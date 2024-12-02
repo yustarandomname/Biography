@@ -9,7 +9,7 @@
 </script>
 
 <!-- Header -->
-<div class="mx-auto my-12 aspect-square h-64 max-w-full rounded-full bg-green-50">
+<div class="mx-auto my-12 aspect-square h-64 w-64 max-w-full rounded-full bg-green-50">
 	<Canvas>
 		<Scene />
 	</Canvas>
