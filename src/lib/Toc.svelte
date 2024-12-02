@@ -38,11 +38,11 @@
 
 <svelte:window onscroll={handleScroll} />
 
-<nav class="sticky h-fit p-12">
+<nav class="sticky hidden h-fit p-12 lg:block">
 	<ul>
 		{#each items as { id, name }}
 			<li class="m-2 text-slate-400" class:highlight={hightlighted == id}>
-				<a href={`#${id}`}>{name}</a>
+				<a class="text-nowrap" href={`#${id}`}>{name}</a>
 			</li>
 		{/each}
 	</ul>

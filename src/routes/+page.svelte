@@ -3,10 +3,13 @@
 	import Scene from './Scene.svelte';
 	import Card from '$lib/Card.svelte';
 	import Toc from '$lib/Toc.svelte';
+	import DutchConfetti from '$lib/DutchConfetti.svelte';
+	import TextBookImage from './textbooks.png?enhanced';
+	import VanHoochImage from './VanHooch.png?enhanced';
 </script>
 
 <!-- Header -->
-<div class="mx-auto my-12 aspect-square max-h-64 max-w-full rounded-full bg-green-50">
+<div class="mx-auto my-12 aspect-square h-64 max-w-full rounded-full bg-green-50">
 	<Canvas>
 		<Scene />
 	</Canvas>
@@ -14,10 +17,10 @@
 
 <div class="prose mx-auto text-center">
 	<h1 class="font-thin">Abel de Bruijn</h1>
-	<p>Developer based in 🇳🇱</p>
+	<p>Developer based in <DutchConfetti /></p>
 </div>
 
-<div class="relative grid grid-cols-1 lg:grid-cols-[1fr_minmax(auto,42rem)_1fr]">
+<div class="relative grid grid-cols-1 px-4 lg:grid-cols-[1fr_minmax(auto,42rem)_1fr]">
 	<Toc
 		items={[
 			{ id: 'socials', name: 'Socials' },
@@ -65,7 +68,7 @@
 
 				<div class="cols-1 grid gap-3">
 					<Card
-						image="./VanHooch.png"
+						image={VanHoochImage}
 						title="Master Thesis"
 						description="Development of a new type data interaction"
 						linkToBlog="./blogs/master-thesis"
@@ -83,7 +86,7 @@
 					</Card>
 
 					<Card
-						image="https://avatars.githubusercontent.com/u/153208040?s=200&v=4"
+						image={TextBookImage}
 						title="TU Delft Textbooks"
 						description="Jupyter notebooks 2.0 template interactive books."
 					>
