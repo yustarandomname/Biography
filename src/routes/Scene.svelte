@@ -79,9 +79,9 @@
 
 		isActiveSpinning = false;
 
-		toast.success('🎉🥳🎊🎉', {
+		toast.message('🎉 🥳 🎊 🎉', {
 			description: 'You scored' + (isHeads ? ' heads' : ' tails') + '!',
-			duration: 10000,
+			duration: 6000,
 			action: {
 				label: 'Spin again',
 				onClick: () => spinCamera()
