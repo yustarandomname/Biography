@@ -39,10 +39,10 @@
 					<a class="" href="https://linkedin.com/in/abeldebruijn"> LinkedIn </a>
 				</li>
 				<li>
-					<a> Email </a>
+					<button> Email </button>
 				</li>
 				<li>
-					<a> Phone </a>
+					<button> Phone </button>
 				</li>
 			</ul>
 		</div>
