@@ -6,6 +6,7 @@
 		description?: string;
 		image?: string | Picture;
 		linkToBlog?: string;
+		actionText?: string;
 		children?: any;
 	};
 
@@ -14,40 +15,47 @@
 		description = 'This is a card that is in progress.',
 		image,
 		linkToBlog = '',
+		actionText = 'Read the blog',
 		children
 	}: CardProps = $props();
 </script>
 
-<div class="grid grid-cols-6 gap-2 rounded-xl border-2 bg-slate-100 px-4 py-3">
+<div class="card grid grid-cols-6 gap-2 rounded-xl border-2 bg-slate-100 px-4 py-3">
 	<div class="col-span-4">
+		<!-- Title -->
 		<h3 class="m-0 mt-2">{title}</h3>
 
+		<!-- Description -->
 		{#if description}
 			<p class="mb-0 text-xs">{description}</p>
 		{/if}
 
+		<!-- Content -->
 		<p class="text-sm">
 			{@render children()}
 		</p>
 	</div>
 
-	<div class="relative col-span-2">
+	<div class="not-prose relative col-span-2">
 		{#if image}
-			<enhanced:img
-				class="m-0 max-h-[12rem] scale-75 rounded object-contain hover:scale-100 motion-safe:transition-transform"
+			<!-- Vite enhanced image such that the optimal resolution is served over the internets -->
+			<div
+				class="m-0 scale-75 overflow-hidden rounded-lg object-contain grayscale-[0.5] hover:scale-[0.9] hover:grayscale-0 motion-safe:transition-all"
 				class:move-up={linkToBlog}
-				src={image}
-				alt="An image of + {description}"
-			/>
+			>
+				<enhanced:img src={image} alt="An image of + {description}" />
+			</div>
 		{/if}
+
+		<!-- Optional link to an (internal/external) resource -->
 		{#if linkToBlog}
-			<a class="absolute bottom-0 right-0" href={linkToBlog}>Go to blog</a>
+			<a class="absolute bottom-0 right-0" href={linkToBlog}>{actionText}</a>
 		{/if}
 	</div>
 </div>
 
 <style>
 	.move-up {
-		@apply -translate-y-5 hover:translate-y-0;
+		@apply absolute top-1/2 -translate-y-1/2;
 	}
 </style>
