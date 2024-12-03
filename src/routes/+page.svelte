@@ -11,8 +11,13 @@
 	import Scene from './Scene.svelte';
 	import TextBookImage from './images/textbooks.png?enhanced';
 	import VanHoochImage from './images/VanHooch.png?enhanced';
+	import { formatDate } from '$lib/utils';
 
 	let { data } = $props();
+
+	function capitalizeFirstLetter(val: string) {
+		return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+	}
 </script>
 
 <!-- Header -->
@@ -183,11 +188,15 @@
 
 		<Section id="blogs" name="Blogs" emoji="📝">
 			{#each data.blogs as blog}
-				<Card
-					title={blog.title}
-					description={blog.description}
-					linkToBlog={'./blogs/' + blog.slug}
-				/>
+				{@const date = formatDate(blog.date)}
+				{@const tags = blog.tags?.map((t) => capitalizeFirstLetter(t)).join(', ')}
+
+				{@const description = [date, tags].filter((x) => x).join(' | ')}
+
+				<Card title={blog.title} {description} linkToBlog={'./blogs/' + blog.slug}>
+					{blog.description}
+					{tags}
+				</Card>
 			{/each}
 		</Section>
 	</main>

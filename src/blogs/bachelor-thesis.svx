@@ -6,6 +6,7 @@ tags:
   - thesis
   - 2023
 published: true
+author: "Abel de Bruijn"
 ---
 
 # Territory patterns created by random walker agents in three dimensions
