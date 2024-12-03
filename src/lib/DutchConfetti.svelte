@@ -1,9 +1,10 @@
 <script lang="ts">
 	import Confetti from 'svelte-confetti';
+	import CheeseImage from './Cheese.png?url';
 
 	let showConfetti = $state(false);
 
-	const emoji = ['./emoji/Cheese.png'];
+	const emoji = [CheeseImage];
 	let timeout: ReturnType<typeof setTimeout> | undefined = undefined;
 
 	async function confetti() {
