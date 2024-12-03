@@ -1,0 +1,13 @@
+---
+title: Master Thesis
+description: Master thesis is work in progress
+date: '2023-4-14'
+categories:
+  - sveltekit
+  - svelte
+published: true
+---
+
+# Master Thesis
+
+Work in Progress

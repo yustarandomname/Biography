@@ -32,7 +32,9 @@
 
 		<!-- Content -->
 		<p class="text-sm">
-			{@render children()}
+			{#if children}
+				{@render children?.()}
+			{/if}
 		</p>
 	</div>
 
