@@ -6,7 +6,7 @@
 	import { Canvas } from '@threlte/core';
 	import BachelorsThesisImage from './images/Beb.webp?enhanced';
 	import CenterOSImage from './images/CenterOS.png?enhanced';
-	import LavaImage from './images/lava.png?enhanced';
+	import LavaImage from './images/Lava.png?enhanced';
 	import OpenLaImage from './images/OpenLaBook.png?enhanced';
 	import Scene from './Scene.svelte';
 	import TextBookImage from './images/textbooks.png?enhanced';
