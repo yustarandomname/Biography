@@ -1,0 +1,11 @@
+---
+title: Master Thesis
+description: Master thesis is work in progress
+date: '2024-12-3'
+published: true
+author: "Abel de Bruijn"
+---
+
+# Master Thesis
+
+Work in Progress

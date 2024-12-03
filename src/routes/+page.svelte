@@ -11,6 +11,13 @@
 	import Scene from './Scene.svelte';
 	import TextBookImage from './images/textbooks.png?enhanced';
 	import VanHoochImage from './images/VanHooch.png?enhanced';
+	import { formatDate } from '$lib/utils';
+
+	let { data } = $props();
+
+	function capitalizeFirstLetter(val: string) {
+		return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+	}
 </script>
 
 <!-- Header -->
@@ -148,7 +155,7 @@
 				image={BachelorsThesisImage}
 				title={'Bachelors Thesis'}
 				description={'2023 | Model for Bacteria mixing in three-dimensions using random walker agents'}
-				linkToBlog="./blogs/bachelors-thesis"
+				linkToBlog="./blogs/bachelor-thesis"
 			>
 				For my bachelors thesis I worked on a model for bacteria mixing in three-dimensions using
 				random walker agents. The goal of the project was to create a model that could be used to
@@ -180,7 +187,17 @@
 		<!-- {@render content('university-projects', 'University Projects', '')} -->
 
 		<Section id="blogs" name="Blogs" emoji="📝">
-			<h3>WIP</h3>
+			{#each data.blogs as blog}
+				{@const date = formatDate(blog.date)}
+				{@const tags = blog.tags?.map((t) => capitalizeFirstLetter(t)).join(', ')}
+
+				{@const description = [date, tags].filter((x) => x).join(' | ')}
+
+				<Card title={blog.title} {description} linkToBlog={'./blogs/' + blog.slug}>
+					{blog.description}
+					{tags}
+				</Card>
+			{/each}
 		</Section>
 	</main>
 </div>
