@@ -20,10 +20,12 @@
 	}: CardProps = $props();
 </script>
 
-<div class="card grid grid-cols-6 gap-2 rounded-xl border-2 bg-slate-100 px-4 py-3">
+<div
+	class="card grid grid-cols-6 gap-2 rounded-xl border-2 bg-slate-100 px-4 py-3 dark:bg-slate-900 dark:text-slate-400"
+>
 	<div class="col-span-4">
 		<!-- Title -->
-		<h3 class="m-0 mt-2">{title}</h3>
+		<h3 class="m-0 mt-2 dark:text-slate-100">{title}</h3>
 
 		<!-- Description -->
 		{#if description}

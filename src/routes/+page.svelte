@@ -1,17 +1,18 @@
 <script lang="ts">
 	import Card from '$lib/Card.svelte';
+	import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
 	import DutchConfetti from '$lib/DutchConfetti.svelte';
 	import Section from '$lib/Section.svelte';
 	import Toc from '$lib/Toc.svelte';
+	import { formatDate } from '$lib/utils';
 	import { Canvas } from '@threlte/core';
 	import BachelorsThesisImage from './images/Beb.webp?enhanced';
 	import CenterOSImage from './images/CenterOS.png?enhanced';
 	import LavaImage from './images/Lava.png?enhanced';
 	import OpenLaImage from './images/OpenLaBook.png?enhanced';
-	import Scene from './Scene.svelte';
 	import TextBookImage from './images/textbooks.png?enhanced';
 	import VanHoochImage from './images/VanHooch.png?enhanced';
-	import { formatDate } from '$lib/utils';
+	import Scene from './Scene.svelte';
 
 	let { data } = $props();
 
@@ -20,14 +21,20 @@
 	}
 </script>
 
+<div class="fixed right-4 top-4 z-50">
+	<ThemeSwitcher />
+</div>
+
 <!-- Header -->
-<div class="mx-auto my-12 aspect-square h-64 w-64 max-w-full rounded-full bg-red-50">
+<div
+	class="mx-auto my-12 aspect-square h-64 w-64 max-w-full rounded-full bg-red-50 dark:bg-red-900"
+>
 	<Canvas>
 		<Scene />
 	</Canvas>
 </div>
 
-<div class="prose mx-auto text-center">
+<div class="prose mx-auto text-center dark:prose-invert">
 	<h1 class="font-thin">Abel de Bruijn</h1>
 	<p>Developer based in <DutchConfetti /></p>
 </div>
@@ -39,11 +46,11 @@
 			{ id: 'in-progress', name: 'In Progress' },
 			{ id: 'projects', name: 'Projects' },
 			{ id: 'university-projects', name: 'University Projects' },
-			{ id: 'Blogs', name: 'Blogs' }
+			{ id: 'blogs', name: 'Blogs' }
 		]}
 	/>
 	<main>
-		<div id="socials" class="prose mx-auto my-12">
+		<div id="socials" class="prose mx-auto my-12 dark:prose-invert">
 			<h2 class="font-medium">🌐 Socials</h2>
 
 			<ul>
@@ -77,6 +84,7 @@
 			>
 				My master thesis at <a href="https://www.tudelft.nl">TU Delft</a> with the
 				<a
+					class="dark:text-slate-100"
 					href="https://www.tudelft.nl/ewi/over-de-faculteit/afdelingen/intelligent-systems/computer-graphics-and-visualization"
 					>Computer Graphics and Data Visualisations Group</a
 				>
@@ -96,9 +104,12 @@
 				learning more interactive and engaging. I am working on the development of a new type of
 				<b class="text-green-700">Jupyter notebooks</b> that can be used to create interactive
 				books. For this project we would like to see if we can migrate from
-				<code><a href="https://mystmd.org/">jupyter-myst</a></code>
+				<code><a class="dark:text-slate-100" href="https://mystmd.org/">jupyter-myst</a></code>
 				to
-				<code><a href="https://next.jupyterbook.org/">jupyter-book-2.0</a></code>
+				<code
+					><a class="dark:text-slate-100" href="https://next.jupyterbook.org/">jupyter-book-2.0</a
+					></code
+				>
 			</Card>
 		</Section>
 
@@ -118,7 +129,9 @@
 				Abstract linear algebra concepts are visualized interactively to enhance student
 				understanding. The book features applets that use 2D and 3D graphics, providing a hands-on
 				experience to explore these concepts. You can view the book at
-				<a href="https://prime.pages.ewi.tudelft.nl/openlabook-published/index.html"
+				<a
+					class="dark:text-slate-100"
+					href="https://prime.pages.ewi.tudelft.nl/openlabook-published/index.html"
 					>prime.pages.ewi.tudelft.nl</a
 				>
 			</Card>
@@ -162,6 +175,7 @@
 				understand how bacteria mix in 3D. Each agent excretes a chemical that replels agents from
 				the other kind. This research was a generalisation of A. Barbaro et al. An interactive 3D
 				visualization of the model can be found at <a
+					class="dark:text-slate-100"
 					href="https://3d-walker.vercel.app/vision/slice">3d-walker.vercel.app/vision/slice</a
 				>.
 			</Card>

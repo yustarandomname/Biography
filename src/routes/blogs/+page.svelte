@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Card from '$lib/Card.svelte';
+	import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
 	import * as Breadcrumb from '$lib/components/ui/breadcrumb/index.js';
 	import Section from '$lib/Section.svelte';
 	import { formatDate } from '$lib/utils';
@@ -11,10 +12,10 @@
 	}
 </script>
 
-<Breadcrumb.Root class="border-b-2 border-red-100 p-6">
+<Breadcrumb.Root class="flex justify-between border-b-2 border-red-100 p-6">
 	<Breadcrumb.List>
 		<Breadcrumb.Item>
-			<Breadcrumb.Link href="/">Home</Breadcrumb.Link>
+			<Breadcrumb.Link href="/">Abel de Bruijn</Breadcrumb.Link>
 		</Breadcrumb.Item>
 
 		<Breadcrumb.Separator />
@@ -23,6 +24,8 @@
 			<Breadcrumb.Link href="/blogs">Blogs</Breadcrumb.Link>
 		</Breadcrumb.Item>
 	</Breadcrumb.List>
+
+	<ThemeSwitcher />
 </Breadcrumb.Root>
 
 <Section id="blogs" name="Blogs" emoji="📝">

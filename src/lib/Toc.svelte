@@ -54,6 +54,6 @@
 	}
 
 	.highlight {
-		color: black;
+		@apply text-green-500;
 	}
 </style>
