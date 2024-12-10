@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Card from '$lib/Card.svelte';
+	import Card from '$lib/components/Card.svelte';
 	import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
 	import DutchConfetti from '$lib/DutchConfetti.svelte';
-	import Section from '$lib/Section.svelte';
+	import Section from '$lib/components/Section.svelte';
 	import Toc from '$lib/Toc.svelte';
 	import { formatDate } from '$lib/utils';
 	import { Canvas } from '@threlte/core';
