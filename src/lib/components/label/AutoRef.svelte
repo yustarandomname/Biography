@@ -24,6 +24,4 @@
 		class="text-nowrap text-slate-500 no-underline transition-colors hover:text-slate-700 hover:underline dark:hover:text-slate-300"
 		href={autoRef.anchor}>{autoRef.toAutoRef()}</a
 	>
-{:else}
-	<span class="font-bold text-red-600">[???]</span>
 {/if}
