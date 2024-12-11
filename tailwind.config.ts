@@ -16,6 +16,9 @@ const config: Config = {
 			}
 		},
 		extend: {
+			maxWidth: {
+				'near-full': 'calc(100% - 3rem)'
+			},
 			colors: {
 				border: 'hsl(var(--border) / <alpha-value>)',
 				input: 'hsl(var(--input) / <alpha-value>)',

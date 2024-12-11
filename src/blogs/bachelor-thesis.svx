@@ -145,12 +145,6 @@ The iteration process starts by writing to the layer of the new marker using equ
   This figure shows an example of a lattice with L = 3 and D = 3. The example highlights how the markers are updated at position (0,0,0). A new lattice is created to store the next iteration of markers. The old data from the marker and agent layers are read and combined to write to the new layer.
 </Image>
 
-<!-- \begin{figure}[htb]
-  \centering
-  \includegraphics[width=1\linewidth]{images/new marker distribution.png}
-  \caption{\label{fig: new marker dist} }
-\end{figure} -->
-
 <!-- The iteration process continues with each agent randomly selecting one of its neighbours, weighted by the number of markers the neighbours possess. As mentioned before, agents prefer neighbours with lower markers of the opposite species. A pseudo-code implementation for moving the red agents is given in algorithm \ref{alg: update universe serial}. -->
 
 <!-- Each iteration ends by removing the old lattices and replacing them with the newer ones. If no errors occur, the iteration count increases. -->
