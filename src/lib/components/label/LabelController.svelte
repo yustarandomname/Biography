@@ -56,6 +56,12 @@
 
 				labels.addLabel(figure);
 				return figure;
+
+			case 'Algorithm':
+				const algorithm = new Label(title, type, Object.keys(labels.algorithms).length);
+
+				labels.addLabel(algorithm);
+				return algorithm;
 			default:
 				throw new Error(`Unknown label type: ${type}`);
 		}

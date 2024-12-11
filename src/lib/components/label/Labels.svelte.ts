@@ -1,13 +1,12 @@
 import type { Heading } from './Heading';
 
-export type LabelType = 'Equation' | 'Heading' | 'Figure';
+export type LabelType = 'Equation' | 'Heading' | 'Figure' | 'Algorithm';
 
 export class Labels {
 	headings: { [key: string]: Heading } = $state({});
 	equations: { [key: string]: Label } = $state({});
 	figures: { [key: string]: Label } = $state({});
-	// tables: [],
-	// figures: []
+	algorithms: { [key: string]: Label } = $state({});
 
 	constructor() {}
 
@@ -33,8 +32,10 @@ export class Labels {
 				this.equations[id] = label;
 				break;
 			case 'Figure':
-				console.log('added figure', label);
 				this.figures[id] = label;
+				break;
+			case 'Algorithm':
+				this.algorithms[id] = label;
 				break;
 			default:
 				throw new Error(`Unknown label type: ${label.type}`);
@@ -50,6 +51,9 @@ export class Labels {
 				break;
 			case 'Figure':
 				delete this.figures[id];
+				break;
+			case 'Algorithm':
+				delete this.algorithms[id];
 				break;
 			default:
 				throw new Error(`Unknown label type: ${label.type}`);
@@ -70,6 +74,8 @@ export class Labels {
 			return this.equations[id];
 		} else if (id in this.figures) {
 			return this.figures[id];
+		} else if (id in this.algorithms) {
+			return this.algorithms[id];
 		}
 
 		return null;

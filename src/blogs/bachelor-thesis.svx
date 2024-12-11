@@ -13,11 +13,15 @@ author: 'Abel de Bruijn'
 import Cite from "$lib/components/Cite.svelte";
 import * as Label from "$lib/components/label/index.js";
 import {AutoRef} from "$lib/components/label/index.js";
+import Code from "$lib/components/Code.svelte";
 import Equation from "$lib/components/Equation.svelte";
 import Image from "$lib/components/Image.svelte";
 
 // Images
 import NewMarkerDistributionImage from './assets/bachelor-thesis/Marker Distribution for Thesis.png?enhanced';
+
+// Code
+import UpdateUnivereSerialCode from './assets/bachelor-thesis/UpdateUniverseSerialCode.svelte';
 
 </script>
 
@@ -55,7 +59,7 @@ The main question attempted to be answered is: “What similarities exist betwee
 lattice models?”. This question is answered with the following sub-questions: "What are the states of the three-dimensional lattice model,
 and are they well-mixed or well-segregated?", "How does mass and gamma/lambda ratio influence the phase transition of the 3D model?".
 
-The paper is structured in the following way: First, <AutoRef label="Background and related work" /> shows the background which is needed to understand this paper. <AutoRef label="The model" /> explains how a random walker model is used with pseudo-code. <AutoRef label="Naive model" /> shows an intuitive algorithm derived from mathematics. <AutoRef label="CPU improvements" /> and <AutoRef label="GPU improvements" /> demonstrate how CPU (Central Processing Unit) and GPU (Graphics Processing Unit) parallel computing can improve the performance of the model. <AutoRef label="Client visualisations" /> explains how the client is interacting and visualising the model. <AutoRef label="Results" /> presents the simulations for multiple configurations. <AutoRef label="Argumentation and discussion" /> discusses what similarities a 3D random walker model creates. <AutoRef label="Conclusion" /> is the conclusion of the paper. Finally, <AutoRef label="Responsible Research" /> discusses the responsibility and accountability of this research paper.
+The paper is structured in the following way: First, <AutoRef label="Background and related work" /> shows the background which is needed to understand this paper. <AutoRef label="Method" /> explains how a random walker model is used with pseudo-code. <AutoRef label="A Naive model" /> shows an intuitive algorithm derived from mathematics. <AutoRef label="CPU improvements" /> and <AutoRef label="GPU improvements" /> demonstrate how CPU (Central Processing Unit) and GPU (Graphics Processing Unit) parallel computing can improve the performance of the model. <AutoRef label="Client visualisations" /> explains how the client is interacting and visualising the model. <AutoRef label="Results" /> presents the simulations for multiple configurations. <AutoRef label="Argumentation and discussion" /> discusses what similarities a 3D random walker model creates. <AutoRef label="Conclusion" /> is the conclusion of the paper. Finally, <AutoRef label="Responsible Research" /> discusses the responsibility and accountability of this research paper.
 
 ---
 
@@ -145,16 +149,15 @@ The iteration process starts by writing to the layer of the new marker using equ
   This figure shows an example of a lattice with L = 3 and D = 3. The example highlights how the markers are updated at position (0,0,0). A new lattice is created to store the next iteration of markers. The old data from the marker and agent layers are read and combined to write to the new layer.
 </Image>
 
-<!-- The iteration process continues with each agent randomly selecting one of its neighbours, weighted by the number of markers the neighbours possess. As mentioned before, agents prefer neighbours with lower markers of the opposite species. A pseudo-code implementation for moving the red agents is given in algorithm \ref{alg: update universe serial}. -->
+The iteration process continues with each agent randomly selecting one of its neighbours, weighted by the number of markers the neighbours possess. As mentioned before, agents prefer neighbours with lower markers of the opposite species. A pseudo-code implementation for moving the red agents is given in <AutoRef label="update universe serial" />.
 
-<!-- Each iteration ends by removing the old lattices and replacing them with the newer ones. If no errors occur, the iteration count increases. -->
+Each iteration ends by removing the old lattices and replacing them with the newer ones. If no errors occur, the iteration count increases.
 
-<!-- \begin{algorithm}[hbt!]
-\caption{Naive way of moving the red agents}\label{alg: update universe serial}
-\begin{algorithmic}
+<Code label="update universe serial">
+  <UpdateUnivereSerialCode />
+</Code>
 
-
-\For {$(agent\_node, marker\_node, index) \gets old\_lattices.iter()$}
+<!-- \For {$(agent\_node, marker\_node, index) \gets old\_lattices.iter()$}
     \MyComment{Loop over every agent and marker node in the old lattices}
 
     \State prng $\gets$ new PRNG(index, iteration, seed);
@@ -182,9 +185,8 @@ The iteration process starts by writing to the layer of the new marker using equ
         \State new\_lattices.agent\_nodes.add\_red\_agent(new\_index)
         \MyComment{Increment the new lattice with agent nodes at the position of new\_index by one}
     \EndFor
-\EndFor
-\end{algorithmic}
-\end{algorithm} -->
+
+\EndFor -->
 
 <!-- \subsection{CPU improvements} -->
 <!-- The straightforward nature of the naive model makes it easy to understand and apply using the mathematics provided. However, as will be shown in section \ref{section: Algorithm speed}, its execution speed is slow. Iteration is the most time-consuming part of the process. The model is built only once, but the program may have to iterate thousands or even millions of times. To speed up this process while still producing the same output, this section will introduce a faster method of iteration. -->
