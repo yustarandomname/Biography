@@ -32,8 +32,7 @@
 				class="rounded-xl border-2 bg-slate-100 px-4 py-3 dark:bg-slate-900 dark:text-slate-400"
 			>
 				<h4 class="mt-0">
-					{paper.title} - {'month' in paper ? paper.month + '/' : ''}
-					{paper.year}
+					{paper.title} - {'month' in paper ? paper.month + '/' : ''}{paper.year}
 				</h4>
 
 				{#if 'authors' in paper}

@@ -30,7 +30,7 @@
 
 		<div class="comment">
 			# Pick one of the neighbours and return the chosen direction to move in (Top, Left, Front,
-			etc.). More info about the method in appendix A
+			etc.). More info about the method in appendix A.
 		</div>
 		<p>direction = PICK_WEIGHTED(prng, blue_strengths)</p>
 
@@ -40,24 +40,6 @@
 		<div class="comment">
 			# Increment the new lattice with agent nodes at the position of new_index by one
 		</div>
-		<p>new_lattices.agent_nodes.add_red_agent(new_index)</p>
+		<p class="mb-2">new_lattices.agent_nodes.add_red_agent(new_index)</p>
 	</div>
 </div>
-
-<style>
-	.indent {
-		@apply border-l-2 border-gray-800 pl-4;
-	}
-
-	.kw {
-		@apply text-red-400;
-	}
-
-	p {
-		@apply mt-0.5;
-	}
-
-	.comment {
-		@apply text-sm leading-none text-green-400/70;
-	}
-</style>

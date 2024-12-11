@@ -62,6 +62,11 @@
 
 				labels.addLabel(algorithm);
 				return algorithm;
+			case 'Table':
+				const table = new Label(title, type, Object.keys(labels.tables).length);
+
+				labels.addLabel(table);
+				return table;
 			default:
 				throw new Error(`Unknown label type: ${type}`);
 		}

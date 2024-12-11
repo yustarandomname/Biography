@@ -65,15 +65,17 @@
 				{#if figureLabel}
 					<Dialog.Title>Figure {figureLabel.index + 1}</Dialog.Title>
 				{/if}
-
-				<Dialog.Description>
-					<div class="mx-auto w-fit">
-						<enhanced:img src={image} alt={description || label || 'image'} />
-					</div>
-
-					{@render children()}
-				</Dialog.Description>
 			</Dialog.Header>
+
+			<Dialog.Description
+				class="max-h-near-full flex flex-col items-center overflow-y-auto overflow-x-hidden"
+			>
+				<div class="mx-auto overflow-hidden rounded-lg">
+					<enhanced:img src={image} alt={description || label || 'image'} />
+				</div>
+
+				<p class="mt-4">{@render children()}</p>
+			</Dialog.Description>
 		</Dialog.Content>
 	</Dialog.Root>
 </div>

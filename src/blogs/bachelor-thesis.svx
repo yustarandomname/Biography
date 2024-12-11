@@ -16,12 +16,21 @@ import {AutoRef} from "$lib/components/label/index.js";
 import Code from "$lib/components/Code.svelte";
 import Equation from "$lib/components/Equation.svelte";
 import Image from "$lib/components/Image.svelte";
+import Table from "$lib/components/Table.svelte";
 
 // Images
 import NewMarkerDistributionImage from './assets/bachelor-thesis/Marker Distribution for Thesis.png?enhanced';
+import ViewsImage from './assets/bachelor-thesis/Views.png?enhanced';
+import Betas3DImage from './assets/bachelor-thesis/Betas3DImage.png?enhanced';
+import OrderParamsLongImage from './assets/bachelor-thesis/OrderParamsLongImage.png?enhanced';
+import MassVFinalOrderImage from './assets/bachelor-thesis/mass-v-final-order.png?enhanced';
+import CritBetaMass from './assets/bachelor-thesis/critical beta vs mass.png?enhanced';
+import GammaVsLambda from './assets/bachelor-thesis/Gamma vs Lambda.png?enhanced';
+import CriticalBetaVsRatio from './assets/bachelor-thesis/Critical Beta vs Ratio.png?enhanced';
 
 // Code
 import UpdateUnivereSerialCode from './assets/bachelor-thesis/UpdateUniverseSerialCode.svelte';
+import UpdateUnivereParallelCode from './assets/bachelor-thesis/UpdateUniverseParallelCode.svelte';
 
 </script>
 
@@ -105,7 +114,7 @@ They concluded that after many iterations, the model began to exhibit segregated
 ---
 
 <Label.Section title="Method" />
-A general model, independent of dimensions is presented in <AutoRef label="A generalised random walker model" />. A naive example model (later referred to as CPU serial model) is described in <AutoRef label="Naive model" /> with pseudo-code to give the reader an impression of how a 3D territory model is represented in code. In <AutoRef label="CPU improvements" /> a Central processing unit (CPU) algorithm using parallelism is proposed that significantly improves the run-time of the naive model. The model has again improved been in run-time in <AutoRef label="GPU improvements" />, where a dedicated GPU takes some work over. Although the model produces the same output, spotting how the mathematical model is represented in these faster models is harder. This is followed by <AutoRef label="Client visualisations" />, where the method for visualising the model in a browser is presented. Lastly, the method for quantifying territory using an order parameter is presented in <AutoRef label="An order parameter" />.
+A general model, independent of dimensions is presented in <AutoRef label="A generalised random walker model" />. A naive example model (later referred to as CPU serial model) is described in <AutoRef label="Naive model" /> with pseudo-code to give the reader an impression of how a 3D territory model is represented in code. In <AutoRef label="CPU improvements" /> a Central processing unit (CPU) algorithm using parallelism is proposed that significantly improves the run-time of the naive model. The model has again improved been in run-time in <AutoRef label="GPU improvements" />, where a dedicated GPU takes some work over. Although the model produces the same output, spotting how the mathematical model is represented in these faster models is harder. This is followed by <AutoRef label="Client visualisations" />, where the method for visualising the model in a browser is presented. Lastly, the method for quantifying territory using an order parameter is presented in <AutoRef label="3D order parameter" />.
 
 <Label.SubSection title="A generalised random walker model" />
 The model consists of two processes. The first process is initialisation, where a lattice of dimension D and side length L is created. N number of agents are randomly and uniformly distributed across the lattice nodes. The mass per species, also known as <Equation latex="N_i" />, is the same for both species A (red) and B (blue). The second process involves each agent leaving behind markers and moving to a neighbouring node based on the number of markers of the opposing species similar to <AutoRef label="marker distribution 2d" />. Further details about each process are provided in the following paragraphs.
@@ -153,117 +162,154 @@ The iteration process continues with each agent randomly selecting one of its ne
 
 Each iteration ends by removing the old lattices and replacing them with the newer ones. If no errors occur, the iteration count increases.
 
-<Code label="update universe serial">
+<Code label="Update universe serial" title="Naive way of moving the red agents">
   <UpdateUnivereSerialCode />
 </Code>
 
-<!-- \For {$(agent\_node, marker\_node, index) \gets old\_lattices.iter()$}
-    \MyComment{Loop over every agent and marker node in the old lattices}
+<Label.SubSection title="CPU improvements" />
 
-    \State prng $\gets$ new PRNG(index, iteration, seed);
-    \MyComment{Setup a pseudorandom number generator (PRNG). The seed should depend on the index and iteration amount, as well as a global seed provided by the user.}
+The straightforward nature of the naive model makes it easy to understand and apply using the mathematics provided. However, as will be shown in <AutoRef label="Algorithm speed" />, its execution speed is slow. Iteration is the most time-consuming part of the process. The model is built only once, but the program may have to iterate thousands or even millions of times. To speed up this process while still producing the same output, this section will introduce a faster method of iteration.
 
-    \State neighbour\_markers = marker\_node.neighbours()
-    \MyComment{Get the 6 neighbours of this marker node}
-    % \State
-    \State blue\_strength = \{\}
-    \MyComment{Store push strengths of all neighbours}
-    \For {$marker \gets neighbour\_markers.iter()$}
-        % \MyComment{Loop over every neighbour marker }
-        \State $blue\_strengths \gets pow(e,-beta \times marker.blue\_value)$
-        \MyComment{Append the blue strength for each marker defined in equation \ref{eq: agent movement 3D} }
-    \EndFor
+Introducing parallel CPU computing can be a good solution when algorithms are running slowly <Cite paperId="Concha_Cabido_Pantrigo_Montemayor_2014" />. Ideally, using K threads can speed up your program by a factor of K. However, this comes with a cost of unpredictability when multiple threads write to the same memory address. This can lead to a behaviour known as a 'race condition' <Cite paperId="Liu_Wang_Zhou_Wang_2022" />.
 
-    \State
+Race conditions can introduce unpredictable and unstable behaviour. An example can be where an agent is moving from one node to another. When threads A and B read the agent count of node X simultaneously and both try to write one agent to it, only one agent will be added to node X. This results in a loss of total agents which is not allowed in this model. A Mutex <Cite paperId="10.1007/978-3-642-21834-7_13" /> prevents simultaneous access to a piece of memory, though this comes with a performance cost as only one thread can access it at a time. By performing all writing calculations within each node and spawning one thread per node, we ensure that only one thread is writing to a memory address during the node's lifetime.
 
-    \For{$red\_agent \gets agent\_node.red\_agents$}
-        \MyComment{Loop over each red\_agent and move it to one of its neighbours according to the strengths of the blue markers}
-        \State direction = \Call{pick\_weighted}{prng, blue\_strengths}
-        \MyComment{Pick one of the neighbours and return the chosen direction to move in (Top, Left, Front, etc.). More info about the method in  appendix \ref{app: update universe serial extended}}
-        \State new\_index $\gets$ agent\_node.index\_from\_dir(direction)
-        \MyComment {Get the neighbours index from the direction}
-        \State new\_lattices.agent\_nodes.add\_red\_agent(new\_index)
-        \MyComment{Increment the new lattice with agent nodes at the position of new\_index by one}
-    \EndFor
+Only the walking part needs to be updated from the naive model, as updating the markers is not writing to other nodes other than itself, as shown in <AutoRef label="new marker dist" />. <AutoRef label="update universe serial" /> is adopted, whereby each node can read all other nodes but can only write to its own. An impression of how the movement of red agents is changed is visible in algorithm <AutoRef label="update universe parallel" />.
 
-\EndFor -->
-
-<!-- \subsection{CPU improvements} -->
-<!-- The straightforward nature of the naive model makes it easy to understand and apply using the mathematics provided. However, as will be shown in section \ref{section: Algorithm speed}, its execution speed is slow. Iteration is the most time-consuming part of the process. The model is built only once, but the program may have to iterate thousands or even millions of times. To speed up this process while still producing the same output, this section will introduce a faster method of iteration. -->
-
-<!-- Introducing parallel CPU computing can be a good solution when algorithms are running slowly \cite{Concha_Cabido_Pantrigo_Montemayor_2014}. Ideally, using K threads can speed up your program by a factor of K. However, this comes with a cost of unpredictability when multiple threads write to the same memory address. This can lead to a behaviour known as a 'race condition' \cite{Liu_Wang_Zhou_Wang_2022}. -->
-
-<!-- Race conditions can introduce unpredictable and unstable behaviour. An example can be where an agent is moving from one node to another. When threads A and B read the agent count of node X simultaneously and both try to write one agent to it, only one agent will be added to node X. This results in a loss of total agents which is not allowed in this model. A Mutex \cite{10.1007/978-3-642-21834-7_13} prevents simultaneous access to a piece of memory, though this comes with a performance cost as only one thread can access it at a time. By performing all writing calculations within each node and spawning one thread per node, we ensure that only one thread is writing to a memory address during the node's lifetime. -->
-
-<!-- Only the walking part needs to be updated from the naive model, as updating the markers is not writing to other nodes other than itself, as shown in figure \ref{fig: new marker dist}. Algorithm \ref{alg: update universe serial} is adopted, whereby each node can read all other nodes but can only write to its own. An impression of how the movement of red agents is changed is visible in algorithm \ref{alg: update universe parallel}. -->
-
-<!-- \begin{algorithm}[hbt!]
-\caption{Moving red agents with parallisation}\label{alg: update universe parallel}
-\begin{algorithmic}
-\State new\_lattices = new Lattices(old\_lattices.parameters)
-\For {$ (marker\_node, agent\_node, index) \gets old\_lattices $}
-    \MyComment{Move agents out by storing the newly distributed agents in this agent node}
-    \State neighbour\_markers = marker\_node.neighbours()
-    \State prng = new PRNG(index, iteration);
-
-    \State agents\_out = \{top:0,right:0,front:0,bottom:0,left:0,back:0\}
-    \For{$red\_agent \gets agent\_node.red\_agents.iter()$}
-        \State blue\_strengths = neighbour\_markers.blue\_strengths
-        \MyComment{Set of blue strength for each neighbouring node}
-        \State dir = pick\_weighted(prng, blue\_strengths)
-        \State agents\_out[dir] += 1
-    \EndFor
-
-    \State new\_lattices.agent\_nodes[index].red\_agents\_out(agents\_out)
-    \MyComment{Write the number of agents that will go to each neighbour to own (index) of the new agent node}
-\EndFor
-\State
-\For {$ (agent\_node, index) \gets new\_lattices $}
-    \MyComment{Read agents from neighbouring nodes and move to this node. For instance, get top neighbours agents that should move down (i.e. to this node).}
-    \State neighbour\_agents = agent\_node.neighbours()
-
-    \State total\_red\_agents = 0
-    \For {dir $\gets$ neighbour\_agents}
-        \State red\_agents\_dir $\gets$ neighbour\_agents[dir].red\_agents\_out
-        \MyComment{Set of all agents in the neighbour at dir (top, right, etc)}
-        \State total\_red\_agents += red\_agents\_dir[dir.opposite]
-        \MyComment{Add red agents from dir.opposite (top -> bottom, right -> left)}
-    \EndFor
-
-    agent\_node.red\_agents(total\_red\_agents)
-    \MyComment{Set red agents that this node gets from all neighbours}
-\EndFor
-\end{algorithmic}
-\end{algorithm} -->
+<Code label="Update universe parallel" title="Moving red agents with parallisation">
+  <UpdateUnivereParallelCode />
+</Code>
 
 <!-- \subsection{GPU improvements} -->
 
-<!-- The speed of the parallelised CPU implementation was still insufficient, as will be discussed in section \ref{section: Algorithm speed}. Most GPUs have many more working threads compared to CPUs, this means that GPUs are able to do parallel computations. The GPU implementation was written using WebGPU \cite{Maxfield:23:W} as the core technology. This web API provides direct access to most GPUs on desktop computers, making the model versatile and more easily reproducible.  -->
+<Label.SubSection title="GPU improvements" />
 
-<!-- WebGPU is often described as a successor of WebGL. WebGL was mostly used for drawing images on the browser screen, whereas WebGPU was designed from the ground up to handle complex GPU computations. WebGPU uses its own shader-language WGSL to reach near-native performance. -->
+The speed of the parallelised CPU implementation was still insufficient, as will be discussed in <AutoRef label="Compare Algorithm speed" />. Most GPUs have many more working threads compared to CPUs, this means that GPUs are able to do parallel computations. The GPU implementation was written using WebGPU <Cite paperId="Maxfield:23:W" /> as the core technology. This web API provides direct access to most GPUs on desktop computers, making the model versatile and more easily reproducible.
 
-<!-- GPUs have one downside: data transfers between the CPU and GPU take a relatively significant amount of time. The algorithm is designed to use a ping-pong buffer to store the old and new lattices in GPU memory, reducing the time needed to transfer data to the CPU. A ping-pong buffer consists of two buffers that are used in an alternating fashion. One buffer is used for input, while the other is used for output. Each iteration they swap their function as input or output buffer. This technique reduces latency and enhances performance in real-time applications. -->
+WebGPU is often described as a successor of WebGL. WebGL was mostly used for drawing images on the browser screen, whereas WebGPU was designed from the ground up to handle complex GPU computations. WebGPU uses its own shader-language WGSL to reach near-native performance.
 
-<!-- \subsection{Visualisations} -->
-<!-- To interpret the raw data model, several visualisation methods have been developed. These fall into three categories: 2D slice, 3D View and Real-time data view. These categories can be seen in figure \ref{fig: views}. To study these views in detail, visit \URL{https://3d-walker.vercel.app/vision/slice} for a live view. The purpose for each category is explained further in the respective paragraphs. -->
+GPUs have one downside: data transfers between the CPU and GPU take a relatively significant amount of time. The algorithm is designed to use a ping-pong buffer to store the old and new lattices in GPU memory, reducing the time needed to transfer data to the CPU. A ping-pong buffer consists of two buffers that are used in an alternating fashion. One buffer is used for input, while the other is used for output. Each iteration they swap their function as input or output buffer. This technique reduces latency and enhances performance in real-time applications.
 
-<!-- The left figure is the \textbf{slice view} and is useful for comparing the current 3D state to the 2D one. If patterns similar to those expected from the 2D case start emerging from a given configuration, it often indicates that we are moving towards an interesting state to compare against. However, each slice is in general an invalid 2D state because agents can cluster and move to slices in the front and back. The assumption of an equal number of agents from species A and B is often not true, so direct comparisons should be made with caution. -->
+<Label.SubSection title="Visualisations" />
+To interpret the raw data model, several visualisation methods have been developed. These fall into three categories: 2D slice, 3D View and Real-time data view. These categories can be seen in figure <AutoRef label="views" />. To study these views in detail, visit <a href="https://3d-walker.vercel.app/vision/slice">https://3d-walker.vercel.app/vision/slice</a> for a live view. The purpose for each category is explained further in the respective paragraphs.
 
-<!-- \begin{figure}[htb]
-  \centering
-  \includegraphics[width=1\linewidth]{images/views.png}
-  \caption{\label{fig: views} Left: 2D slicing view. Centre: 3D view and right: data view. All three views display the visuals for lattice area $50^3$, iterations 31001, beta = 1.5e-5, $\gamma$ = 0.5, $\lambda$ = 0.5. }
-\end{figure} -->
+The left figure is the **slice view** and is useful for comparing the current 3D state to the 2D one. If patterns similar to those expected from the 2D case start emerging from a given configuration, it often indicates that we are moving towards an interesting state to compare against. However, each slice is in general an invalid 2D state because agents can cluster and move to slices in the front and back. The assumption of an equal number of agents from species A and B is often not true, so direct comparisons should be made with caution.
 
-<!-- The centre figure shows the \textbf{3D view}. Drawing each node as a coloured block is difficult to interpret in 3D, because blocks that are hidden by others are hard to spot. The marching cubes algorithm \cite{MarchingCubes} is often used in the three-dimensional visualisation of territories. This technique shows the border at which species are equally dominant. Blue-shaded areas describe territories, where the blue species is most dominant. Observe how the slicing view at index z=0 is recognised at the front (left) side of the cube. -->
+<Image image={ViewsImage} label="views">
+  Left: 2D slicing view. Centre: 3D view and right: data view. All three views display the visuals for lattice area <Equation latex="50^3" />, iterations 31001, <Equation latex="\beta = 1.5e-5" />, <Equation latex="\gamma = 0.5" />, <Equation latex="\lambda = 0.5" />.
+</Image>
 
-<!-- Lastly, the right figure is \textbf{real-time data view}. This is for abstracting the visuals away and showing condensed metrics about the model. Here, the order parameter over time which will be defined in section \ref{section: An order parameter} is shown. Hovering over each data point reveals the exact order parameter at each time step. -->
+The centre figure shows the **3D view**. Drawing each node as a coloured block is difficult to interpret in 3D, because blocks that are hidden by others are hard to spot. The marching cubes algorithm <Cite paperId="MarchingCubes" /> is often used in the three-dimensional visualisation of territories. This technique shows the border at which species are equally dominant. Blue-shaded areas describe territories, where the blue species is most dominant. Observe how the slicing view at index z=0 is recognised at the front (left) side of the cube.
 
-<!-- \subsection{3D order parameter}
-\label{section: An order parameter}
-The previous territorial paper employed an order parameter to measure the effect of various parameters on the state of well-mixed versus segregated systems. The order parameter (as defined in equation \ref{eq: order parameter 2d}) is adapted to use agent densities in three dimensions, where the agent density of species i is formulated as $\rho_i(x,y,z,t) =$ (amount of agents  at position (x,y,z) and time t) * $L^3$.
-\begin{multline}
-\label{eq: order param 3d}
-\epsilon = \frac{1}{6L^3N^2} \sum_{(x,y,z) \in S } \sum_{(\tilde{x},\tilde{y},\tilde{z}) \sim(x,y,z)} \\(\rho_A(x,y,z,t) - \rho_B(x,y,z,t)) (\rho_A(\tilde{x},\tilde{y},\tilde{z} t) - \rho_B(\tilde{x},\tilde{y},\tilde{z} t))
-\end{multline}
-The normalisation coefficient is adapted too. We divide the entire equation by the product of the number of neighbours, lattice area, and total mass squared. This keeps the order parameter bounded at 1, making comparisons between papers easier. -->
+Lastly, the right figure is **real-time data view**. This is for abstracting the visuals away and showing condensed metrics about the model. Here, the order parameter over time which will be defined in section <AutoRef label="3d order parameter" /> is shown. Hovering over each data point reveals the exact order parameter at each time step.
+
+<Label.SubSection title="3D order parameter" />
+
+The previous territorial paper employed an order parameter to measure the effect of various parameters on the state of well-mixed versus segregated systems. The order parameter (as defined in equation <AutoRef label="order parameter 2d" /> is adapted to use agent densities in three dimensions, where the agent density of species i is formulated as <Equation latex="{'\\rho_i(x,y,z,t) ='}" /> (amount of agents at position (x,y,z) and time t) <Equation latex="{'* L^3'}" />.
+
+<Equation label="order param 3d" block latex={String.raw`\begin{align} 
+\epsilon = \frac{1}{6L^3N^2} \sum_{(x,y,z) \in S } \sum_{(\tilde{x},\tilde{y},\tilde{z}) \sim(x,y,z)} (\rho_A(x,y,z,t) - \rho_B(x,y,z,t)) (\rho_A(\tilde{x},\tilde{y},\tilde{z} t) - \rho_B(\tilde{x},\tilde{y},\tilde{z} t))
+\end{align}`} />
+
+The normalisation coefficient is adapted too. We divide the entire equation by the product of the number of neighbours, lattice area, and total mass squared. This keeps the order parameter bounded at 1, making comparisons between papers easier.
+
+---
+
+<Label.Section title="Results" />
+
+Having established the methodology for defining the model with varying levels of complexity, we explain why speed-ups were necessary in <AutoRef label="Compare algorithm speed" />. These speed-ups enabled us to simulate multiple models and compare them to some properties of the previous territorial paper; using the newly established order parameter. <AutoRef label="Comparing phase transitions between papers" /> presents how the phase transition is affected by different parameters in our model.
+
+<Label.SubSection title="Compare algorithm speed" />
+
+The advantage of improving the time-complexity of our model is evident when <AutoRef label="Algorithm speed" /> is examined. Parallelisation on a CPU yields approximately five times the speedup of serialisation. Introducing GPU acceleration yields another approximately 200-fold improvement between CPU and GPU parallelization for larger iterations. <AutoRef label="Algorithm speed" /> does not take the initialisation step into consideration, because most of the time will be spent in the iteration step, especially with many iterations.
+
+<Table label="Algorithm speed" data={[
+  ["Iterations", "CPU Serial", "CPU Parallel", "GPU Parallel"], 
+  ["1", "5.13s", "999ms", "54ms"], 
+  ["10", "40.70s", "9.48s", "99ms"], 
+  ["100", "6m 55s", "1m 37s", "388ms"], 
+  ["1000", "62m 13s", "11m 12s", "2852ms"]
+  ]} hasHead>
+Iteration process for the three different methods of computing in <AutoRef label="A naive model" />, <AutoRef label="CPU improvements" /> and <AutoRef label="GPU improvements" />. These tests were performed on a Mac-Book Pro with a M1 Pro chip, 12 CPU cores, 14 GPU cores and 32 GB RAM.
+</Table>
+
+The CPU's speed is approximately ten times slower when performing ten times the work, while the GPU does not follow this pattern. This may be due to the significant time overhead involved in transferring data between the CPU and GPU during GPU computations. Data is transferred from the CPU to GPU when the model is initialised. Measuring the state of the model requires data to be transferred from the GPU to the CPU.
+
+To enhance the algorithm's speed, it is advisable to minimise the number of measurements taken, as demonstrated in table <AutoRef label="Iteration speed" />. Each row displays the number of measures performed for getting to time step 1000, the number of iterations between measurements and the total time taken to reach the 1000 step. The table shows that measuring less will drastically improve the run-time of the algorithm. Often, we only need the final state of the model to compare the 2D and 3D models. We'll explain this further in <AutoRef label="Comparing mass parameters" />.
+
+<Table label="iteration speed" data={[
+  ["Measures", "Iterations between", "Time"], 
+  ["1", "1000", "2s 852ms"], 
+  ["10", "100", "3s 313ms"], 
+  ["100", "10", "6s 85ms"], 
+  ["1000", "1", "46s 449ms"]
+  ]} hasHead >
+  Iterating to P iterations can be done with M measurements where M spans 0 to P in between P/M iterations. Doing fewer measurements between iterations will speed up the GPU algorithm significantly. For this table, the value 1000 is used for P.
+</Table>
+
+<Label.SubSection title="Comparing phase transitions between papers" />
+
+Previous research showed that various parameters had a significant impact on the phase transition of the model. We first detect a phase transition in our model in <AutoRef label="Well-mixed, well-segregated and partial-segregated states" />. Then, we analyse how total mass affects both 2D and 3D models in <AutoRef label="Comparing mass parameters" />. Finally, we compare phase transition with the ratio of <Equation latex="{'\\gamma / \\lambda'}" /> between models in <AutoRef label="Comparing lambda/gamma parameters" />.
+
+<Label.SubSubSection title="Well-mixed, well-segregated and partial-segregated states" />
+The random walker model from A. Alsenafi and A.B. Barbaro <Cite paperId="ALSENAFI2018765" /> identified three different states for a model.
+
+1. **Well-mixed**: Species will move with an unbiased walk. This is translated to a low beta value.
+1. **Partial-segregated**: Species will move together, but not to the point of complete separation.
+1. **Well-segregated**: Species will move to a state where only two territories remain, one for each species. This corresponds to a beta parameter approaching 1.
+
+These states were also observed for the 3D model. This can be observed in <AutoRef label="states" />, where all images are using <Equation latex="{' L = 50, \\gamma = 0.5, \\lambda = 0.5'}" />, the total mass is 12.5 million (50 agents per node per species) and an iteration count of 60,000. The top left image is a state observed at iteration 0. Because each agent starts off at a uniformly random location, this state is by definition a well-mixed state. The top right image displays a mix of blue and red species with many small territories. This suggests that species do not form distinct territories and remain well-mixed. The bottom left image depicts a partially segregated state with some islands of territories. We can see that agents have formed some structures from the initially mixed state, making them partially segregated. The bottom right image is well-segregated, with large territories for each species.
+
+Understanding how the model would further evolve can be done by looking at the trend of the order parameter defined in <AutoRef label="order param 3d" />. The corresponding order parameters over time for <AutoRef label="states" /> are displayed in <AutoRef label="order-beta" />. All states reach 90% of their final order parameter before 1000 iterations. At the 20000 iteration mark, all states have reached over 97% of their final order parameter. We notice from the evolution of the order parameter that the segregation occurs well before the first 50000 iterations.
+
+<Image image={Betas3DImage} label="states">
+  Top left: A model without iterating over it, all models start off as well-mixed. Top right: A model with beta = 1e-8, this model is still classified as well-mixed. Bottom left: A model with beta = 5e-6, this model is classified as partial-segregated. Bottom right: A model with beta 1.5e-5, and is classified as well-segregated. All models have total mass of 12.5 million, lattice area = <Equation latex="{' 50^3, \\gamma=0.5'}" /> and <Equation latex="{' \\lambda = 0.5'}" />.
+</Image>
+
+<br />
+
+<Image image={OrderParamsLongImage} label="order-beta">
+  Order parameters for different beta values corresponding to (from top to bottom) a well-segregated, partial-segregated and well-mixed state.  Using a lattice length of 50, the mass is 12.5 million, <Equation latex="{'\\gamma=0.5'}" /> and <Equation latex="{' \\lambda = 0.5'}" />.
+</Image>
+
+<Label.SubSubSection title="Comparing mass parameters" />
+Using the knowledge from section <AutoRef label="Well-mixed, well-segregated and partial-segregated states" />, the model is unlikely to switch from well-mixed to well-segregated after 50,000 iterations. The previous territory paper concluded that using more mass corresponds to fewer beta required to reach a segregated state.
+
+<!-- \subsubsection{Comparing mass parameters} -->
+<!-- \label{subsection: mass and critical beta} -->
+
+After 50,000 iterations, we calculate the final order parameter value for three different beta values. The results are presented in <AutoRef label="final-order-beta-example" />. We set the critical <Equation latex="\beta" /> to be the same as the previous paper for easier comparison. This <Equation latex="\beta" /> corresponds to an order parameter of 0.01, which we denote as <Equation latex="\beta *" />. Validation that this value is correct in 3D is provided in Appendix B.
+
+The first plot in <AutoRef label="final-order-beta-example" /> shows that for a mass of 1,600,000, the critical <Equation latex="\beta" /> value for the phase transition is approximately <Equation latex="{'3.55 \\times e^{-6}'}" />. In contrast, when the mass is increased to 3,200,000, the critical <Equation latex="\beta" /> value decreases to around <Equation latex="{'2.32 \\times e^{-6}'}" />, as shown in the right plot. These findings suggest that as the system's mass increases, the critical <Equation latex="\beta" /> value for the phase transition decreases. This observation is consistent with the previous work on 2D territory formation.
+
+<Image image={MassVFinalOrderImage} label="final-order-beta-example">
+  Final order-parameters for different values of beta. The left graph has a total mass of 1,600,000, and the right has a total mass of 3,200,000. Both graphs were produced with a lattice length of 20, <Equation latex="{'\\gamma=0.5'}" /> and <Equation latex="{' \\lambda = 0.5'}" />.
+</Image>
+
+Generalising this finding with different masses to critical betas is shown in <AutoRef label="critical beta vs mass" />. The continuous stability analysis is plotted next to our measurements. It can be observed how the discrete 3D model has a similar shape to the two-dimensional stability analysis case.
+
+<Image image={CritBetaMass} label="critical beta vs mass">
+  Critical <Equation latex="\beta" /> for different total masses. <b>Left:</b> (their) 2D stability analysis, measure where taken with lattice length of 50, <Equation latex="{'\\gamma=0.5'}" /> and <Equation latex="{' \\lambda = 0.5'}" />. <b>Right:</b> (our) 3D discreet model, measures were taken with a lattice length of 20, <Equation latex="{'\\gamma=0.5'}" /> and <Equation latex="{' \\lambda = 0.5'}" />.
+</Image>
+
+<Label.SubSubSection title="Comparing lambda/gamma parameters" />
+The same procedure can be done to compare the behaviour of the ratio of gamma and lambda. The previous paper concluded that changing and making the ratio of gamma/lambda smaller resulted in an approximate doubling of critical beta.
+
+We investigated this finding in three dimensions for two ratios: 0.25/0.5 and 0.75/0.5 (see <AutoRef label="critical beta vs ratio example" />). The ratio of 1/2 was measured with a critical beta of 7.14e-6. When the ratio was increased to 3/2, the critical beta decreased to 2.27e-6. This roughly corresponds to a threefold decrease in critical beta. This finding is consistent with previous research on two-dimensional territory formation.
+
+<Image image={GammaVsLambda} label="critical beta vs ratio example">
+   Final order-parameters for different ratios of <Equation latex="{'\\gamma/\\lambda'}" />. The left graph has a ratio of 0.25/0.5 = 1/2, and the right has a ratio of 0.75/0.5 = 3/2. Both graphs were produced with a lattice length of 20, and a total mass of 3,200,000.
+</Image>
+
+<br/>
+
+<AutoRef label="critical beta vs ratio"/> reveals generalised measurements for a range of ratios. We plot our 3D model findings alongside the previous 2D model results. We scale both axes to the same size to allow for better analysis. The graphs have a similar shape, although remember that the total mass and lattice sizes differ between models.
+
+<br/>
+<br/>
+
+<Image image={CriticalBetaVsRatio} label="critical beta vs ratio">
+   Critical <Equation latex="\beta" /> for different ratios of <Equation latex="{'\\gamma/\\lambda'}" />. <b>Left:</b> (their) 2D analysis both stability analysis and discrete measurements, measures were taken with a lattice length of 50, total mass = 200,000.  <b>Right:</b> (our) 3D discreet model, measures were taken with a lattice length of 20, and a total mass of 3,200,000.
+</Image>
+
+---
