@@ -71,8 +71,31 @@
 	}
 	html,
 	body {
-		scroll-behavior: smooth;
+		/* scroll-behavior: smooth; */
 		scroll-padding-top: 3rem;
 		@apply bg-background text-foreground;
+	}
+
+	code {
+		&::before,
+		&::after {
+			content: '' !important;
+		}
+
+		& .indent {
+			@apply border-l-2 border-gray-800 pl-4;
+		}
+
+		& .kw {
+			@apply text-red-400;
+		}
+
+		& p {
+			@apply mt-0.5 !important;
+		}
+
+		& .comment {
+			@apply font-sans text-sm font-light leading-5 text-green-400/70;
+		}
 	}
 }

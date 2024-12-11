@@ -1,10 +1,12 @@
 <script lang="ts">
-	import { formatDate } from '$lib/utils';
-	import * as Breadcrumb from '$lib/components/ui/breadcrumb/index.js';
-	import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
-	import { buttonVariants } from '$lib/components/ui/button';
 	import { goto } from '$app/navigation';
+	import Bibliography from '$lib/components/Bibliography.svelte';
+	import LabelController from '$lib/components/label/LabelController.svelte';
+	import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
+	import * as Breadcrumb from '$lib/components/ui/breadcrumb/index.js';
+	import { buttonVariants } from '$lib/components/ui/button';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
+	import { formatDate } from '$lib/utils';
 
 	let { data } = $props();
 </script>
@@ -61,6 +63,10 @@
 	{/if}
 
 	<article>
-		<data.content />
+		<Bibliography>
+			<LabelController>
+				<data.content />
+			</LabelController>
+		</Bibliography>
 	</article>
 </main>
