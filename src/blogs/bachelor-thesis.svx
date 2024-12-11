@@ -68,7 +68,7 @@ The main question attempted to be answered is: “What similarities exist betwee
 lattice models?”. This question is answered with the following sub-questions: "What are the states of the three-dimensional lattice model,
 and are they well-mixed or well-segregated?", "How does mass and gamma/lambda ratio influence the phase transition of the 3D model?".
 
-The paper is structured in the following way: First, <AutoRef label="Background and related work" /> shows the background which is needed to understand this paper. <AutoRef label="Method" /> explains how a random walker model is used with pseudo-code. <AutoRef label="A Naive model" /> shows an intuitive algorithm derived from mathematics. <AutoRef label="CPU improvements" /> and <AutoRef label="GPU improvements" /> demonstrate how CPU (Central Processing Unit) and GPU (Graphics Processing Unit) parallel computing can improve the performance of the model. <AutoRef label="Client visualisations" /> explains how the client is interacting and visualising the model. <AutoRef label="Results" /> presents the simulations for multiple configurations. <AutoRef label="Argumentation and discussion" /> discusses what similarities a 3D random walker model creates. <AutoRef label="Conclusion" /> is the conclusion of the paper. Finally, <AutoRef label="Responsible Research" /> discusses the responsibility and accountability of this research paper.
+The paper is structured in the following way: First, <AutoRef label="Background and related work" /> shows the background which is needed to understand this paper. <AutoRef label="Method" /> explains how a random walker model is used with pseudo-code. <AutoRef label="A Naive model" /> shows an intuitive algorithm derived from mathematics. <AutoRef label="CPU improvements" /> and <AutoRef label="GPU improvements" /> demonstrate how CPU (Central Processing Unit) and GPU (Graphics Processing Unit) parallel computing can improve the performance of the model. <AutoRef label="Visualisations" /> explains how the client is interacting and visualising the model. <AutoRef label="Results" /> presents the simulations for multiple configurations. <AutoRef label="Argumentation and discussion" /> discusses what similarities a 3D random walker model creates. <AutoRef label="Conclusion" /> is the conclusion of the paper. Finally, <AutoRef label="Responsible Research" /> discusses the responsibility and accountability of this research paper.
 
 ---
 
@@ -114,7 +114,7 @@ They concluded that after many iterations, the model began to exhibit segregated
 ---
 
 <Label.Section title="Method" />
-A general model, independent of dimensions is presented in <AutoRef label="A generalised random walker model" />. A naive example model (later referred to as CPU serial model) is described in <AutoRef label="Naive model" /> with pseudo-code to give the reader an impression of how a 3D territory model is represented in code. In <AutoRef label="CPU improvements" /> a Central processing unit (CPU) algorithm using parallelism is proposed that significantly improves the run-time of the naive model. The model has again improved been in run-time in <AutoRef label="GPU improvements" />, where a dedicated GPU takes some work over. Although the model produces the same output, spotting how the mathematical model is represented in these faster models is harder. This is followed by <AutoRef label="Client visualisations" />, where the method for visualising the model in a browser is presented. Lastly, the method for quantifying territory using an order parameter is presented in <AutoRef label="3D order parameter" />.
+A general model, independent of dimensions is presented in <AutoRef label="A generalised random walker model" />. A naive example model (later referred to as CPU serial model) is described in <AutoRef label="A Naive model" /> with pseudo-code to give the reader an impression of how a 3D territory model is represented in code. In <AutoRef label="CPU improvements" /> a Central processing unit (CPU) algorithm using parallelism is proposed that significantly improves the run-time of the naive model. The model has again improved been in run-time in <AutoRef label="GPU improvements" />, where a dedicated GPU takes some work over. Although the model produces the same output, spotting how the mathematical model is represented in these faster models is harder. This is followed by <AutoRef label="Visualisations" />, where the method for visualising the model in a browser is presented. Lastly, the method for quantifying territory using an order parameter is presented in <AutoRef label="3D order parameter" />.
 
 <Label.SubSection title="A generalised random walker model" />
 The model consists of two processes. The first process is initialisation, where a lattice of dimension D and side length L is created. N number of agents are randomly and uniformly distributed across the lattice nodes. The mass per species, also known as <Equation latex="N_i" />, is the same for both species A (red) and B (blue). The second process involves each agent leaving behind markers and moving to a neighbouring node based on the number of markers of the opposing species similar to <AutoRef label="marker distribution 2d" />. Further details about each process are provided in the following paragraphs.
@@ -152,7 +152,7 @@ To maintain the separation of concerns, a separate layer is allocated for agents
 
 The iteration process runs for each forward time step and will update the model as constructed in the initialisation process. In each iteration, a new empty layer is constructed for both agents and markers to write to. The old layers are only used to read from. This is done to prohibit the behaviour that a node from time t is requested to be read. However, the node data is already partially updated with data for time (t + 1).
 
-The iteration process starts by writing to the layer of the new marker using equation <AutoRef label="marker distribution general" />. The data from the old agent and marker layers are read and computed together. The result of the equation is stored in the layer of the new markers as illustrated in <AutoRef label="new marker dist" />.
+The iteration process starts by writing to the layer of the new marker using <AutoRef label="marker distribution general" />. The data from the old agent and marker layers are read and computed together. The result of the equation is stored in the layer of the new markers as illustrated in <AutoRef label="new marker dist" />.
 
 <Image image={NewMarkerDistributionImage} label="new marker dist">
   This figure shows an example of a lattice with L = 3 and D = 3. The example highlights how the markers are updated at position (0,0,0). A new lattice is created to store the next iteration of markers. The old data from the marker and agent layers are read and combined to write to the new layer.
@@ -174,7 +174,7 @@ Introducing parallel CPU computing can be a good solution when algorithms are ru
 
 Race conditions can introduce unpredictable and unstable behaviour. An example can be where an agent is moving from one node to another. When threads A and B read the agent count of node X simultaneously and both try to write one agent to it, only one agent will be added to node X. This results in a loss of total agents which is not allowed in this model. A Mutex <Cite paperId="10.1007/978-3-642-21834-7_13" /> prevents simultaneous access to a piece of memory, though this comes with a performance cost as only one thread can access it at a time. By performing all writing calculations within each node and spawning one thread per node, we ensure that only one thread is writing to a memory address during the node's lifetime.
 
-Only the walking part needs to be updated from the naive model, as updating the markers is not writing to other nodes other than itself, as shown in <AutoRef label="new marker dist" />. <AutoRef label="update universe serial" /> is adopted, whereby each node can read all other nodes but can only write to its own. An impression of how the movement of red agents is changed is visible in algorithm <AutoRef label="update universe parallel" />.
+Only the walking part needs to be updated from the naive model, as updating the markers is not writing to other nodes other than itself, as shown in <AutoRef label="new marker dist" />. <AutoRef label="update universe serial" /> is adopted, whereby each node can read all other nodes but can only write to its own. An impression of how the movement of red agents is changed is visible in <AutoRef label="update universe parallel" />.
 
 <Code label="Update universe parallel" title="Moving red agents with parallisation">
   <UpdateUnivereParallelCode />
@@ -191,7 +191,7 @@ WebGPU is often described as a successor of WebGL. WebGL was mostly used for dra
 GPUs have one downside: data transfers between the CPU and GPU take a relatively significant amount of time. The algorithm is designed to use a ping-pong buffer to store the old and new lattices in GPU memory, reducing the time needed to transfer data to the CPU. A ping-pong buffer consists of two buffers that are used in an alternating fashion. One buffer is used for input, while the other is used for output. Each iteration they swap their function as input or output buffer. This technique reduces latency and enhances performance in real-time applications.
 
 <Label.SubSection title="Visualisations" />
-To interpret the raw data model, several visualisation methods have been developed. These fall into three categories: 2D slice, 3D View and Real-time data view. These categories can be seen in figure <AutoRef label="views" />. To study these views in detail, visit <a href="https://3d-walker.vercel.app/vision/slice">https://3d-walker.vercel.app/vision/slice</a> for a live view. The purpose for each category is explained further in the respective paragraphs.
+To interpret the raw data model, several visualisation methods have been developed. These fall into three categories: 2D slice, 3D View and Real-time data view. These categories can be seen in <AutoRef label="views" />. To study these views in detail, visit <a href="https://3d-walker.vercel.app/vision/slice">https://3d-walker.vercel.app/vision/slice</a> for a live view. The purpose for each category is explained further in the respective paragraphs.
 
 The left figure is the **slice view** and is useful for comparing the current 3D state to the 2D one. If patterns similar to those expected from the 2D case start emerging from a given configuration, it often indicates that we are moving towards an interesting state to compare against. However, each slice is in general an invalid 2D state because agents can cluster and move to slices in the front and back. The assumption of an equal number of agents from species A and B is often not true, so direct comparisons should be made with caution.
 
@@ -201,11 +201,11 @@ The left figure is the **slice view** and is useful for comparing the current 3D
 
 The centre figure shows the **3D view**. Drawing each node as a coloured block is difficult to interpret in 3D, because blocks that are hidden by others are hard to spot. The marching cubes algorithm <Cite paperId="MarchingCubes" /> is often used in the three-dimensional visualisation of territories. This technique shows the border at which species are equally dominant. Blue-shaded areas describe territories, where the blue species is most dominant. Observe how the slicing view at index z=0 is recognised at the front (left) side of the cube.
 
-Lastly, the right figure is **real-time data view**. This is for abstracting the visuals away and showing condensed metrics about the model. Here, the order parameter over time which will be defined in section <AutoRef label="3d order parameter" /> is shown. Hovering over each data point reveals the exact order parameter at each time step.
+Lastly, the right figure is **real-time data view**. This is for abstracting the visuals away and showing condensed metrics about the model. Here, the order parameter over time which will be defined in <AutoRef label="3d order parameter" /> is shown. Hovering over each data point reveals the exact order parameter at each time step.
 
 <Label.SubSection title="3D order parameter" />
 
-The previous territorial paper employed an order parameter to measure the effect of various parameters on the state of well-mixed versus segregated systems. The order parameter (as defined in equation <AutoRef label="order parameter 2d" /> is adapted to use agent densities in three dimensions, where the agent density of species i is formulated as <Equation latex="{'\\rho_i(x,y,z,t) ='}" /> (amount of agents at position (x,y,z) and time t) <Equation latex="{'* L^3'}" />.
+The previous territorial paper employed an order parameter to measure the effect of various parameters on the state of well-mixed versus segregated systems. The order parameter (as defined in <AutoRef label="order parameter 2d" /> is adapted to use agent densities in three dimensions, where the agent density of species i is formulated as <Equation latex="{'\\rho_i(x,y,z,t) ='}" /> (amount of agents at position (x,y,z) and time t) <Equation latex="{'* L^3'}" />.
 
 <Equation label="order param 3d" block latex={String.raw`\begin{align} 
 \epsilon = \frac{1}{6L^3N^2} \sum_{(x,y,z) \in S } \sum_{(\tilde{x},\tilde{y},\tilde{z}) \sim(x,y,z)} (\rho_A(x,y,z,t) - \rho_B(x,y,z,t)) (\rho_A(\tilde{x},\tilde{y},\tilde{z} t) - \rho_B(\tilde{x},\tilde{y},\tilde{z} t))
@@ -235,7 +235,7 @@ Iteration process for the three different methods of computing in <AutoRef label
 
 The CPU's speed is approximately ten times slower when performing ten times the work, while the GPU does not follow this pattern. This may be due to the significant time overhead involved in transferring data between the CPU and GPU during GPU computations. Data is transferred from the CPU to GPU when the model is initialised. Measuring the state of the model requires data to be transferred from the GPU to the CPU.
 
-To enhance the algorithm's speed, it is advisable to minimise the number of measurements taken, as demonstrated in table <AutoRef label="Iteration speed" />. Each row displays the number of measures performed for getting to time step 1000, the number of iterations between measurements and the total time taken to reach the 1000 step. The table shows that measuring less will drastically improve the run-time of the algorithm. Often, we only need the final state of the model to compare the 2D and 3D models. We'll explain this further in <AutoRef label="Comparing mass parameters" />.
+To enhance the algorithm's speed, it is advisable to minimise the number of measurements taken, as demonstrated in <AutoRef label="Iteration speed" />. Each row displays the number of measures performed for getting to time step 1000, the number of iterations between measurements and the total time taken to reach the 1000 step. The table shows that measuring less will drastically improve the run-time of the algorithm. Often, we only need the final state of the model to compare the 2D and 3D models. We'll explain this further in <AutoRef label="Comparing mass parameters" />.
 
 <Table label="iteration speed" data={[
   ["Measures", "Iterations between", "Time"], 
@@ -273,7 +273,7 @@ Understanding how the model would further evolve can be done by looking at the t
 </Image>
 
 <Label.SubSubSection title="Comparing mass parameters" />
-Using the knowledge from section <AutoRef label="Well-mixed, well-segregated and partial-segregated states" />, the model is unlikely to switch from well-mixed to well-segregated after 50,000 iterations. The previous territory paper concluded that using more mass corresponds to fewer beta required to reach a segregated state.
+Using the knowledge from <AutoRef label="Well-mixed, well-segregated and partial-segregated states" />, the model is unlikely to switch from well-mixed to well-segregated after 50,000 iterations. The previous territory paper concluded that using more mass corresponds to fewer beta required to reach a segregated state.
 
 <!-- \subsubsection{Comparing mass parameters} -->
 <!-- \label{subsection: mass and critical beta} -->
@@ -297,15 +297,15 @@ The same procedure can be done to compare the behaviour of the ratio of gamma an
 
 We investigated this finding in three dimensions for two ratios: 0.25/0.5 and 0.75/0.5 (see <AutoRef label="critical beta vs ratio example" />). The ratio of 1/2 was measured with a critical beta of 7.14e-6. When the ratio was increased to 3/2, the critical beta decreased to 2.27e-6. This roughly corresponds to a threefold decrease in critical beta. This finding is consistent with previous research on two-dimensional territory formation.
 
+<AutoRef label="critical beta vs ratio"/> reveals generalised measurements for a range of ratios. We plot our 3D model findings alongside the previous 2D model results. We scale both axes to the same size to allow for better analysis. The graphs have a similar shape, although remember that the total mass and lattice sizes differ between models.
+
+<br/>
+<br/>
+
 <Image image={GammaVsLambda} label="critical beta vs ratio example">
    Final order-parameters for different ratios of <Equation latex="{'\\gamma/\\lambda'}" />. The left graph has a ratio of 0.25/0.5 = 1/2, and the right has a ratio of 0.75/0.5 = 3/2. Both graphs were produced with a lattice length of 20, and a total mass of 3,200,000.
 </Image>
 
-<br/>
-
-<AutoRef label="critical beta vs ratio"/> reveals generalised measurements for a range of ratios. We plot our 3D model findings alongside the previous 2D model results. We scale both axes to the same size to allow for better analysis. The graphs have a similar shape, although remember that the total mass and lattice sizes differ between models.
-
-<br/>
 <br/>
 
 <Image image={CriticalBetaVsRatio} label="critical beta vs ratio">
@@ -313,3 +313,64 @@ We investigated this finding in three dimensions for two ratios: 0.25/0.5 and 0.
 </Image>
 
 ---
+
+<Label.Section title="Argumentation and discussion" />
+
+Using the results obtained in the previous section, we address the limitations of the presented model for territory formation, which includes the consideration of how well our comparisons can be made between models. However, the section will also explore the possibilities for future work, such as the extension of the model to multiple species, the exploration of different metrics for analysing behavioural patterns, and the application of the model to other fields of research, such as disease spread.
+
+<Label.SubSection title="Discuss results" />
+
+This section revisits the two sub-questions asked in the introduction to determine if they have been adequately answered. Each sub-question is elaborated in its own subsection.
+
+<Label.SubSubSection title="Three-dimensional lattice phase states" />
+
+The first sub-question to be discussed is: "What are the states of the three-dimensional lattice model, and are they well-mixed or well-segregated". Well-mixed states are, by definition, present at the start of each model. <AutoRef label="states"/> and <AutoRef label="order-beta" /> demonstrate how an ordered state is created from chaos. We observed that larger values of beta produce larger territories, which are classified as well-segregated.
+
+The previous paper noted that models showed signs of segregation after the order parameter surpassed the value of 0.01. The same threshold was chosen for our model for better comparisons. Curious readers can find multiple two-dimensional slices and three-dimensional models in the Appendix validation, which validate that the threshold is still a valid measure.
+
+<Label.SubSubSection title="Contrast and similarities between models" />
+
+The second sub-question was: "How does mass and gamma/lambda ratio influence the phase transition of the 3D model?". <AutoRef label="final-order-beta-example" /> and <AutoRef label="critical beta vs ratio example" /> demonstrate that similarly to the findings of the previous paper, increasing the total mass or the <Equation latex="\gamma" /> to <Equation latex="\lambda" /> ratio decreases the amount of beta required to reach a segregated state.
+
+To determine if the behaviour was consistent across a wider range of masses and ratios, we plotted them and compared them to the 2D model. We noticed that the graph shape was similar between the models, concluding that the same behaviour could be observed. We take caution when making direct comparisons between models; this will be discussed in <AutoRef label="Discussion on discreet models" />.
+
+<Label.SubSection title="Discussion on discreet models" />
+
+Analysis of the critical beta parameter in relation to total mass for both 2D continuous and 3D discrete models displays similar behaviour across dimensions. However, a noteworthy difference is that the 3D model needs significantly more beta to reach the same critical point for each total mass. The same holds for comparing the behaviour of <Equation latex="{'\\gamma/\\lambda'}" /> ratio.
+
+The main cause for this large increase must be linked to the number of dimensions an agent can walk towards. Other smaller factors may also be involved. To enable direct comparisons between models, a continuous 3D model should be developed for further analysis.
+
+Discrete models are useful for exploring new behaviours, while continuous models provide more accurate representations for comparing models. Continuous models eliminate random fluctuations that can be introduced by discrete models. In summary, further research should be devoted to transforming our discrete results into a continuous model to allow for direct comparisons between models.
+
+<Label.SubSection title="Find other metrics" />
+Research is a collaborative effort, and often, one study can lead to the discovery of new insights and avenues for exploration. Because this paper has an accessible web version published, it is easy to find new interesting behaviour for other researchers.
+
+In the background of this paper, in <AutoRef label="Taking a drunkard walk" /> it is noted that the amount of data that can be generated with random walker models is endless. An infinite amount of parameters and iterations can be combined to produce a meaningful output. This paper computes behavioural patterns using our order parameter, defined in <AutoRef label="3D order parameter" />. Different (order) functions can be defined to analyse different types of behavioural patterns in territory formation.
+
+For example, M. Skrodzki et al. <Cite paperId="martinPaper" /> uncovered a metric related to the typology of certain states in three-dimensional Turing-like patterns. Further research can be conducted into finding a similar behaviour for our three-dimensional patterns <Cite paperId="test" />.
+
+In their extension paper <Cite paperId="Alsenafi_Barbaro_2021" />, A. Alsenafi and A.B. Barbaro proposed a multi-species model (with n>2) that has many new intriguing properties relevant to this paper. Examining how the many species would interact with one another could provide meaningful insight into the realm of micro-organisms.
+
+<Label.SubSection title="Other fields of research" />
+This paper was inspired by micro-organisms forming a territory. However, this paper is mathematically created so it can be extended to many other fields of research.
+
+<!-- % Territory formation is also found for larger mammals \cite{Potts.2014}, \cite{Giuggioli.2011}. These animals secrete chemicals to signal to other species that they must either leave the territory or fight for the limited resources in the area. This gives the guest the ecosystem a better equilibrium for sharing resources.  -->
+
+Territory formation is also apparent for ant colony formation <Cite paperId="10.1111/icad.12486" /> <Cite paperId="10.1673/031.011.0126" />. Ants are known for their remarkable ability to form complex societies, which are often characterised by the formation of territories. These territories are established through a variety of mechanisms, including chemical communication. However, studying ant behaviour in the wild can be challenging due to the harsh environments in which they live and the confined spaces in which they operate. By using computer models, researchers can manipulate various parameters and observe how they affect ant colony behaviour, allowing them to gain insights into the underlying mechanisms of ant colony formation.
+
+---
+
+<Label.Section title="Conclusion" />
+We conclude that the main question: "What similarities exist between properties of the two-dimensional and three-dimensional lattice models?" can be answered by that both models have a well-mixed and segregated state. Furthermore, the point at which the state changes from well-mixed to well-segregated is in both models determined by the amount of mass present in the lattices and the ratio between <Equation latex="{'\\gamma/\\lambda'}" /> plays a large role. For both models, the more mass or <Equation latex="{'\\gamma/\\lambda'}" /> they have, the less beta is required to reach the critical point. Additionally, the 3D model needs significantly more beta to reach the same critical point for the same amount of mass or <Equation latex="{'\\gamma/\\lambda'}" /> ratio.
+
+We conclude that the model has many behaviours that remain unexplored in this paper. Making the model easily accessible to other researchers can enable the measurement and observation of more interesting behaviours, helping to better understand the complex world of higher-dimensional random walks.
+
+---
+
+<Label.Section title="Responsible research" />
+Responsibility in research was carefully considered while writing this paper. All images referenced in this paper are easy to reproduce with the public web app created alongside this paper. The code for this paper is available on GitHub (<a href="https://github.com/yustarandomname/territories-in-three-dimensions"> https://github.com/yustarandomname/territories-in-three-dimensions</a>) under the MIT license, allowing abundant opportunities for extension. The code is thus reproducible and extendable for future work. Finally, any work used by other researchers is properly cited and referenced in the text to locate the sources correctly.
+
+We were supplied with the original code from the previous territory paper. However, this code was not reproducible on the machines used by the author. Our method was created from scratch and checked with the mathematics from the paper. Small discrepancies could be the result of this method. For instance, differences in PRNGs (Pseudo Random Number Generators)
+could give small differences between results. We thus opted to look if the behaviour between models was similar and were careful with making direct comparisons between models. We noted that direct comparisons are only possible if our method was reproduced with a continuous mathematical model.
+
+Finally, the author listed on the title page wrote the entire original paper. AI models like OpenAI GPT-4 and Grammarly were used to enhance grammar and readability. The author and several others validated all the changes.
