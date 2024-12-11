@@ -1,12 +1,12 @@
-export class Heading {
-	title: string;
-	index: number;
+import { Label } from './Labels.svelte';
+
+export class Heading extends Label {
 	indexStr: string;
 	level: number = 0;
 
 	constructor(title: string, index: number, level: number) {
-		this.title = title;
-		this.index = index;
+		super(title, 'Heading', index);
+
 		this.indexStr = index.toString();
 		this.level = level;
 	}

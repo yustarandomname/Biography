@@ -2,7 +2,7 @@
 	import { onDestroy, setContext } from 'svelte';
 	import { type LabelsContext } from '.';
 	import { Heading } from './Heading';
-	import { Labels } from './Labels.svelte';
+	import { Label, Labels, type LabelType } from './Labels.svelte';
 
 	let { children } = $props();
 
@@ -15,7 +15,7 @@
 
 	let current = $state<TreeItem[]>([]);
 
-	setContext<LabelsContext>('labels', { addHeading, labels });
+	setContext<LabelsContext>('labels', { addHeading, addLabel, removeLabel, labels });
 
 	function addHeading(title: string, level: number) {
 		const item = new Heading(title, 0, level);
@@ -42,6 +42,22 @@
 			.join('.');
 
 		return item;
+	}
+
+	function addLabel(title: string, type: LabelType) {
+		switch (type) {
+			case 'Equation':
+				const item = new Label(title, type, Object.keys(labels.equations).length);
+
+				labels.addLabel(item);
+				return item;
+			default:
+				throw new Error(`Unknown label type: ${type}`);
+		}
+	}
+
+	function removeLabel(label: Label) {
+		labels.removeLabel(label);
 	}
 
 	onDestroy(() => {

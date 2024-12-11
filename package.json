@@ -47,6 +47,8 @@
 		"@tailwindcss/typography": "^0.5.15",
 		"@threlte/core": "8.0.0-next.31",
 		"@threlte/extras": "9.0.0-next.42",
+		"@types/katex": "^0.16.7",
+		"katex": "^0.16.15",
 		"svelte-confetti": "^2.2.0",
 		"three": "^0.171.0"
 	}

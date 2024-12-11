@@ -71,7 +71,7 @@
 	}
 	html,
 	body {
-		scroll-behavior: smooth;
+		/* scroll-behavior: smooth; */
 		scroll-padding-top: 3rem;
 		@apply bg-background text-foreground;
 	}
