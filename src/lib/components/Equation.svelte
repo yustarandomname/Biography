@@ -52,14 +52,17 @@
 </script>
 
 {#if block}
-	<div id={equationLabel?.id || ''} class="m-2 flex w-full items-center justify-between">
+	<div
+		id={equationLabel?.id || ''}
+		class="m-2 flex max-w-full flex-col-reverse items-start justify-start gap-2 text-xs sm:text-base md:flex-row md:items-center md:justify-between"
+	>
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		<div>
+		<div class="max-w-full overflow-x-auto overflow-y-hidden pb-2">
 			{@html strOutput}
 		</div>
 
 		{#if equationLabel}
-			<div class="ml-2 text-sm text-slate-500">
+			<div class=" text-nowrap text-sm text-slate-500">
 				(Eqn {equationLabel.index + 1}.)
 			</div>
 		{/if}

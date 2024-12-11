@@ -12,8 +12,6 @@
 		const label = labels.find(id);
 
 		if (!label) {
-			console.warn(`Label not found: ${labelId}`);
-
 			return undefined;
 		}
 
@@ -23,7 +21,7 @@
 
 {#if autoRef}
 	<a
-		class="text-slate-500 no-underline transition-colors hover:text-slate-700 hover:underline dark:hover:text-slate-300"
+		class="text-nowrap text-slate-500 no-underline transition-colors hover:text-slate-700 hover:underline dark:hover:text-slate-300"
 		href={autoRef.anchor}>{autoRef.toAutoRef()}</a
 	>
 {:else}

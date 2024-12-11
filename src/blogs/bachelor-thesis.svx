@@ -14,6 +14,11 @@ import Cite from "$lib/components/Cite.svelte";
 import * as Label from "$lib/components/label/index.js";
 import {AutoRef} from "$lib/components/label/index.js";
 import Equation from "$lib/components/Equation.svelte";
+import Image from "$lib/components/Image.svelte";
+
+// Images
+import NewMarkerDistributionImage from './assets/bachelor-thesis/Marker Distribution for Thesis.png?enhanced';
+
 </script>
 
 # Territory patterns created by random walker agents in three dimensions
@@ -96,54 +101,54 @@ They concluded that after many iterations, the model began to exhibit segregated
 ---
 
 <Label.Section title="Method" />
+A general model, independent of dimensions is presented in <AutoRef label="A generalised random walker model" />. A naive example model (later referred to as CPU serial model) is described in <AutoRef label="Naive model" /> with pseudo-code to give the reader an impression of how a 3D territory model is represented in code. In <AutoRef label="CPU improvements" /> a Central processing unit (CPU) algorithm using parallelism is proposed that significantly improves the run-time of the naive model. The model has again improved been in run-time in <AutoRef label="GPU improvements" />, where a dedicated GPU takes some work over. Although the model produces the same output, spotting how the mathematical model is represented in these faster models is harder. This is followed by <AutoRef label="Client visualisations" />, where the method for visualising the model in a browser is presented. Lastly, the method for quantifying territory using an order parameter is presented in <AutoRef label="An order parameter" />.
 
-<!-- A general model, independent of dimensions is presented in section \ref{section: The model}. A naive example model (later referred to as CPU serial model) is described in section \ref{section: Naive model} with pseudo-code to give the reader an impression of how a 3D territory model is represented in code. In section \ref{section: CPU improvements} a Central processing unit (CPU) algorithm using parallelism is proposed that significantly improves the run-time of the naive model. The model has again improved been in run-time in section \ref{section: GPU improvements}, where a dedicated GPU takes some work over. Although the model produces the same output, spotting how the mathematical model is represented in these faster models is harder. This is followed by section \ref{section: Client visualisations}, where the method for visualising the model in a browser is presented. Lastly, the method for quantifying territory using an order parameter is presented in section \ref{section: An order parameter}. -->
+<Label.SubSection title="A generalised random walker model" />
+The model consists of two processes. The first process is initialisation, where a lattice of dimension D and side length L is created. N number of agents are randomly and uniformly distributed across the lattice nodes. The mass per species, also known as <Equation latex="N_i" />, is the same for both species A (red) and B (blue). The second process involves each agent leaving behind markers and moving to a neighbouring node based on the number of markers of the opposing species similar to <AutoRef label="marker distribution 2d" />. Further details about each process are provided in the following paragraphs.
 
-<!-- \subsection{A generalised random walker model}
-\label{section: The model}
-The model consists of two processes. The first process is initialisation, where a lattice of dimension D and side length L is created. N number of agents are randomly and uniformly distributed across the lattice nodes. The mass per species, also known as $N_i$, is the same for both species A (red) and B (blue). The second process involves each agent leaving behind markers and moving to a neighbouring node based on the number of markers of the opposing species similar to equation \ref{eq: marker distribution 2d}. Further details about each process are provided in the following paragraphs. -->
+The model is **initialised** with a cyclic lattice, where <Equation latex="D" /> number of dimensions is created. We assume each lattice side to have the same length. This results in a lattice with <Equation latex="L^D" /> nodes with <Equation latex="{'\\lbrace x_1,x_2,...,x_D \\rbrace \\in \\lbrace 0,1,2,...,L-2,L-1  \\rbrace '}" />. Each node is connected to its direct neighbours. Thus, node <Equation latex="(x_1, x_2, ..., x_D)" /> is connected to <Equation latex="{'(\\tilde{x_1},\\tilde{x_2},...,\\tilde{x_D})'}" />, which can be formulated with the following equation:
 
-<!-- The model is \textbf{initialised} with a cyclic lattice, where $D$ number of dimensions is created. We assume each lattice side to have the same length. This results in a lattice with $L^D$ nodes with $x_1,x_2,...,x_D \in \{0,1,2,3,...,L-2,L-1\}$. Each node is connected to its direct neighbours. Thus, node $(x_1, x_2, ..., x_D)$ is connected to $(\tilde{x_1},\tilde{x_2},...,\tilde{x_D})$, which can be formulated with the following equation:
-\begin{multline}
-\label{eq: neighbours general}
-(\tilde{x_1},\tilde{x_2},...,\tilde{x_D}) \in \{(x_1 \pm 1, x_2, \ldots, x_D), \\ (x_1, x_2 \pm 1, \ldots, x_D), \ldots ,(x_1, x_2, ..., x_D \pm 1) \}
-\end{multline}
-Each node keeps track of its own amount of agents, and the amount of markers. -->
+<Equation label="neighbours general" block latex={String.raw`(\tilde{x_1},\tilde{x_2},...,\tilde{x_D}) \in \{(x_1 \pm 1, x_2, \ldots, x_D), (x_1, x_2 \pm 1, \ldots, x_D), \ldots ,(x_1, x_2, ..., x_D \pm 1) \}`} />
+Each node keeps track of its own amount of agents, and the amount of markers.
 
-<!-- At each \textbf{iteration}, all nodes adjust their amount of markers and agent count. For adjusting markers, equation \ref{eq: marker distribution 2d} is adapted for $\xi_i$ and $\rho_i$ to reference to a location in D-dimensional space. Therefore, our model applies the following equation for adjusting markers between time steps:
-\begin{multline}
-\label{eq: marker distribution general}
+At each **iteration**, all nodes adjust their amount of markers and agent count. For adjusting markers, <AutoRef label="marker distribution 2d" /> is adapted for <Equation latex="\xi_i"/> and <Equation latex="\rho_i" /> to reference to a location in D-dimensional space. Therefore, our model applies the following equation for adjusting markers between time steps:
+
+<Equation label="marker distribution general" block latex={String.raw`\begin{align}
 \xi_i(x_1,x_2,\ldots,x_D,t+1) = (1-\lambda)\cdot\xi_i(x_1,x_2,\ldots,x_D,t) + \\ \gamma\cdot\rho_i(x_1,x_2,\ldots,x_D,t)
-\end{multline}
-Similarly, in equation \ref{eq: agent movement 2D}, the movement of agents is transformed to the following formula:
-\begin{multline} \label{eq: agent movement 3D}
-M_{A}(x_1\rightarrow \hat{x_1} , x_2 \rightarrow \hat{x_2}, \ldots, x_D \rightarrow \hat{x_D}, t) = \\ \frac{e^{-\beta\cdot\xi_{B}(\hat{x_1},\hat{x_2},\ldots,\hat{x_D},t)}}{\sum_{(\tilde{x_1},\tilde{x_2}, \ldots,\tilde{x_D})\sim(x_1,x_2,\ldots,x_D)}e^{-\beta\cdot\xi_{B}(\tilde{x_1},\tilde{x_2},\ldots,\tilde{x_D},t))}}
-\end{multline} -->
+\end{align}`} />
 
-<!-- By utilising these formulae, the adaptability of the model is demonstrated to any number of dimensions, whether it be one, ten, or a thousand. The model's movement in higher dimensions should resemble that of the 2D model proposed in section \ref{section: human gang territories}. -->
+Similarly, in <AutoRef label="agent movement 2D" />, the movement of agents is transformed to the following formula:
 
-<!-- % \subsection{deterministic random walk} -->
-<!-- % \label{section: deterministic random walk} -->
-<!-- % A pseudo-random number generator (PRNG) is used to create a reproducible state and enable perfect replication. Using the same PRNG ensures validation across different algorithms. NVidia has designed a PRNG for GPU multi-threading \cite{Nguyen_2007}, which means that the PRNG can be used in all. -->
+<Equation label="agent movement 3D" block latex={String.raw`
+\begin{align} 
+M_{A}(x_1\rightarrow \hat{x_1} , x_2 \rightarrow \hat{x_2}, \ldots, x_D \rightarrow \hat{x_D}, t) = \\ \frac{e^{-\beta\cdot\xi_{B}(\hat{x_1},\hat{x_2},\ldots,\hat{x_D},t)}}{\sum_{(\tilde{x_1},\tilde{x_2}, \ldots,\tilde{x_D})\sim(x_1,x_2,\ldots,x_D)}e^{-\beta\cdot\xi\_{B}(\tilde{x_1},\tilde{x_2},\ldots,\tilde{x_D},t))}}
+\end{align}`} />
 
-<!-- \subsection{A naive model} -->
-<!-- \label{section: Naive model} -->
-<!-- We have established that the previous territory paper can be extended to any number of dimensions. To illustrate this, an example is presented with figures and pseudo-codes of how mathematics is used in the 3D model. The example is divided into two sections, similar to the mathematics in section \ref{section: The model}. -->
+By utilising these formulae, the adaptability of the model is demonstrated to any number of dimensions, whether it be one, ten, or a thousand. The model's movement in higher dimensions should resemble that of the 2D model proposed in <AutoRef label="Human gang territories" />.
 
-<!-- \subsubsection{Initialisation} -->
-<!-- The initialization process is executed every time the model needs to be started or reset. The model is set up with an $L \times L \times L$ lattice, where each node is connected to its direct neighbours. This connection is described by Equation \ref{eq: neighbours general}, with $D = 3$. All global hyper-parameters ($beta$, $lambda$, $gamma$) are initialised so they can be accessed by the iteration process. -->
+<Label.SubSection title="A naive model" />
+We have established that the previous territory paper can be extended to any number of dimensions. To illustrate this, an example is presented with figures and pseudo-codes of how mathematics is used in the 3D model. The example is divided into two sections, similar to the mathematics in <AutoRef label="A generalised random walker model" />.
 
-<!-- To maintain the separation of concerns, a separate layer is allocated for agents and markers. N agents from both species A and B are randomly (uniformly) distributed over all nodes. Initially, all markers for each species are set to zero. -->
+<Label.SubSubSection title="Initialisation" />
 
-<!-- \subsubsection{Iteration} -->
-<!-- The iteration process runs for each forward time step and will update the model as constructed in the initialisation process. In each iteration, a new empty layer is constructed for both agents and markers to write to. The old layers are only used to read from. This is done to prohibit the behaviour that a node from time t is requested to be read. However, the node data is already partially updated with data for time (t + 1). -->
+The initialization process is executed every time the model needs to be started or reset. The model is set up with an <Equation latex="L \times L \times L" /> lattice, where each node is connected to its direct neighbours. This connection is described by <AutoRef label="neighbours general" />, with <Equation latex="D = 3" />. All global hyper-parameters (<Equation latex="\beta" />, <Equation latex="\lambda" />, <Equation latex="\gamma" />) are initialised so they can be accessed by the iteration process.
 
-<!-- The iteration process starts by writing to the layer of the new marker using equation \ref{eq: marker distribution general}. The data from the old agent and marker layers are read and computed together. The result of the equation is stored in the layer of the new markers as illustrated in figure \ref{fig: new marker dist}. -->
+To maintain the separation of concerns, a separate layer is allocated for agents and markers. N agents from both species A and B are randomly (uniformly) distributed over all nodes. Initially, all markers for each species are set to zero.
+
+<Label.SubSubSection title="Iteration" />
+
+The iteration process runs for each forward time step and will update the model as constructed in the initialisation process. In each iteration, a new empty layer is constructed for both agents and markers to write to. The old layers are only used to read from. This is done to prohibit the behaviour that a node from time t is requested to be read. However, the node data is already partially updated with data for time (t + 1).
+
+The iteration process starts by writing to the layer of the new marker using equation <AutoRef label="marker distribution general" />. The data from the old agent and marker layers are read and computed together. The result of the equation is stored in the layer of the new markers as illustrated in <AutoRef label="new marker dist" />.
+
+<Image image={NewMarkerDistributionImage} label="new marker dist">
+  This figure shows an example of a lattice with L = 3 and D = 3. The example highlights how the markers are updated at position (0,0,0). A new lattice is created to store the next iteration of markers. The old data from the marker and agent layers are read and combined to write to the new layer.
+</Image>
 
 <!-- \begin{figure}[htb]
   \centering
   \includegraphics[width=1\linewidth]{images/new marker distribution.png}
-  \caption{\label{fig: new marker dist} This figure shows an example of a lattice with L = 3 and D = 3. The example highlights how the markers are updated at position (0,0,0). A new lattice is created to store the next iteration of markers. The old data from the marker and agent layers are read and combined to write to the new layer.}
+  \caption{\label{fig: new marker dist} }
 \end{figure} -->
 
 <!-- The iteration process continues with each agent randomly selecting one of its neighbours, weighted by the number of markers the neighbours possess. As mentioned before, agents prefer neighbours with lower markers of the opposite species. A pseudo-code implementation for moving the red agents is given in algorithm \ref{alg: update universe serial}. -->

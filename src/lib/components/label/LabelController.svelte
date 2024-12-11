@@ -47,10 +47,15 @@
 	function addLabel(title: string, type: LabelType) {
 		switch (type) {
 			case 'Equation':
-				const item = new Label(title, type, Object.keys(labels.equations).length);
+				const equation = new Label(title, type, Object.keys(labels.equations).length);
 
-				labels.addLabel(item);
-				return item;
+				labels.addLabel(equation);
+				return equation;
+			case 'Figure':
+				const figure = new Label(title, type, Object.keys(labels.figures).length);
+
+				labels.addLabel(figure);
+				return figure;
 			default:
 				throw new Error(`Unknown label type: ${type}`);
 		}
