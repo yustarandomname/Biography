@@ -296,7 +296,7 @@ const papers = {
 		ID: 'Potts.2014',
 		authors: ['Potts, Jonathan R.', 'Lewis, Mark A.']
 	},
-	'P\u00f3lya1921': {
+	Polya1921: {
 		year: '1921',
 		volume: '84',
 		url: 'http://eudml.org/doc/158886',

@@ -23,4 +23,19 @@ export class Heading {
 	get fullTitle() {
 		return this.indexStr + '. ' + this.title;
 	}
+
+	toAutoRef() {
+		switch (this.level) {
+			case 1:
+				return 'Title ' + this.indexStr;
+			case 2:
+				return 'Section ' + this.indexStr;
+			case 3:
+				return 'Subsection ' + this.indexStr;
+			case 4:
+				return 'Subsubsection ' + this.indexStr;
+			default:
+				return 'Section ' + this.indexStr;
+		}
+	}
 }

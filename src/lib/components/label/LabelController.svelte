@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy, setContext, untrack } from 'svelte';
+	import { onDestroy, setContext } from 'svelte';
 	import { type LabelsContext } from '.';
 	import { Heading } from './Heading';
 	import { Labels } from './Labels.svelte';

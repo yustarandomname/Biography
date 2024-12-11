@@ -13,6 +13,6 @@
 	const item = context.addHeading(title, 3);
 </script>
 
-<h3 id={item.anchor}>
+<h3 id={item.id}>
 	{item.fullTitle}
 </h3>

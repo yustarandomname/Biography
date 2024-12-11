@@ -1,3 +1,4 @@
+import AutoRef from './AutoRef.svelte';
 import type { Heading } from './Heading';
 import type { Labels } from './Labels.svelte';
 import Section from './Section.svelte';
@@ -9,4 +10,4 @@ export type LabelsContext = {
 	labels: Labels;
 };
 
-export { Section, SubSection, SubSubSection };
+export { AutoRef, Section, SubSection, SubSubSection };
