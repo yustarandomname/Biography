@@ -1,12 +1,43 @@
 <script lang="ts">
+	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
+	import * as Form from '$lib/components/ui/form/index.js';
+	import type { DragDropState } from '@thisux/sveltednd';
+	import { superForm, type Infer, type SuperValidated } from 'sveltekit-superforms';
+	import { zodClient } from 'sveltekit-superforms/adapters';
 	import SortableList from './SortableList.svelte';
+	import { formSchema, type FormSchema } from './zodSchema';
 
-	type Props = {
-		sortables: { id: string; emoji: string }[];
+	type Sortable = {
+		id: string;
+		emoji: string;
 	};
 
-	let { sortables }: Props = $props();
+	type Props = {
+		sortables: Sortable[];
+		dataForm: SuperValidated<Infer<FormSchema>>;
+	};
+
+	let { sortables, dataForm }: Props = $props();
+
+	let items = $state(sortables);
+
+	function handleDrop(state: DragDropState<Sortable>) {
+		const { draggedItem, targetContainer } = state;
+		const dragIndex = items.findIndex((item) => item.id === draggedItem.id);
+		const dropIndex = parseInt(targetContainer ?? '0');
+
+		if (dragIndex !== -1 && !isNaN(dropIndex)) {
+			const [item] = items.splice(dragIndex, 1);
+			items.splice(dropIndex, 0, item);
+		}
+	}
+
+	const form = superForm(dataForm, {
+		validators: zodClient(formSchema)
+	});
+
+	const { form: formData, enhance } = form;
 </script>
 
 Solve captcha to unlock Email and Phone
@@ -33,7 +64,21 @@ Solve captcha to unlock Email and Phone
 				number. {sortables.map((s) => s.emoji).join(' ')}
 			</Dialog.Description>
 
-			<SortableList bind:sortables></SortableList>
+			<form method="POST" use:enhance>
+				<SortableList {items} {handleDrop}></SortableList>
+
+				<Form.Field {form} name="guess">
+					<Form.Control>
+						{#snippet children({ props })}
+							<input type="hidden" {...props} value={items.map((i) => i.id).join('-')} />
+						{/snippet}
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+				<div class="flex justify-end">
+					<Form.Button>Submit</Form.Button>
+				</div>
+			</form>
 		</Dialog.Header>
 	</Dialog.Content>
 </Dialog.Root>

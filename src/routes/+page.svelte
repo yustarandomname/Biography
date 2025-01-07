@@ -68,11 +68,11 @@
 						<a href="tel:+3162433892"> Phone (whatsapp only) </a>
 					</li>
 					<li>
-						<a href="mailto:abeldebruijn@hotmail.com"> eMail </a>
+						<a href="mailto:abeldebruijn@hotmail.com"> e-Mail </a>
 					</li>
 				{:else}
 					<li>
-						<Captcha sortables={data.sortables} />
+						<Captcha sortables={data.sortables} dataForm={data.form} />
 					</li>
 				{/if}
 			</ul>

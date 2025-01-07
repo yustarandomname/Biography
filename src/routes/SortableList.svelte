@@ -3,48 +3,46 @@
 	import { flip } from 'svelte/animate';
 	import { fade } from 'svelte/transition';
 
-	type Sortable = {
+	interface Item {
 		id: string;
 		emoji: string;
+	}
+
+	type Props = {
+		items: Item[];
+		handleDrop: (state: DragDropState<Item>) => void;
 	};
 
-	let { sortables = $bindable() }: { sortables: Sortable[] } = $props();
-
-	function handleDrop(state: DragDropState<Sortable>) {
-		const { draggedItem, targetContainer } = state;
-		if (!targetContainer) {
-			console.log('no target container');
-			return;
-		}
-
-		sortables = sortables.filter((sortable: Sortable) => sortable.id !== draggedItem.id); // Remove the dragged item
-		sortables.splice(parseInt(targetContainer), 0, draggedItem); // Insert the dragged item at the new position
-	}
+	const { items = $bindable(), handleDrop }: Props = $props();
 </script>
 
-<div class="flex overflow-x-auto p-4">
-	{#each sortables as sortable, index (sortable.id)}
+<div class="flex justify-center gap-2 py-4">
+	{#each items as item, index (item.id)}
 		<div
-			use:droppable={{ container: index.toString(), callbacks: { onDrop: handleDrop } }}
-			class="relative rounded-xl p-1"
+			use:draggable={{ container: index.toString(), dragData: item }}
+			use:droppable={{
+				container: index.toString(),
+				callbacks: { onDrop: handleDrop }
+			}}
 			animate:flip={{ duration: 200 }}
+			in:fade={{ duration: 150 }}
+			out:fade={{ duration: 150 }}
+			class="svelte-dnd-touch-feedback grid h-16 w-16 cursor-move items-center rounded-lg bg-white text-center shadow-sm ring-1 ring-gray-200 transition-all duration-200 hover:shadow-md hover:ring-2 hover:ring-blue-200"
 		>
-			<div
-				use:draggable={{
-					container: index.toString(),
-					dragData: sortable
-				}}
-				in:fade={{ duration: 150 }}
-				out:fade={{ duration: 150 }}
-				class="svelte-dnd-touch-feedback grid h-20 w-20 cursor-move items-center justify-center rounded-xl bg-slate-200 transition-colors hover:bg-slate-300"
-			>
-				{sortable.emoji}
-			</div>
-
-			<!-- Added position indicator -->
-			<div class="mx-auto mt-2 w-fit rounded bg-slate-100 p-1 text-center text-xs">
-				{sortable.id}
+			<div class="w-full text-center">
+				<div class="h-8 text-2xl">{item.emoji}</div>
+				<div class="w-full text-xs text-slate-700">{item.id}</div>
 			</div>
 		</div>
 	{/each}
 </div>
+
+<style>
+	:global(.dragging) {
+		@apply opacity-50 shadow-lg ring-2 ring-blue-400;
+	}
+
+	:global(.drag-over) {
+		@apply bg-blue-50;
+	}
+</style>
