@@ -21,6 +21,7 @@
 	let { sortables, dataForm }: Props = $props();
 
 	let items = $state(sortables);
+	let dialogOpen = $state(false);
 
 	function handleDrop(state: DragDropState<Sortable>) {
 		const { draggedItem, targetContainer } = state;
@@ -34,7 +35,12 @@
 	}
 
 	const form = superForm(dataForm, {
-		validators: zodClient(formSchema)
+		validators: zodClient(formSchema),
+		onResult: ({ result }) => {
+			if (result.type == 'success') {
+				dialogOpen = false;
+			}
+		}
 	});
 
 	const { form: formData, enhance } = form;
@@ -42,9 +48,9 @@
 
 Solve captcha to unlock Email and Phone
 
-<Dialog.Root open={true}>
+<Dialog.Root bind:open={dialogOpen}>
 	<Dialog.Trigger
-		class="no-prose mt-2 flex w-64 items-center justify-between rounded border-2 border-slate-200 bg-slate-50 px-3 py-2 text-slate-900"
+		class="no-prose mt-2 flex w-64 items-center justify-between rounded border-2 border-slate-200 bg-slate-50 px-3 py-2 text-slate-900 dark:border-slate-400 dark:bg-slate-800 dark:text-slate-200"
 	>
 		<div class="w-full p-2 text-left">
 			<input id="captcha" class="mr-2 scale-[1.5] cursor-pointer" type="checkbox" />
@@ -61,7 +67,7 @@ Solve captcha to unlock Email and Phone
 			<Dialog.Title>Emoji Captcha</Dialog.Title>
 			<Dialog.Description>
 				Sort the emojis from smallest to largest real-world size to unlock the email and phone
-				number. {sortables.map((s) => s.emoji).join(' ')}
+				number.
 			</Dialog.Description>
 
 			<form method="POST" use:enhance>

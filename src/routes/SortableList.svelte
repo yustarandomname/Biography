@@ -27,11 +27,11 @@
 			animate:flip={{ duration: 200 }}
 			in:fade={{ duration: 150 }}
 			out:fade={{ duration: 150 }}
-			class="svelte-dnd-touch-feedback grid h-16 w-16 cursor-move items-center rounded-lg bg-white text-center shadow-sm ring-1 ring-gray-200 transition-all duration-200 hover:shadow-md hover:ring-2 hover:ring-blue-200"
+			class="svelte-dnd-touch-feedback grid h-16 w-16 cursor-move items-center rounded-lg bg-white text-center shadow-sm ring-1 ring-gray-200 transition-all duration-200 hover:shadow-md hover:ring-2 hover:ring-blue-200 dark:bg-slate-700"
 		>
 			<div class="w-full text-center">
 				<div class="h-8 text-2xl">{item.emoji}</div>
-				<div class="w-full text-xs text-slate-700">{item.id}</div>
+				<div class="w-full text-xs text-slate-700 dark:text-slate-300">{item.id}</div>
 			</div>
 		</div>
 	{/each}
