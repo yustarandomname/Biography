@@ -125,11 +125,11 @@
 
 	<T.Mesh scale={0.01} position.z={0.05} position.x={1.5} position.y={0.3} rotation.y={Math.PI}>
 		<Text3DGeometry text={`Abel`} />
-		<T.MeshStandardMaterial color="darkred" />
+		<T.MeshStandardMaterial color="darkblue" />
 	</T.Mesh>
 
 	<T.Mesh scale={0.01} position.z={0.05} position.y={-1.1} position.x={2.5} rotation.y={Math.PI}>
 		<Text3DGeometry text={`de Bruijn`} />
-		<T.MeshStandardMaterial color="darkred" />
+		<T.MeshStandardMaterial color="darkblue" />
 	</T.Mesh>
 </T.Group>

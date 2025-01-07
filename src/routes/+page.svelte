@@ -26,12 +26,14 @@
 </div>
 
 <!-- Header -->
-<div
-	class="mx-auto my-12 aspect-square h-64 w-64 max-w-full rounded-full bg-red-50 dark:bg-red-900"
->
-	<Canvas>
-		<Scene />
-	</Canvas>
+<div class="my-12 flex justify-center">
+	<div class="-mr-48 h-64 w-64 scale-75 rounded-full bg-blue-200/40 dark:bg-red-900/30"></div>
+	<div class="-mr-48 h-64 w-64 scale-90 rounded-full bg-blue-200/50 dark:bg-red-900/50"></div>
+	<div class="aspect-square h-64 w-64 max-w-full rounded-full bg-blue-200 dark:bg-red-900">
+		<Canvas>
+			<Scene />
+		</Canvas>
+	</div>
 </div>
 
 <div class="prose mx-auto text-center dark:prose-invert">
@@ -89,10 +91,10 @@
 					>Computer Graphics and Data Visualisations Group</a
 				>
 				is about the development of a new type
-				<b class="text-green-700"> data interaction</b>. In collaboration with the Dutch
-				Rijksmuseum, I am developing a new type of data interaction that allows painting
-				conservators to identify pigments in paintings. The goal is to make the process of
-				clustering 200+ dimensional scans of paintings more efficient.
+				<b class="text-blue-700"> data interaction</b>. In collaboration with the Dutch Rijksmuseum,
+				I am developing a new type of data interaction that allows painting conservators to identify
+				pigments in paintings. The goal is to make the process of clustering 200+ dimensional scans
+				of paintings more efficient.
 			</Card>
 
 			<Card
@@ -102,8 +104,8 @@
 			>
 				The TU Delft library is working on a new template for interactive books. The goal is to make
 				learning more interactive and engaging. I am working on the development of a new type of
-				<b class="text-green-700">Jupyter notebooks</b> that can be used to create interactive
-				books. For this project we would like to see if we can migrate from
+				<b class="text-blue-700">Jupyter notebooks</b> that can be used to create interactive books.
+				For this project we would like to see if we can migrate from
 				<code><a class="dark:text-slate-100" href="https://mystmd.org/">jupyter-myst</a></code>
 				to
 				<code
@@ -213,5 +215,13 @@
 				</Card>
 			{/each}
 		</Section>
+
+		<footer class="prose mx-auto my-24 dark:prose-invert">
+			<p>
+				© 2024-{new Date().getFullYear()} Abel de Bruijn. All rights reserved. Made with
+				<a href="https://svelte.dev">Svelte</a> and
+				<a href="https://tailwindcss.com">Tailwind CSS</a>.
+			</p>
+		</footer>
 	</main>
 </div>

@@ -54,6 +54,6 @@
 	}
 
 	.highlight {
-		@apply text-green-500;
+		@apply text-blue-500;
 	}
 </style>
