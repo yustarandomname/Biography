@@ -22,6 +22,9 @@ const config: Config = {
 			maxHeight: {
 				'near-full': 'calc(100dvh - 12rem)'
 			},
+			transformOrigin: {
+				'center-right': 'center right'
+			},
 			colors: {
 				border: 'hsl(var(--border) / <alpha-value>)',
 				input: 'hsl(var(--input) / <alpha-value>)',
