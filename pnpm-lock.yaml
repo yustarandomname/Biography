@@ -14,6 +14,9 @@ importers:
       '@tailwindcss/typography':
         specifier: ^0.5.15
         version: 0.5.15(tailwindcss@3.4.15)
+      '@thisux/sveltednd':
+        specifier: ^0.0.19
+        version: 0.0.19(svelte@5.4.0)
       '@threlte/core':
         specifier: 8.0.0-next.31
         version: 8.0.0-next.31(svelte@5.4.0)(three@0.171.0)
@@ -778,6 +781,19 @@ packages:
     resolution: {integrity: sha512-AqhlCXl+8grUz8uqExv5OTtgpjuVIwFTSXTrh8y9/pw6q2ek7fJ+Y8ZEVw7EB2DCcuCOtEjf9w3+J3rzts01uA==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders || >=4.0.0-alpha.20'
+
+  '@thisux/sveltednd@0.0.14':
+    resolution: {integrity: sha512-Vbq69SU3HUomPg6oCXtb89OG89hka0YIkdaErYibn3waK7tYE66IcQxD/Fzg8YNW3EVsXoA9kc7kW5EUBCSQGg==}
+
+  '@thisux/sveltednd@0.0.17':
+    resolution: {integrity: sha512-lRninjw439phhA8xAHqCpMAX0hnwFMdbXW4M0XJgAdnGxeum+QsLiIC4P3HnkNXAygsVKUqxRcbS84CxDZ9hPw==}
+    peerDependencies:
+      svelte: ^5.0.0
+
+  '@thisux/sveltednd@0.0.19':
+    resolution: {integrity: sha512-SqqkmO3EyrdE+hjmy0N7ogYiDVK7qIUoNtS5T+Tx+sMVUFnJYVqDnxUOu8w7EhwCmWxu/C/XIgUb5+ag/PxEKg==}
+    peerDependencies:
+      svelte: ^5.0.0
 
   '@threejs-kit/instanced-sprite-mesh@2.5.0':
     resolution: {integrity: sha512-W4cRK7f1o15GtacvLi8h1022ySiMM5218eZJQYWHbVGKqpRezmj8hscdzgp4JFSCkRoAIdyIdLZg5U0Mtmcu/w==}
@@ -2759,6 +2775,18 @@ snapshots:
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
       tailwindcss: 3.4.15
+
+  '@thisux/sveltednd@0.0.14': {}
+
+  '@thisux/sveltednd@0.0.17(svelte@5.4.0)':
+    dependencies:
+      '@thisux/sveltednd': 0.0.14
+      svelte: 5.4.0
+
+  '@thisux/sveltednd@0.0.19(svelte@5.4.0)':
+    dependencies:
+      '@thisux/sveltednd': 0.0.17(svelte@5.4.0)
+      svelte: 5.4.0
 
   '@threejs-kit/instanced-sprite-mesh@2.5.0(@types/three@0.170.0)(three@0.171.0)':
     dependencies:

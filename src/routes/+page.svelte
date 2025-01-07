@@ -13,6 +13,7 @@
 	import TextBookImage from './images/textbooks.png?enhanced';
 	import VanHoochImage from './images/VanHooch.png?enhanced';
 	import Scene from './Scene.svelte';
+	import Captcha from './Captcha.svelte';
 
 	let { data } = $props();
 
@@ -62,12 +63,18 @@
 				<li>
 					<a class="" href="https://linkedin.com/in/abeldebruijn"> LinkedIn </a>
 				</li>
-				<li>
-					<button> Email </button>
-				</li>
-				<li>
-					<button> Phone </button>
-				</li>
+				{#if data.isHuman}
+					<li>
+						<a href="tel:+3162433892"> Phone (whatsapp only) </a>
+					</li>
+					<li>
+						<a href="mailto:abeldebruijn@hotmail.com"> eMail </a>
+					</li>
+				{:else}
+					<li>
+						<Captcha sortables={data.sortables} />
+					</li>
+				{/if}
 			</ul>
 		</div>
 
