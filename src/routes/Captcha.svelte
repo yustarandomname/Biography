@@ -7,6 +7,8 @@
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import SortableList from './SortableList.svelte';
 	import { formSchema, type FormSchema } from './zodSchema';
+	import ChevronLeft from 'lucide-svelte/icons/chevron-left';
+	import { fade } from 'svelte/transition';
 
 	type Sortable = {
 		id: string;
@@ -21,7 +23,7 @@
 	let { sortables, dataForm }: Props = $props();
 
 	let items = $state(sortables);
-	let dialogOpen = $state(false);
+	let captchaOpen = $state(false);
 
 	function handleDrop(state: DragDropState<Sortable>) {
 		const { draggedItem, targetContainer } = state;
@@ -38,7 +40,7 @@
 		validators: zodClient(formSchema),
 		onResult: ({ result }) => {
 			if (result.type == 'success') {
-				dialogOpen = false;
+				captchaOpen = false;
 			}
 		}
 	});
@@ -48,43 +50,55 @@
 
 Solve captcha to unlock Email and Phone
 
-<Dialog.Root bind:open={dialogOpen}>
-	<Dialog.Trigger
-		class="no-prose mt-2 flex w-64 items-center justify-between rounded border-2 border-slate-200 bg-slate-50 px-3 py-2 text-slate-900 dark:border-slate-400 dark:bg-slate-800 dark:text-slate-200"
+<Button
+	class="no-prose mt-2 flex w-64 items-center justify-between rounded border-2 border-slate-200 bg-slate-50 px-3 py-8 text-slate-900 dark:border-slate-400 dark:bg-slate-800 dark:text-slate-200"
+	onclick={() => (captchaOpen = !captchaOpen)}
+>
+	<div class="w-full p-2 text-left">
+		<input
+			id="captcha"
+			class="mr-2 scale-[1.5] cursor-pointer"
+			type="checkbox"
+			disabled
+			bind:checked={captchaOpen}
+		/>
+		<label for="captcha" class="cursor-pointer">I'm not a robot</label>
+	</div>
+	<div>
+		<div class="text-4xl opacity-80 saturate-[0.7]">🤪</div>
+		<div class="text-xs">Captcha</div>
+	</div>
+</Button>
+
+{#if captchaOpen}
+	<form
+		class="my-2 rounded border-2 border-slate-500 p-2"
+		method="POST"
+		in:fade={{ duration: 300 }}
+		use:enhance
 	>
-		<div class="w-full p-2 text-left">
-			<input id="captcha" class="mr-2 scale-[1.5] cursor-pointer" type="checkbox" />
-			<label for="captcha" class="cursor-pointer">I'm not a robot</label>
+		<div class="flex items-center gap-3">
+			<Button class="text-xs" variant="outline" onclick={() => (captchaOpen = false)}>
+				<ChevronLeft /> Close
+			</Button>
+			<h3 class="m-0">Emoji Captcha</h3>
 		</div>
-		<div>
-			<div class="text-4xl opacity-80 saturate-[0.7]">🤪</div>
-			<div class="text-xs">Captcha</div>
+		<p>
+			Sort the emojis from smallest to largest real-world size to unlock the email and phone number.
+		</p>
+
+		<SortableList {items} {handleDrop}></SortableList>
+
+		<Form.Field {form} name="guess">
+			<Form.Control>
+				{#snippet children({ props })}
+					<input type="hidden" {...props} value={items.map((i) => i.id).join('-')} />
+				{/snippet}
+			</Form.Control>
+			<Form.FieldErrors />
+		</Form.Field>
+		<div class="flex justify-end">
+			<Form.Button>Submit</Form.Button>
 		</div>
-	</Dialog.Trigger>
-
-	<Dialog.Content>
-		<Dialog.Header>
-			<Dialog.Title>Emoji Captcha</Dialog.Title>
-			<Dialog.Description>
-				Sort the emojis from smallest to largest real-world size to unlock the email and phone
-				number.
-			</Dialog.Description>
-
-			<form method="POST" use:enhance>
-				<SortableList {items} {handleDrop}></SortableList>
-
-				<Form.Field {form} name="guess">
-					<Form.Control>
-						{#snippet children({ props })}
-							<input type="hidden" {...props} value={items.map((i) => i.id).join('-')} />
-						{/snippet}
-					</Form.Control>
-					<Form.FieldErrors />
-				</Form.Field>
-				<div class="flex justify-end">
-					<Form.Button>Submit</Form.Button>
-				</div>
-			</form>
-		</Dialog.Header>
-	</Dialog.Content>
-</Dialog.Root>
+	</form>
+{/if}

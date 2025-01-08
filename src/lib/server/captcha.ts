@@ -18,7 +18,7 @@ const emoji = {
 	],
 	md: [
 		{ id: 'astronaut', emoji: '🧑‍🚀' },
-		{ id: 'programmer', emoji: '👨‍💻' },
+		{ id: 'developer', emoji: '👨‍💻' },
 		{ id: 'kangaroo', emoji: '🦘' },
 		{ id: 'gorilla', emoji: '🦍' },
 		{ id: 'sloth', emoji: '🦥' },
