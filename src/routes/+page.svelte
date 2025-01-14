@@ -65,10 +65,10 @@
 				</li>
 				{#if data.isHuman}
 					<li>
-						<a href="tel:+3162433892"> Phone (whatsapp only) </a>
+						<a href={data.whatsapp}> Phone (whatsapp only) </a>
 					</li>
 					<li>
-						<a href="mailto:abeldebruijn@hotmail.com"> e-Mail </a>
+						<a href="mailto:{data.email}?subject=Hello&body=Dear Abel de Bruijn,"> eMail </a>
 					</li>
 				{:else}
 					<li>

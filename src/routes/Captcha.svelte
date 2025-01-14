@@ -1,14 +1,13 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
-	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import * as Form from '$lib/components/ui/form/index.js';
 	import type { DragDropState } from '@thisux/sveltednd';
+	import ChevronLeft from 'lucide-svelte/icons/chevron-left';
+	import { fade } from 'svelte/transition';
 	import { superForm, type Infer, type SuperValidated } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import SortableList from './SortableList.svelte';
 	import { formSchema, type FormSchema } from './zodSchema';
-	import ChevronLeft from 'lucide-svelte/icons/chevron-left';
-	import { fade } from 'svelte/transition';
 
 	type Sortable = {
 		id: string;
@@ -45,13 +44,13 @@
 		}
 	});
 
-	const { form: formData, enhance } = form;
+	const { enhance } = form;
 </script>
 
 Solve captcha to unlock Email and Phone
 
 <Button
-	class="no-prose mt-2 flex w-64 items-center justify-between rounded border-2 border-slate-200 bg-slate-50 px-3 py-8 text-slate-900 dark:border-slate-400 dark:bg-slate-800 dark:text-slate-200"
+	class="no-prose mt-2 flex w-64 items-center justify-between rounded border-2 border-slate-200 bg-slate-50 px-3 py-8 text-slate-900 hover:bg-slate-200 dark:border-slate-400 dark:bg-slate-800 dark:text-slate-200"
 	onclick={() => (captchaOpen = !captchaOpen)}
 >
 	<div class="w-full p-2 text-left">

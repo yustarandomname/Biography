@@ -16,6 +16,8 @@ export const load: PageServerLoad = async ({ fetch, cookies }) => {
 
 	return {
 		isHuman,
+		email: isHuman ? 'abeldebruijn@hotmail.com' : '',
+		whatsapp: isHuman ? 'https://wa.me/+31624335892' : '',
 		blogs,
 		sortables: captcha.sortables,
 		form: await superValidate(zod(formSchema))
