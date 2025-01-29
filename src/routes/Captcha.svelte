@@ -83,7 +83,8 @@ Solve captcha to unlock Email and Phone
 			<h3 class="m-0">Emoji Captcha</h3>
 		</div>
 		<p>
-			Sort the emojis from smallest to largest real-world size to unlock the email and phone number.
+			Sort the emojis from largest (left) to smallest (right) real-world size to unlock the email
+			and phone number.
 		</p>
 
 		<SortableList {items} {handleDrop}></SortableList>
