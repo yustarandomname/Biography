@@ -4,6 +4,7 @@ export type Blog = {
 	description: string;
 	date: string;
 	author: string;
+	coauthors?: string[];
 	tags?: string[];
 	published: boolean;
 };

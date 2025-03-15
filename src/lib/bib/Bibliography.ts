@@ -474,6 +474,62 @@ const papers = {
 		ENTRYTYPE: 'article',
 		ID: '10.1007/978-3-642-21834-7_13',
 		authors: ['Kleijn, J., Koutny, M.']
+	},
+	ZHAO2015156: {
+		title: 'Demand for multi-scale weather data for regional crop modeling',
+		journal: 'Agricultural and Forest Meteorology',
+		volume: '200',
+		pages: '156-171',
+		year: '2015',
+		issn: '0168-1923',
+		doi: 'https://doi.org/10.1016/j.agrformet.2014.09.026',
+		url: 'https://www.sciencedirect.com/science/article/pii/S0168192314002500',
+		author:
+			'Gang Zhao and Stefan Siebert and Andreas Enders and Ehsan Eyshi Rezaei and Changqing Yan and Frank Ewert',
+		ENTRYTYPE: 'article',
+		ID: 'ZHAO2015156',
+		authors: [
+			'Gang Zhao',
+			'Stefan Siebert',
+			'Andreas Enders',
+			'Ehsan Eyshi Rezaei',
+			'Changqing Yan',
+			'Frank Ewert'
+		]
+	},
+	trautner2021line: {
+		title: 'Line Weaver: Importance-Driven Order Enhanced Rendering of Dense Line Charts',
+		author: 'Trautner, Thomas and Bruckner, Stefan',
+		booktitle: 'Computer Graphics Forum',
+		volume: '40',
+		number: '3',
+		pages: '399-410',
+		year: '2021',
+		ENTRYTYPE: 'inproceedings',
+		ID: 'trautner2021line',
+		authors: ['Trautner, Thomas', 'Bruckner, Stefan']
+	},
+	StructuredBrushing: {
+		doi: 'https://doi.org/10.1111/cgf.12901',
+		author:
+			'Radoš, S. and Splechtna, R. and Matković, K. and Đuras, M. and Gröller, E. and Hauser, H.',
+		title: 'Towards Quantitative Visual Analytics with Structured Brushing and Linked Statistics',
+		journal: 'Computer Graphics Forum',
+		year: '2015',
+		month: '01',
+		volume: '35',
+		number: '3',
+		pages: '251-260',
+		ENTRYTYPE: 'article',
+		ID: 'StructuredBrushing',
+		authors: [
+			'Radoš, S.',
+			'Splechtna, R.',
+			'Matković, K.',
+			'Đuras, M.',
+			'Gröller, E.',
+			'Hauser, H.'
+		]
 	}
 } satisfies { [key: string]: Paper };
 

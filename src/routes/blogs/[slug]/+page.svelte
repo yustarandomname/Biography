@@ -52,7 +52,12 @@
 
 <main class="prose mx-auto my-32 px-6 dark:prose-invert">
 	<p>Published on {formatDate(data.meta.date)}</p>
-	<p>Written by {data.meta.author}</p>
+	<p>
+		Written by {[data.meta.author, data.meta['coauthors']]
+			.filter((x) => Boolean(x))
+			.flatMap((x) => x)
+			.join(', ')}
+	</p>
 
 	{#if data.meta.tags}
 		<div class="mb-4 flex gap-2 text-sm">
