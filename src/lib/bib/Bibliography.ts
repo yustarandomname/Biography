@@ -530,6 +530,82 @@ const papers = {
 			'Gröller, E.',
 			'Hauser, H.'
 		]
+	},
+	Albero: {
+		author:
+			'Diehl, A. and Pelorosso, L. and Delrieux, C. and Matković, K. and Ruiz, J. and Gröller, M.E. and Bruckner, S.',
+		title: 'Albero: A Visual Analytics Approach for Probabilistic Weather Forecasting',
+		journal: 'Computer Graphics Forum',
+		volume: '36',
+		number: '7',
+		year: '2017',
+		month: '10',
+		pages: '135-144',
+		keywords:
+			'Categories and Subject Descriptors (according to ACM CCS), I.3.3 Computer Graphics: Picture/Image Generation—Viewing algorithms, I.3.6 Computer Graphics: Methodology and Techniques—Interaction techniques, I.3.8 Computer Graphics: Applications—Probabilistic Weather Forecasting',
+		doi: 'https://doi.org/10.1111/cgf.13279',
+		url: 'https://onlinelibrary.wiley.com/doi/abs/10.1111/cgf.13279',
+		ENTRYTYPE: 'article',
+		ID: 'Albero',
+		authors: [
+			'Diehl, A.',
+			'Pelorosso, L.',
+			'Delrieux, C.',
+			'Matković, K.',
+			'Ruiz, J.',
+			'Gröller, M.E.',
+			'Bruckner, S.'
+		]
+	},
+
+	YANG19931: {
+		abstract:
+			'This paper is a survey of fuzzy set theory applied in cluster analysis. These fuzzy clustering algorithms have been widely studied and applied in a variety of substantive areas. They also become the major techniques in cluster analysis. In this paper, we give a survey of fuzzy clustering in three categories. The first category is the fuzzy clustering based on fuzzy relation. The second one is the fuzzy clustering based on objective function. Finally, we give an overview of a nonparametric classifier. That is the fuzzy generalized k-nearest neighbor rule.',
+		keywords:
+			'Cluster analysis, Fuzzy clustering, Fuzzy -partitions, Fuzzy relation, Fuzzy -means, Fuzzy generalized -nearest neighbor rule, Cluster validity',
+		author: 'M.-S. Yang',
+		url: 'https://www.sciencedirect.com/science/article/pii/089571779390202A',
+		doi: 'https://doi.org/10.1016/0895-7177(93)90202-A',
+		issn: '0895-7177',
+		year: '1993',
+		pages: '1-16',
+		number: '11',
+		volume: '18',
+		journal: 'Mathematical and Computer Modelling',
+		title: 'A survey of fuzzy clustering',
+		ENTRYTYPE: 'article',
+		ID: 'YANG19931',
+		authors: ['M.-S. Yang']
+	},
+	fan2021sketch: {
+		title:
+			'On sketch-based selections from scatterplots using KDE, compared to Mahalanobis and CNN brushing',
+		author: 'Fan, Chaoran and Hauser, Helwig',
+		journal: 'IEEE Computer Graphics and Applications',
+		volume: '41',
+		number: '5',
+		pages: '67-78',
+		year: '2021',
+		publisher: 'IEEE',
+		ENTRYTYPE: 'article',
+		ID: 'fan2021sketch',
+		authors: ['Fan, Chaoran', 'Hauser, Helwig']
+	},
+
+	'9120181': {
+		author: 'Zhou, Shuisheng and Li, Dong and Zhang, Zhuan and Ping, Rui',
+		journal: 'IEEE Transactions on Fuzzy Systems',
+		title: 'A New Membership Scaling Fuzzy C-Means Clustering Algorithm',
+		year: '2021',
+		volume: '29',
+		number: '9',
+		pages: '2810-2818',
+		keywords:
+			'Clustering algorithms;Convergence;Acceleration;Fuzzy systems;Trajectory;Indexes;Robustness;Fuzzy c-means (FCM);membership degree;membership scaling (MS);triangular inequality',
+		doi: '10.1109/TFUZZ.2020.3003441',
+		ENTRYTYPE: 'article',
+		ID: '9120181',
+		authors: ['Zhou, Shuisheng', 'Li, Dong', 'Zhang, Zhuan', 'Ping, Rui']
 	}
 } satisfies { [key: string]: Paper };
 

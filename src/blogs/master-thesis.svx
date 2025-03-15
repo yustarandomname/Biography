@@ -30,13 +30,18 @@ import VisualAbstract from "./assets/master-thesis/visual-abstract.png?enhanced"
 
 ## Title and Research Question
 
-The term “large scale” refers to thousands or millions of (PCP) lines, while “high-dimensional” denotes data with multiple dimensions like RIS data or Weather data <Cite paperId="ZHAO2015156" />. I would like to focus on fuzzy-clustering certain line groups by guiding a user by pulling certain lines in or out of context.
+The term “large scale” refers to thousands or millions of (PCP) lines, while “high-dimensional” denotes data with multiple dimensions like RIS data or large-scale Weather data <Cite paperId="Albero" /> <Cite paperId="ZHAO2015156" />. I would like to focus on fuzzy-clustering certain line groups by guiding a user by pulling certain lines in or out of context. My research question are stated as follows:
+
+- (Main question) How to effectively cluster large-scale high-dimensional line data?
+  - How to optimally select certain lines to be in or out of focus?
+  - How to help a user to cluster lines in a semi-automatic way?
+  - How to make the rendering of large-scale high-dimensional line data more efficient?
 
 ## Background
 
-[Weather prediction](https://onlinelibrary-wiley-com.tudelft.idm.oclc.org/doi/full/10.1111/cgf.13279)
+This work builds on many ideas intoduced before. To get a better understanding of the context. First some motivation for why large scale Then some work about rendering medium-scale rendering is introduced.
 
-Andra’s work with Manivault Studio
+Many authors have attemted to solve the problem of clustering (large-scale) point data. This is done by using a variety of techniques, such as the use of a Mahalanobis brush <Cite paperId="fan2021sketch" /> or a fuzzy classifier <Cite paperId="9120181"/><Cite paperId="YANG19931" />. However, the problem of clustering large-scale line data has not been addressed in the literature. This research aims to fill this gap by exploring how GPU shaders can significantly enhance the processing of large-scale multi-dimensional line data. In addition, various (semi-automatic) interaction tools are explored to optimally cluster line data and effectively select certain lines to be in or out of focus.
 
 ## Evaluation metric
 
@@ -113,5 +118,3 @@ Andra’s work with Manivault Studio
 
 - (Implement) Tidy up the codebase to make it more extendable.
 - (Write) Format/Review the first version of the research paper
-
-##
