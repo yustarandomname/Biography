@@ -11,7 +11,6 @@ coauthors: ['Thomas Hollt']
 import Cite from "$lib/components/Cite.svelte";
 import Image from "$lib/components/Image.svelte";
 
-
 // Images
 import VisualAbstract from "./assets/master-thesis/visual-abstract.png?enhanced";
 </script>
@@ -76,7 +75,7 @@ Many authors have attemted to solve the problem of clustering (large-scale) poin
 - (Implement) Render the selected lines on top using depth buffer
 - (Research) How to best select lines (Mahalanobis brush by C. Fan et al.) or find others
 
-### Week 3 - **Mar 31 - Apr 4 (Selection week)**
+### Week 3 - Mar 31 - Apr 4 (Selection week)
 
 - (Implement) Enable the ability to select multiple lines, allowing users to create, add, remove, or delete the chosen lines.
 - (Research) Read about Structured Brushing <Cite paperId="StructuredBrushing"/> papers
@@ -88,14 +87,13 @@ Many authors have attemted to solve the problem of clustering (large-scale) poin
 - (Implement) Hide already created groups
 - (Implement) Have to ability to show your False- Positive/Negative scores
 
-### Week 5 - Apr 14 - 18
+### Week 5 - Apr 14 - 18 (Focus/Context week)
 
 - (Implement) Make lines more pop-out similar to described in the paper about Line Weaver or linking&brushing
-- (Implement) Merge
+- (Implement) Merging/Splitting of clusters
 
 ### Week 6 - Apr 21 - 25
 
-- (Implement) Line Weaver to make it easier for an user to distiguish between focus/context
 - (Research) Read on how a simple ML brush can better segment/cluster lines
 
 ### Week 7 - Apr 28 - May 2

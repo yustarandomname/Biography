@@ -591,7 +591,6 @@ const papers = {
 		ID: 'fan2021sketch',
 		authors: ['Fan, Chaoran', 'Hauser, Helwig']
 	},
-
 	'9120181': {
 		author: 'Zhou, Shuisheng and Li, Dong and Zhang, Zhuan and Ping, Rui',
 		journal: 'IEEE Transactions on Fuzzy Systems',
