@@ -38,13 +38,13 @@ The term “large scale” refers to thousands or millions of (PCP) lines, while
 
 ## Background
 
-This work builds on many ideas intoduced before. To get a better understanding of the context. First some motivation for why large scale Then some work about rendering medium-scale rendering is introduced.
+To gain a better understanding of how this research differs from previous work, it is important to understand the current state of the art. This section explains what others have done in the fields of selecting large-scale high-dimensional, rendering, and clustering line data.
 
 Many authors have attemted to solve the problem of clustering (large-scale) point data <Cite paperId="ben2015computational" />. This is done by using a variety of techniques, such as the use of a Mahalanobis brush <Cite paperId="fan2021sketch" /> or a fuzzy classifier <Cite paperId="9120181"/><Cite paperId="YANG19931" />. This paper will borow some of these techniques and apply them to line data.
 
 Fewer research has been done on clustering large-scale line data. One of the few papers that has been written about this is the work by Trautner <Cite paperId="trautner2021line" />. This paper assumed the data to be pre-clustered and only focused on the rendering of the data. However, the rendering technique does prioritise well-segmented clusters and renders them in a way that makes them stand out. This paper will focus on the clustering of the data and will use the rendering technique as a way to show the user the clusters.
 
-<Cite paperId="wei2011parallel" /> introduces a GPU-optimized Expectation Maximization algorithm for clustering large-scale point data. Although this method is able to establish a great seed for reaching some local optimum, expert-led clustering is still needed to achieve the best clustering. This paper will focus on creating better tools for experts to cluster the data in a more efficient way.
+<Cite paperId="wei2011parallel" /> introduces a GPU-optimized Expectation Maximization algorithm for clustering large-scale point data. Although this method is able to establish a great seed for reaching some local optimum, expert-led clustering is expected to achieve a better clustering. This paper will focus on creating better tools for experts to cluster the data in a more effective way.
 
 ## Evaluation metric
 
