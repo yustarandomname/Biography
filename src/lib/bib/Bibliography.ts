@@ -474,6 +474,158 @@ const papers = {
 		ENTRYTYPE: 'article',
 		ID: '10.1007/978-3-642-21834-7_13',
 		authors: ['Kleijn, J., Koutny, M.']
+	},
+	ZHAO2015156: {
+		title: 'Demand for multi-scale weather data for regional crop modeling',
+		journal: 'Agricultural and Forest Meteorology',
+		volume: '200',
+		pages: '156-171',
+		year: '2015',
+		issn: '0168-1923',
+		doi: 'https://doi.org/10.1016/j.agrformet.2014.09.026',
+		url: 'https://www.sciencedirect.com/science/article/pii/S0168192314002500',
+		author:
+			'Gang Zhao and Stefan Siebert and Andreas Enders and Ehsan Eyshi Rezaei and Changqing Yan and Frank Ewert',
+		ENTRYTYPE: 'article',
+		ID: 'ZHAO2015156',
+		authors: [
+			'Gang Zhao',
+			'Stefan Siebert',
+			'Andreas Enders',
+			'Ehsan Eyshi Rezaei',
+			'Changqing Yan',
+			'Frank Ewert'
+		]
+	},
+	trautner2021line: {
+		title: 'Line Weaver: Importance-Driven Order Enhanced Rendering of Dense Line Charts',
+		author: 'Trautner, Thomas and Bruckner, Stefan',
+		booktitle: 'Computer Graphics Forum',
+		volume: '40',
+		number: '3',
+		pages: '399-410',
+		year: '2021',
+		ENTRYTYPE: 'inproceedings',
+		ID: 'trautner2021line',
+		authors: ['Trautner, Thomas', 'Bruckner, Stefan']
+	},
+	StructuredBrushing: {
+		doi: 'https://doi.org/10.1111/cgf.12901',
+		author:
+			'Radoš, S. and Splechtna, R. and Matković, K. and Đuras, M. and Gröller, E. and Hauser, H.',
+		title: 'Towards Quantitative Visual Analytics with Structured Brushing and Linked Statistics',
+		journal: 'Computer Graphics Forum',
+		year: '2015',
+		month: '01',
+		volume: '35',
+		number: '3',
+		pages: '251-260',
+		ENTRYTYPE: 'article',
+		ID: 'StructuredBrushing',
+		authors: [
+			'Radoš, S.',
+			'Splechtna, R.',
+			'Matković, K.',
+			'Đuras, M.',
+			'Gröller, E.',
+			'Hauser, H.'
+		]
+	},
+	Albero: {
+		author:
+			'Diehl, A. and Pelorosso, L. and Delrieux, C. and Matković, K. and Ruiz, J. and Gröller, M.E. and Bruckner, S.',
+		title: 'Albero: A Visual Analytics Approach for Probabilistic Weather Forecasting',
+		journal: 'Computer Graphics Forum',
+		volume: '36',
+		number: '7',
+		year: '2017',
+		month: '10',
+		pages: '135-144',
+		keywords:
+			'Categories and Subject Descriptors (according to ACM CCS), I.3.3 Computer Graphics: Picture/Image Generation—Viewing algorithms, I.3.6 Computer Graphics: Methodology and Techniques—Interaction techniques, I.3.8 Computer Graphics: Applications—Probabilistic Weather Forecasting',
+		doi: 'https://doi.org/10.1111/cgf.13279',
+		url: 'https://onlinelibrary.wiley.com/doi/abs/10.1111/cgf.13279',
+		ENTRYTYPE: 'article',
+		ID: 'Albero',
+		authors: [
+			'Diehl, A.',
+			'Pelorosso, L.',
+			'Delrieux, C.',
+			'Matković, K.',
+			'Ruiz, J.',
+			'Gröller, M.E.',
+			'Bruckner, S.'
+		]
+	},
+
+	YANG19931: {
+		abstract:
+			'This paper is a survey of fuzzy set theory applied in cluster analysis. These fuzzy clustering algorithms have been widely studied and applied in a variety of substantive areas. They also become the major techniques in cluster analysis. In this paper, we give a survey of fuzzy clustering in three categories. The first category is the fuzzy clustering based on fuzzy relation. The second one is the fuzzy clustering based on objective function. Finally, we give an overview of a nonparametric classifier. That is the fuzzy generalized k-nearest neighbor rule.',
+		keywords:
+			'Cluster analysis, Fuzzy clustering, Fuzzy -partitions, Fuzzy relation, Fuzzy -means, Fuzzy generalized -nearest neighbor rule, Cluster validity',
+		author: 'M.-S. Yang',
+		url: 'https://www.sciencedirect.com/science/article/pii/089571779390202A',
+		doi: 'https://doi.org/10.1016/0895-7177(93)90202-A',
+		issn: '0895-7177',
+		year: '1993',
+		pages: '1-16',
+		number: '11',
+		volume: '18',
+		journal: 'Mathematical and Computer Modelling',
+		title: 'A survey of fuzzy clustering',
+		ENTRYTYPE: 'article',
+		ID: 'YANG19931',
+		authors: ['M.-S. Yang']
+	},
+	fan2021sketch: {
+		title:
+			'On sketch-based selections from scatterplots using KDE, compared to Mahalanobis and CNN brushing',
+		author: 'Fan, Chaoran and Hauser, Helwig',
+		journal: 'IEEE Computer Graphics and Applications',
+		volume: '41',
+		number: '5',
+		pages: '67-78',
+		year: '2021',
+		publisher: 'IEEE',
+		ENTRYTYPE: 'article',
+		ID: 'fan2021sketch',
+		authors: ['Fan, Chaoran', 'Hauser, Helwig']
+	},
+	'9120181': {
+		author: 'Zhou, Shuisheng and Li, Dong and Zhang, Zhuan and Ping, Rui',
+		journal: 'IEEE Transactions on Fuzzy Systems',
+		title: 'A New Membership Scaling Fuzzy C-Means Clustering Algorithm',
+		year: '2021',
+		volume: '29',
+		number: '9',
+		pages: '2810-2818',
+		keywords:
+			'Clustering algorithms;Convergence;Acceleration;Fuzzy systems;Trajectory;Indexes;Robustness;Fuzzy c-means (FCM);membership degree;membership scaling (MS);triangular inequality',
+		doi: '10.1109/TFUZZ.2020.3003441',
+		ENTRYTYPE: 'article',
+		ID: '9120181',
+		authors: ['Zhou, Shuisheng', 'Li, Dong', 'Zhang, Zhuan', 'Ping, Rui']
+	},
+	ben2015computational: {
+		title: 'Computational feasibility of clustering under clusterability assumptions',
+		author: 'Ben-David, Shai',
+		journal: 'arXiv preprint arXiv:1501.00437',
+		year: '2015',
+		ENTRYTYPE: 'article',
+		ID: 'ben2015computational',
+		authors: ['Ben-David, Shai'],
+		doi: 'https://doi.org/10.48550/arXiv.1501.00437'
+	},
+	wei2011parallel: {
+		title: 'Parallel clustering for visualizing large scientific line data',
+		author: 'Wei, Jishang and Yu, Hongfeng and Chen, Jacqueline H and Ma, Kwan-Liu',
+		booktitle: '2011 IEEE Symposium on Large Data Analysis and Visualization',
+		pages: '47-55',
+		year: '2011',
+		journal: 'IEEE',
+		ENTRYTYPE: 'inproceedings',
+		ID: 'wei2011parallel',
+		authors: ['Wei, Jishang', 'Yu, Hongfeng', 'Chen, Jacqueline H', 'Ma, Kwan-Liu']
 	}
 } satisfies { [key: string]: Paper };
 

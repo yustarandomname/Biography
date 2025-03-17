@@ -1,11 +1,122 @@
 ---
 title: Master Thesis
 description: Master thesis is work in progress
-date: '2024-12-3'
+date: '2025-3-15'
 published: true
-author: "Abel de Bruijn"
+author: 'Abel de Bruijn'
+coauthors: ['Thomas Hollt']
 ---
 
-# Master Thesis
+<script lang="ts">
+import Cite from "$lib/components/Cite.svelte";
+import Image from "$lib/components/Image.svelte";
 
-Work in Progress
+// Images
+import VisualAbstract from "./assets/master-thesis/visual-abstract.png?enhanced";
+</script>
+
+# Interactive visual manipulation of large-scale high-dimensional data
+
+## Abstract
+
+> As datasets grow in size, the demand for efficient rendering and manipulation of this data intensifies. This research paper explores how GPU shaders can significantly enhance the processing of large-scale multi-dimensional line data. In addition, various (semi-automatic) interaction tools are explored to optimally cluster line data and effectively select certain lines to be in or out of focus.
+
+### Visual abstract
+
+<Image image={VisualAbstract} label="visual abstract">
+  Visual abstract
+</Image>
+
+## Title and Research Question
+
+The term “large scale” refers to thousands or millions of (PCP) lines, while “high-dimensional” denotes data with multiple dimensions like RIS data or large-scale Weather data <Cite paperId="Albero" /> <Cite paperId="ZHAO2015156" />. I would like to focus on fuzzy-clustering certain line groups by guiding a user by pulling certain lines in or out of context. My research question are stated as follows:
+
+- (Main question) How to effectively cluster large-scale high-dimensional line data?
+  - How to optimally select certain lines to be in or out of focus?
+  - How to help a user to cluster lines in a semi-automatic way?
+  - How to make the rendering of large-scale high-dimensional line data more efficient?
+
+## Background
+
+This work builds on many ideas intoduced before. To get a better understanding of the context. First some motivation for why large scale Then some work about rendering medium-scale rendering is introduced.
+
+Many authors have attemted to solve the problem of clustering (large-scale) point data <Cite paperId="ben2015computational" />. This is done by using a variety of techniques, such as the use of a Mahalanobis brush <Cite paperId="fan2021sketch" /> or a fuzzy classifier <Cite paperId="9120181"/><Cite paperId="YANG19931" />. This paper will borow some of these techniques and apply them to line data.
+
+Fewer research has been done on clustering large-scale line data. One of the few papers that has been written about this is the work by Trautner <Cite paperId="trautner2021line" />. This paper assumed the data to be pre-clustered and only focused on the rendering of the data. However, the rendering technique does prioritise well-segmented clusters and renders them in a way that makes them stand out. This paper will focus on the clustering of the data and will use the rendering technique as a way to show the user the clusters.
+
+<Cite paperId="wei2011parallel" /> introduces a GPU-optimized Expectation Maximization algorithm for clustering large-scale point data. Although this method is able to establish a great seed for reaching some local optimum, expert-led clustering is still needed to achieve the best clustering. This paper will focus on creating better tools for experts to cluster the data in a more efficient way.
+
+## Evaluation metric
+
+1. A user is able to select and group out of a large co-hort of lines with low FP/FN
+1. When a semi-automatic brush is implemented, the stearing of the user should be as minimal as posible. This means the automatic part should score at least some percentage in some artificial/real datasets when selecting/grouping lines.
+1. As an additional benefit of the project, it should be straightforward to create your own data plot using your own dataset.
+
+## Weekly planning
+
+### During the Seminar
+
+- (Research) the work by T. Trautner (Line Weaver, Honeycomb Plots, Sunspot Plots)
+- (Implement) a WebGL version of <Cite paperId="trautner2021line"/> in 3D
+
+### Weeks ≤0 - Feb 1 - Mar 14
+
+- (Implement) Setup a prototype of rendering 1k/1M lines in WebGPU.
+- (Research) Decide on a Title and Research Question
+- (Research) Read first chapter (basics) of ([webgpufundamentals](https://webgpufundamentals.org))
+- (Write) Write a formal research proposal
+
+---
+
+### Week 1 - Mar 17 - 21 (Research week)
+
+- (Implement) Have the ability to select on line across all dimensions
+- (Research) Read all 5 chapters of ([webgpufundamentals](https://webgpufundamentals.org))
+- (Research) Read [WebGPU — All of the cores, none of the canvas](https://surma.dev/things/webgpu/)
+
+### Week 2 - Mar 24 - 28 (Going in depth)
+
+- (Implement) Render the selected lines on top using depth buffer
+- (Research) How to best select lines (Mahalanobis brush by C. Fan et al.) or find others
+
+### Week 3 - Mar 31 - Apr 4 (Selection week)
+
+- (Implement) Enable the ability to select multiple lines, allowing users to create, add, remove, or delete the chosen lines.
+- (Research) Read about Structured Brushing <Cite paperId="StructuredBrushing"/> papers
+- (Write) Setup overleaf file
+
+### Week 4 - Apr 7 - 11 (UI/UX week)
+
+- (Implement) Add ability to create groups in the data.
+- (Implement) Hide already created groups
+- (Implement) Have to ability to show your False- Positive/Negative scores
+
+### Week 5 - Apr 14 - 18 (Focus/Context week)
+
+- (Implement) Make lines more pop-out similar to described in the paper about Line Weaver or linking&brushing
+- (Implement) Merging/Splitting of clusters
+
+### Week 6 - Apr 21 - 25
+
+- (Research) Read on how a simple ML brush can better segment/cluster lines
+
+### Week 7 - Apr 28 - May 2
+
+- (Implement) Simple ML based brush
+- (Research) Read on how a fuzzy classifier can be used to have a line be categorised in multiple groups
+
+### Week 8 - May 6 - 9
+
+- (Implement) Some other brushes
+- (Research) Read on how lines can be drawn more efficiently in a buffer
+- (Write) Background section
+
+### Week 9 - May 12 - 16
+
+- (Implement) All about performance
+- (Write) Introduction
+
+### Week 10 - May 19 - 23
+
+- (Implement) Tidy up the codebase to make it more extendable.
+- (Write) Format/Review the first version of the research paper
