@@ -605,6 +605,27 @@ const papers = {
 		ENTRYTYPE: 'article',
 		ID: '9120181',
 		authors: ['Zhou, Shuisheng', 'Li, Dong', 'Zhang, Zhuan', 'Ping, Rui']
+	},
+	ben2015computational: {
+		title: 'Computational feasibility of clustering under clusterability assumptions',
+		author: 'Ben-David, Shai',
+		journal: 'arXiv preprint arXiv:1501.00437',
+		year: '2015',
+		ENTRYTYPE: 'article',
+		ID: 'ben2015computational',
+		authors: ['Ben-David, Shai'],
+		doi: 'https://doi.org/10.48550/arXiv.1501.00437'
+	},
+	wei2011parallel: {
+		title: 'Parallel clustering for visualizing large scientific line data',
+		author: 'Wei, Jishang and Yu, Hongfeng and Chen, Jacqueline H and Ma, Kwan-Liu',
+		booktitle: '2011 IEEE Symposium on Large Data Analysis and Visualization',
+		pages: '47-55',
+		year: '2011',
+		journal: 'IEEE',
+		ENTRYTYPE: 'inproceedings',
+		ID: 'wei2011parallel',
+		authors: ['Wei, Jishang', 'Yu, Hongfeng', 'Chen, Jacqueline H', 'Ma, Kwan-Liu']
 	}
 } satisfies { [key: string]: Paper };
 
