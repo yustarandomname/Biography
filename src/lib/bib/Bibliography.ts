@@ -626,6 +626,28 @@ const papers = {
 		ENTRYTYPE: 'inproceedings',
 		ID: 'wei2011parallel',
 		authors: ['Wei, Jishang', 'Yu, Hongfeng', 'Chen, Jacqueline H', 'Ma, Kwan-Liu']
+	},
+
+	'2022_gch_andra': {
+		author:
+			'Andra Popa and Francesca Gabrieli and Thomas Kroes and Anna Krekeler and Matthias Alfeld and Boudewijn Lelieveldt and Elmar Eisemann and Thomas Höllt',
+		title: 'Visual Analysis of RIS Data for Endmember Selection',
+		booktitle:
+			'Proceedings of Eurographics Workshop on Graphics and Cultural Heritage Short Papers',
+		year: '2022',
+		doi: '10.2312/gch.20221233',
+		ENTRYTYPE: 'inproceedings',
+		ID: 'bib:2022_gch_andra',
+		authors: [
+			'Andra Popa',
+			'Francesca Gabrieli',
+			'Thomas Kroes',
+			'Anna Krekeler',
+			'Matthias Alfeld',
+			'Boudewijn Lelieveldt',
+			'Elmar Eisemann',
+			'Thomas Höllt'
+		]
 	}
 } satisfies { [key: string]: Paper };
 

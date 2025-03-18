@@ -4,15 +4,13 @@ description: Master thesis is work in progress
 date: '2025-3-15'
 published: true
 author: 'Abel de Bruijn'
-coauthors: ['Thomas Hollt']
+coauthors: ['Thomas Höllt']
 ---
 
 <script lang="ts">
-import Cite from "$lib/components/Cite.svelte";
-import Image from "$lib/components/Image.svelte";
-
-// Images
-import VisualAbstract from "./assets/master-thesis/visual-abstract.png?enhanced";
+	import Cite from "$lib/components/Cite.svelte"; import Image from "$lib/components/Image.svelte";
+	
+  import VisualAbstract from "./assets/master-thesis/visual-abstract.png?enhanced";
 </script>
 
 # Interactive visual manipulation of large-scale high-dimensional data
@@ -24,7 +22,7 @@ import VisualAbstract from "./assets/master-thesis/visual-abstract.png?enhanced"
 ### Visual abstract
 
 <Image image={VisualAbstract} label="visual abstract">
-  Visual abstract
+	Visual abstract
 </Image>
 
 ## Title and Research Question
@@ -44,7 +42,12 @@ Many authors have attemted to solve the problem of clustering (large-scale) poin
 
 Fewer research has been done on clustering large-scale line data. One of the few papers that has been written about this is the work by Trautner <Cite paperId="trautner2021line" />. This paper assumed the data to be pre-clustered and only focused on the rendering of the data. However, the rendering technique does prioritise well-segmented clusters and renders them in a way that makes them stand out. This paper will focus on the clustering of the data and will use the rendering technique as a way to show the user the clusters.
 
-<Cite paperId="wei2011parallel" /> introduces a GPU-optimized Expectation Maximization algorithm for clustering large-scale point data. Although this method is able to establish a great seed for reaching some local optimum, expert-led clustering is expected to achieve a better clustering. This paper will focus on creating better tools for experts to cluster the data in a more effective way.
+<Cite paperId="wei2011parallel" /> introduces a GPU-optimized Expectation Maximization algorithm for
+clustering large-scale point data. Although this method is able to establish a great seed for
+reaching some local optimum, expert-led clustering is expected to achieve a better clustering. This
+paper will focus on creating better tools for experts to cluster the data in a more effective way.
+
+An expert lead tool has been developed by A. Popa <Cite paperId="2022_gch_andra" />. This tool allows the user to select points in a 2D space and cluster them. This paper will focus on extending this tool to a higher dimension by directly selecting lines.
 
 ## Evaluation metric
 
@@ -70,7 +73,7 @@ Fewer research has been done on clustering large-scale line data. One of the few
 
 ### Week 1 - Mar 17 - 21 (Research week)
 
-- (Implement) Have the ability to select on line across all dimensions
+- (Implement) Have the ability to select one line across all dimensions
 - (Research) Read all 5 chapters of ([webgpufundamentals](https://webgpufundamentals.org))
 - (Research) Read [WebGPU — All of the cores, none of the canvas](https://surma.dev/things/webgpu/)
 
