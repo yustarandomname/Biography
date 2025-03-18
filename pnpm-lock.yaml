@@ -23,6 +23,12 @@ importers:
       '@astrojs/vercel':
         specifier: ^8.1.2
         version: 8.1.2(astro@5.5.2(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.36.0)(typescript@5.8.2))(react@19.0.0)(rollup@4.36.0)
+      '@fontsource-variable/playwrite-us-trad':
+        specifier: ^5.2.5
+        version: 5.2.5
+      '@fontsource/cinzel-decorative':
+        specifier: ^5.2.5
+        version: 5.2.5
       '@radix-ui/react-slot':
         specifier: ^1.1.2
         version: 1.1.2(@types/react@19.0.11)(react@19.0.0)
@@ -347,6 +353,12 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@fontsource-variable/playwrite-us-trad@5.2.5':
+    resolution: {integrity: sha512-PHY6kvKmSsVFDj7n7Vzp4XFoc8yxRtZp/M6cP0pqCg4g47QDGyP+OQ8tZ//0FPD90RGOKH0j8wnXzASrmGY7BA==}
+
+  '@fontsource/cinzel-decorative@5.2.5':
+    resolution: {integrity: sha512-iXN1HxjU8AHHnkDXeIu5apPgFuBxkwnL3GVPrDvCmylCXl+45hx1GNhtzCzFd2zJwBsv+ggOOIgshBMJB8ymgg==}
 
   '@img/sharp-darwin-arm64@0.33.5':
     resolution: {integrity: sha512-UT4p+iz/2H4twwAoLCqfA9UH5pI6DggwKEGuaPy7nCVQ8ZsiY5PIcrRvD1DzuY3qYL07NtIQcWnBSY/heikIFQ==}
@@ -2571,6 +2583,10 @@ snapshots:
 
   '@esbuild/win32-x64@0.25.1':
     optional: true
+
+  '@fontsource-variable/playwrite-us-trad@5.2.5': {}
+
+  '@fontsource/cinzel-decorative@5.2.5': {}
 
   '@img/sharp-darwin-arm64@0.33.5':
     optionalDependencies:

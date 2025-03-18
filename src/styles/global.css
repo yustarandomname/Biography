@@ -1,8 +1,39 @@
 @import 'tailwindcss';
+@import '@fontsource/cinzel-decorative/700.css';
+@import '@fontsource-variable/playwrite-us-trad'; /* Supports weights 100-400 */
 
 @plugin 'tailwindcss-animate';
 
 @custom-variant dark (&:is(.dark *));
+
+@font-face {
+  font-family: 'CinzelDecorative';
+  src: url('/fonts/CinzelDecorative-Regular.ttf') format('ttf');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'CinzelDecorative';
+  src: url('/fonts/CinzelDecorative-Bold.ttf') format('ttf');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Playwrite';
+  src: url('/fonts/PlaywriteUSTrad-VariableFont_wght.ttf') format('ttf');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Atkinson';
+  src: url('/fonts/atkinson-regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   --radius: 0.625rem;
@@ -117,5 +148,14 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  .font-title {
+    font-family: 'Cinzel Decorative', sans-serif;
+    font-weight: 700;
+  }
+
+  .font-write {
+    font-family: 'Playwrite US Trad Variable', cursive;
   }
 }
