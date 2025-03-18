@@ -123,3 +123,8 @@ An expert lead tool has been developed by A. Popa <Cite paperId="2022_gch_andra"
 
 - (Implement) Tidy up the codebase to make it more extendable.
 - (Write) Format/Review the first version of the research paper
+
+### Week 11... - May 26
+
+- (implement) Allow the user to upload their own data
+- (Write) Abstract, Method, Discussion & Conclusion
