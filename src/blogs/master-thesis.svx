@@ -13,11 +13,11 @@ coauthors: ['Thomas Höllt']
   import VisualAbstract from "./assets/master-thesis/visual-abstract.png?enhanced";
 </script>
 
-# Interactive visual manipulation of large-scale high-dimensional data
+# Interactive visual manipulation of large-scale line data
 
 ## Abstract
 
-> As datasets grow in size, the demand for efficient rendering and manipulation of this data intensifies. This research paper explores how GPU shaders can significantly enhance the processing of large-scale multi-dimensional line data. In addition, various (semi-automatic) interaction tools are explored to optimally cluster line data and effectively select certain lines to be in or out of focus.
+> As datasets grow in size, the demand for efficient rendering and manipulation of this data intensifies. This research paper explores how GPU shaders can significantly enhance the processing of large-scale line data. In addition, various (semi-automatic) interaction tools are explored to optimally cluster line data and effectively select certain lines to be in or out of focus.
 
 ### Visual abstract
 
@@ -27,12 +27,14 @@ coauthors: ['Thomas Höllt']
 
 ## Title and Research Question
 
-The term “large scale” refers to thousands or millions of (PCP) lines, while “high-dimensional” denotes data with multiple dimensions like RIS data or large-scale Weather data <Cite paperId="Albero" /> <Cite paperId="ZHAO2015156" />. I would like to focus on fuzzy-clustering certain line groups by guiding a user by pulling certain lines in or out of context. My research question are stated as follows:
+> "Interactive visual manipulation of large-scale line data"
 
-- (Main question) How to effectively cluster large-scale high-dimensional line data?
-  - How to optimally select certain lines to be in or out of focus?
+The term “large scale” refers to thousands or millions of (PCP) lines; this can be, for example, millions of RIS data lines <Cite paperId="2022_gch_andra" /> or large-scale weather data <Cite paperId="Albero" /> <Cite paperId="ZHAO2015156" />. I would like to focus on fuzzy-clustering certain line groups by guiding a user by pulling certain lines in or out of context. My research questions are stated as follows:
+
+- (Main question) How to effectively cluster large-scale line data?
   - How to help a user to cluster lines in a semi-automatic way?
-  - How to make the rendering of large-scale high-dimensional line data more efficient?
+  - How to make the rendering of large-scale line data more efficient?
+  - How to optimally select certain lines to be in or out of focus?
 
 ## Background
 
@@ -56,6 +58,31 @@ An expert lead tool has been developed by A. Popa <Cite paperId="2022_gch_andra"
 1. As an additional benefit of the project, it should be straightforward to create your own data plot using your own dataset.
 
 ## Weekly planning
+
+As my thesis will be user-driven I will spend at least a few hours every week on some user feedback. I have planned the weekly schedule fairly conservatively; some weeks could eventually contain +50% of the work as listed below. However, due to my user-driven approach, I must remain flexible and adjust my planning based on the feedback I receive. The current planning is as broadly as follows:
+
+- **Week 1-3:** How to select lines using a basic brush
+- **Week 4-6:** Research and implement an effective way to cluster lines
+- **Week 7-9:** Implement a semi-automatic brush to give the user some guidance
+
+Basic user feedback can occur after week 6, while the core of the application can be tested after week 9. The time beyond week 9 will be used to enhance the application further and explore how its core can be extended toward a more standalone technical paper.
+
+- **Q1** - Have the core of the application ready for meaningfull user feedback
+- **Q2** - Explore possible extensions (as listed below)
+- **Q3** - In addition to implementing others' work, I will delve deeper into the technical details of rendering the lines. This will elevate the paper beyond simply being an application that renders a pre-selected dataset. A potential end goal could be to also render graphs, area plots, or other examples from the D3 library.
+
+### Possible extensions
+
+Based on the results of the first nine weeks, I will decide on the next steps. These could be:
+
+- Going in depth on the rendering of millions of lines in a WebGPU environment
+- Implementing a more advanced brush
+- Implement multiple (3+) levels of focus/context. For giving the user a better way to focus on what lines are more or less likely to be added to the current selection. Forinstance:
+  1. Selected lines (Highlight colour + Shadow)
+  2. Selected Cluster groups (Faded Colour)
+  3. Unselected Cluster groups (Display as Mean+Std similar to A. Popa <Cite paperId="2022_gch_andra" />)
+  4. Noise lines (blurred in the background)
+  5. All other lines (Density plot)
 
 ### During the Seminar
 
@@ -92,7 +119,7 @@ An expert lead tool has been developed by A. Popa <Cite paperId="2022_gch_andra"
 
 - (Implement) Add ability to create groups in the data.
 - (Implement) Hide already created groups
-- (Implement) Have to ability to show your False- Positive/Negative scores
+- (Implement) Have to ability to show your False- Positive/Negative scores (or other evaluation metrics)
 
 ### Week 5 - Apr 14 - 18 (Focus/Context week)
 
@@ -102,16 +129,19 @@ An expert lead tool has been developed by A. Popa <Cite paperId="2022_gch_andra"
 ### Week 6 - Apr 21 - 25
 
 - (Research) Read on how a simple ML brush can better segment/cluster lines
+- (Research) How to automatically naivly cluster lines
+- (Write) Evaluation metric / User study guidelines
 
 ### Week 7 - Apr 28 - May 2
 
 - (Implement) Simple ML based brush
-- (Research) Read on how a fuzzy classifier can be used to have a line be categorised in multiple groups
+- (implement) Automatic naive clustering
+- (Research) Read on how a fuzzy classifier can be used to have a line be categorised in multiple clusters
 
 ### Week 8 - May 6 - 9
 
-- (Implement) Some other brushes
-- (Research) Read on how lines can be drawn more efficiently in a buffer
+- (Implement) Some fuzzy-clustering brushes
+- (Research) Read on how lines can be drawn [more efficiently in a buffer](https://webgpufundamentals.org/webgpu/lessons/webgpu-timing.html)
 - (Write) Background section
 
 ### Week 9 - May 12 - 16
@@ -122,9 +152,11 @@ An expert lead tool has been developed by A. Popa <Cite paperId="2022_gch_andra"
 ### Week 10 - May 19 - 23
 
 - (Implement) Tidy up the codebase to make it more extendable.
+- (implement) Sub-sampling
 - (Write) Format/Review the first version of the research paper
 
 ### Week 11... - May 26
 
 - (implement) Allow the user to upload their own data
+- (implement) Extend the Manivault application to embed the methods described above
 - (Write) Abstract, Method, Discussion & Conclusion
