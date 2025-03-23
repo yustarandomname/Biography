@@ -648,6 +648,79 @@ const papers = {
 			'Elmar Eisemann',
 			'Thomas Höllt'
 		]
+	},
+	shimony2002automated: {
+		title: 'Automated fuzzy clustering of neuronal pathways in diffusion tensor tracking',
+		author: 'Shimony, Joshua S and Snyder, Avi Z and Lori, Nicholas and Conturo, TE',
+		booktitle: 'Proc. Intl. Soc. Mag. Reson. Med',
+		volume: '10',
+		pages: '1--1',
+		year: '2002',
+		ENTRYTYPE: 'inproceedings',
+		ID: 'shimony2002automated',
+		authors: ['Shimony, Joshua S', 'Snyder, Avi Z', 'Lori, Nicholas', 'Conturo, TE']
+	},
+	'10410948': {
+		author:
+			'Wang, Zhenglin and Walsh, Kerry and Sabrina, Fariza and Piyathilaka, Lasitha and Lin, Yufeng',
+		booktitle:
+			'2023 International Conference on Digital Image Computing: Techniques and Applications (DICTA)',
+		title: 'Clustering-TinyPointNet for Fast Large-scale Point Cloud Semantic Segmentation',
+		year: '2023',
+		pages: '229-236',
+		keywords:
+			'Point cloud compression;Semantic segmentation;Digital images;Neural networks;Clustering algorithms;Real-time systems;Partitioning algorithms;point cloud;segmentation;deep learning;K-means++ clustering;pointnet++',
+		doi: '10.1109/DICTA60407.2023.00039',
+		ENTRYTYPE: 'inproceedings',
+		ID: '10410948',
+		authors: [
+			'Wang, Zhenglin',
+			'Walsh, Kerry',
+			'Sabrina, Fariza',
+			'Piyathilaka, Lasitha',
+			'Lin, Yufeng'
+		]
+	},
+
+	'rsos.211189': {
+		author: 'Butyaev, A. and Drogaris, C. and Tremblay-Savard, O. and Waldispühl, J.',
+		title: 'Human-supervised clustering of multidimensional data using crowdsourcing',
+		journal: 'Royal Society Open Science',
+		year: '2022',
+		volume: '9',
+		issue: '5',
+		doi: '10.1098/rsos.211189',
+		ENTRYTYPE: 'article',
+		ID: '10.1098/rsos.211189',
+		authors: ['Butyaev, A.', 'Drogaris, C.', 'Tremblay-Savard, O.', 'Waldispühl, J.']
+	},
+
+	Amagata2023EfficientDC: {
+		title:
+			'Efficient Density-peaks Clustering Algorithms on Static and Dynamic Data in Euclidean Space',
+		author: 'Daichi Amagata and Takahiro Hara',
+		journal: 'ACM Transactions on Knowledge Discovery from Data',
+		year: '2023',
+		volume: '18',
+		pages: '1 - 27',
+		url: 'https://api.semanticscholar.org/CorpusID:259346562',
+		ENTRYTYPE: 'article',
+		ID: 'Amagata2023EfficientDC',
+		authors: ['Daichi Amagata', 'Takahiro Hara']
+	},
+
+	Chen2022ParallelGC: {
+		title: 'Parallel gravitational clustering based on grid partitioning for large-scale data',
+		author:
+			'Lei Chen and Fadong Chen and Zhaohua Liu and Mingyang Lv and Tingqin He and Shiwen Zhang',
+		journal: 'Applied Intelligence',
+		year: '2022',
+		volume: '53',
+		pages: '2506-2526',
+		url: 'https://api.semanticscholar.org/CorpusID:248707931',
+		ENTRYTYPE: 'article',
+		ID: 'Chen2022ParallelGC',
+		authors: ['Lei Chen', 'Fadong Chen', 'Zhaohua Liu', 'Mingyang Lv', 'Tingqin He', 'Shiwen Zhang']
 	}
 } satisfies { [key: string]: Paper };
 

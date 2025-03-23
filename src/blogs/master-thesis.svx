@@ -29,7 +29,7 @@ coauthors: ['Thomas Höllt']
 
 > "Interactive visual manipulation of large-scale line data"
 
-The term “large scale” refers to thousands or millions of (PCP) lines; this can be, for example, millions of RIS data lines <Cite paperId="2022_gch_andra" /> or large-scale weather data <Cite paperId="Albero" /> <Cite paperId="ZHAO2015156" />. I would like to focus on fuzzy-clustering certain line groups by guiding a user by pulling certain lines in or out of context. My research questions are stated as follows:
+The term “large scale” refers to thousands or millions of (PCP) lines; this can be, for example, millions of RIS data lines <Cite paperId="2022_gch_andra" /> or large-scale weather data <Cite paperId="Albero" /> <Cite paperId="ZHAO2015156" />. I would like to focus on fuzzy-clustering <Cite paperId="shimony2002automated" /> certain line groups by guiding a user by pulling certain lines in or out of context. My research questions are stated as follows:
 
 - (Main question) How to effectively cluster large-scale line data?
   - How to help a user to cluster lines in a semi-automatic way?
@@ -40,14 +40,11 @@ The term “large scale” refers to thousands or millions of (PCP) lines; this 
 
 To gain a better understanding of how this research differs from previous work, it is important to understand the current state of the art. This section explains what others have done in the fields of selecting large-scale high-dimensional, rendering, and clustering line data.
 
-Many authors have attemted to solve the problem of clustering (large-scale) point data <Cite paperId="ben2015computational" />. This is done by using a variety of techniques, such as the use of a Mahalanobis brush <Cite paperId="fan2021sketch" /> or a fuzzy classifier <Cite paperId="9120181"/><Cite paperId="YANG19931" />. This paper will borow some of these techniques and apply them to line data.
+Many authors have attemted to solve the problem of clustering (large-scale) point data <Cite paperId="Chen2022ParallelGC" /><Cite paperId="ben2015computational" /><Cite paperId="Amagata2023EfficientDC" />. This is done by using a variety of techniques, such as the use of a Mahalanobis brush <Cite paperId="fan2021sketch" /> or a fuzzy classifier <Cite paperId="9120181"/><Cite paperId="YANG19931" /><Cite paperId="shimony2002automated" /> or K-means++ clustering with a lightweight neural network <Cite paperId="10410948" />. This paper will borow some of these techniques and apply them to 2D line data.
 
 Fewer research has been done on clustering large-scale line data. One of the few papers that has been written about this is the work by Trautner <Cite paperId="trautner2021line" />. This paper assumed the data to be pre-clustered and only focused on the rendering of the data. However, the rendering technique does prioritise well-segmented clusters and renders them in a way that makes them stand out. This paper will focus on the clustering of the data and will use the rendering technique as a way to show the user the clusters.
 
-<Cite paperId="wei2011parallel" /> introduces a GPU-optimized Expectation Maximization algorithm for
-clustering large-scale point data. Although this method is able to establish a great seed for
-reaching some local optimum, expert-led clustering is expected to achieve a better clustering. This
-paper will focus on creating better tools for experts to cluster the data in a more effective way.
+<Cite paperId="wei2011parallel" /> introduces a GPU-optimized Expectation Maximization algorithm for clustering large-scale point data. Although this method is able to establish a great seed for reaching some local optimum, expert-led clustering is expected to achieve a better clustering <Cite paperId="rsos.211189" />. This paper will focus on creating better tools for experts to cluster the data in a more effective way.
 
 An expert lead tool has been developed by A. Popa <Cite paperId="2022_gch_andra" />. This tool allows the user to select points in a 2D space and cluster them. This paper will focus on extending this tool to a higher dimension by directly selecting lines.
 
