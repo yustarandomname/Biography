@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { T, useThrelte } from '@threlte/core';
+  import { T, useThrelte } from "@threlte/core";
   import {
     ImageMaterial,
     interactivity,
     OrbitControls,
     Suspense,
     Text3DGeometry,
-  } from '@threlte/extras';
-  import { get } from 'svelte/store';
-  import { DoubleSide, PerspectiveCamera, Quaternion, Vector3 } from 'three';
+  } from "@threlte/extras";
+  import { get } from "svelte/store";
+  import { DoubleSide, PerspectiveCamera, Quaternion, Vector3 } from "three";
 
   interactivity();
 
@@ -22,11 +22,11 @@
     from: Vector3,
     to: Vector3,
     DURATION = 300,
-    INTERVALS = 20
+    INTERVALS = 20,
   ) {
     const rot = new Quaternion().setFromUnitVectors(
       from.clone().normalize(),
-      to.clone().normalize()
+      to.clone().normalize(),
     );
 
     let i = 1;
@@ -107,7 +107,7 @@
         url="./AbelFace.png"
         radius={3.25}
         zoom={1.1}
-        monochromeColor="red"
+        monochromeColor="#c2410c"
         monochromeStrength={0.1}
       />
     </T.Mesh>
@@ -115,7 +115,7 @@
 
   <T.Mesh rotation.x={Math.PI / 2}>
     <T.CylinderGeometry args={[3.5, 3.5, 0.2, 64]} />
-    <T.MeshPhongMaterial color="red" reflectivity={2} />
+    <T.MeshPhongMaterial color="#c2410c" reflectivity={2} />
   </T.Mesh>
 
   <T.Mesh
