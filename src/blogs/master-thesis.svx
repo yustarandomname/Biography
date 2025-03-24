@@ -104,6 +104,7 @@ Based on the results of the first nine weeks, I will decide on the next steps. T
 ### Week 2 - Mar 24 - 28 (Going in depth)
 
 - (Implement) Render the selected lines on top using depth buffer
+- (Implement) Make all both ROW and COLUMN sizes based on data instead of hardcoded
 - (Research) How to best select lines (Mahalanobis brush by C. Fan et al.) or find others
 
 ### Week 3 - Mar 31 - Apr 4 (Selection week)
