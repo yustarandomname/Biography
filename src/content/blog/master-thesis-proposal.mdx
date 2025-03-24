@@ -1,0 +1,160 @@
+---
+title: "Master Thesis Proposal"
+description: "Lorem ipsum dolor sit amet"
+pubDate: "Mar 14 2025"
+heroImage: "/blog-placeholder-4.jpg"
+---
+
+# Interactive visual manipulation of large-scale line data
+
+## Abstract
+
+> As datasets grow in size, the demand for efficient rendering and manipulation of this data intensifies. This research paper explores how GPU shaders can significantly enhance the processing of large-scale line data. In addition, various (semi-automatic) interaction tools are explored to optimally cluster line data and effectively select certain lines to be in or out of focus.
+
+### Visual abstract
+
+<img
+  src="/visual-abstract.png"
+  alt="Visual abstract"
+  style={{ width: "100%", height: "auto" }}
+/>
+
+## Title and Research Question
+
+> "Interactive visual manipulation of large-scale line data"
+
+The term “large scale” refers to thousands or millions of (PCP) lines; this can be, for example, millions of RIS data lines <Cite paperId="2022_gch_andra" /> or large-scale weather data <Cite paperId="Albero" /> <Cite paperId="ZHAO2015156" />. I would like to focus on fuzzy-clustering <Cite paperId="shimony2002automated" /> certain line groups by guiding a user by pulling certain lines in or out of context. My research questions are stated as follows:
+
+- (Main question) How to effectively cluster large-scale line data?
+  - How to help a user to cluster lines in a semi-automatic way?
+  - How to make the rendering of large-scale line data more efficient?
+  - How to optimally select certain lines to be in or out of focus?
+
+## Background
+
+To gain a better understanding of how this research differs from previous work, it is important to understand the current state of the art. This section explains what others have done in the fields of selecting large-scale high-dimensional, rendering, and clustering line data.
+
+Many authors have attemted to solve the problem of clustering (large-scale) point data <Cite paperId="Chen2022ParallelGC" /><Cite paperId="ben2015computational" /><Cite paperId="Amagata2023EfficientDC" />. This is done by using a variety of techniques, such as the use of a Mahalanobis brush <Cite paperId="fan2021sketch" /> or a fuzzy classifier <Cite paperId="9120181"/><Cite paperId="YANG19931" /><Cite paperId="shimony2002automated" /> or K-means++ clustering with a lightweight neural network <Cite paperId="10410948" />. This paper will borow some of these techniques and apply them to 2D line data.
+
+Fewer research has been done on clustering large-scale line data. One of the few papers that has been written about this is the work by Trautner <Cite paperId="trautner2021line" />. This paper assumed the data to be pre-clustered and only focused on the rendering of the data. However, the rendering technique does prioritise well-segmented clusters and renders them in a way that makes them stand out. This paper will focus on the clustering of the data and will use the rendering technique as a way to show the user the clusters.
+
+<Cite paperId="wei2011parallel" /> introduces a GPU-optimized Expectation
+Maximization algorithm for clustering large-scale point data. Although this
+method is able to establish a great seed for reaching some local optimum,
+expert-led clustering is expected to achieve a better clustering
+<Cite paperId="rsos.211189" />. This paper will focus on creating better tools
+for experts to cluster the data in a more effective way.
+
+An expert lead tool has been developed by A. Popa <Cite paperId="2022_gch_andra" />. This tool allows the user to select points in a 2D space and cluster them. This paper will focus on extending this tool to a higher dimension by directly selecting lines.
+
+## Evaluation metric
+
+1. A user is able to select and group out of a large co-hort of lines with low FP/FN
+1. When a semi-automatic brush is implemented, the stearing of the user should be as minimal as posible. This means the automatic part should score at least some percentage in some artificial/real datasets when selecting/grouping lines.
+1. As an additional benefit of the project, it should be straightforward to create your own data plot using your own dataset.
+
+## Weekly planning
+
+As my thesis will be user-driven I will spend at least a few hours every week on some user feedback. I have planned the weekly schedule fairly conservatively; some weeks could eventually contain +50% of the work as listed below. However, due to my user-driven approach, I must remain flexible and adjust my planning based on the feedback I receive. The current planning is as broadly as follows:
+
+- **Week 1-3:** How to select lines using a basic brush
+- **Week 4-6:** Research and implement an effective way to cluster lines
+- **Week 7-9:** Implement a semi-automatic brush to give the user some guidance
+
+Basic user feedback can occur after week 6, while the core of the application can be tested after week 9. The time beyond week 9 will be used to enhance the application further and explore how its core can be extended toward a more standalone technical paper.
+
+- **Q1** - Have the core of the application ready for meaningfull user feedback
+- **Q2** - Explore possible extensions (as listed below)
+- **Q3** - In addition to implementing others' work, I will delve deeper into the technical details of rendering the lines. This will elevate the paper beyond simply being an application that renders a pre-selected dataset. A potential end goal could be to also render graphs, area plots, or other examples from the D3 library.
+
+### Possible extensions
+
+Based on the results of the first nine weeks, I will decide on the next steps. These could be:
+
+- Going in depth on the rendering of millions of lines in a WebGPU environment
+- Implementing a more advanced brush
+- Implement multiple (3+) levels of focus/context. For giving the user a better way to focus on what lines are more or less likely to be added to the current selection. Forinstance:
+  1. Selected lines (Highlight colour + Shadow)
+  2. Selected Cluster groups (Faded Colour)
+  3. Unselected Cluster groups (Display as Mean+Std similar to A. Popa <Cite paperId="2022_gch_andra" />)
+  4. Noise lines (blurred in the background)
+  5. All other lines (Density plot)
+
+### During the Seminar
+
+- (Research) the work by T. Trautner (Line Weaver, Honeycomb Plots, Sunspot Plots)
+- (Implement) a WebGL version of <Cite paperId="trautner2021line"/> in 3D
+
+### Weeks ≤0 - Feb 1 - Mar 14
+
+- (Implement) Setup a prototype of rendering 1k/1M lines in WebGPU.
+- (Research) Decide on a Title and Research Question
+- (Research) Read first chapter (basics) of ([webgpufundamentals](https://webgpufundamentals.org))
+- (Write) Write a formal research proposal
+
+---
+
+### Week 1 - Mar 17 - 21 (Research week)
+
+- (Implement) Have the ability to select one line across all dimensions
+- (Research) Read all 5 chapters of ([webgpufundamentals](https://webgpufundamentals.org))
+- (Research) Read [WebGPU — All of the cores, none of the canvas](https://surma.dev/things/webgpu/)
+
+### Week 2 - Mar 24 - 28 (Going in depth)
+
+- (Implement) Render the selected lines on top using depth buffer
+- (Research) How to best select lines (Mahalanobis brush by C. Fan et al.) or find others
+
+### Week 3 - Mar 31 - Apr 4 (Selection week)
+
+- (Implement) Enable the ability to select multiple lines, allowing users to create, add, remove, or delete the chosen lines.
+- (Research) Read about Structured Brushing <Cite paperId="StructuredBrushing"/> papers
+- (Write) Setup overleaf file
+
+### Week 4 - Apr 7 - 11 (UI/UX week)
+
+- (Implement) Add ability to create groups in the data.
+- (Implement) Hide already created groups
+- (Implement) Have to ability to show your False- Positive/Negative scores (or other evaluation metrics)
+
+### Week 5 - Apr 14 - 18 (Focus/Context week)
+
+- (Implement) Make lines more pop-out similar to described in the paper about Line Weaver or linking&brushing
+- (Implement) Merging/Splitting of clusters
+
+### Week 6 - Apr 21 - 25
+
+- (Research) Read on how a simple ML brush can better segment/cluster lines
+- (Research) How to automatically naivly cluster lines
+- (Write) Evaluation metric / User study guidelines
+
+### Week 7 - Apr 28 - May 2
+
+- (Implement) Simple ML based brush
+- (implement) Automatic naive clustering
+- (Research) Read on how a fuzzy classifier can be used to have a line be categorised in multiple clusters
+
+### Week 8 - May 6 - 9
+
+- (Implement) Some fuzzy-clustering brushes
+- (Research) Read on how lines can be drawn [more efficiently in a buffer](https://webgpufundamentals.org/webgpu/lessons/webgpu-timing.html)
+- (Write) Background section
+
+### Week 9 - May 12 - 16
+
+- (Implement) All about performance
+- (Write) Introduction
+
+### Week 10 - May 19 - 23
+
+- (Implement) Tidy up the codebase to make it more extendable.
+- (implement) Sub-sampling
+- (Write) Format/Review the first version of the research paper
+
+### Week 11... - May 26
+
+- (implement) Allow the user to upload their own data
+- (implement) Extend the Manivault application to embed the methods described above
+- (Write) Abstract, Method, Discussion & Conclusion
+
+<Biography client:load />
