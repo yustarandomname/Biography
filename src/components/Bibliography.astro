@@ -1,0 +1,19 @@
+---
+import { refState } from './svelte/bib/BibState.svelte';
+
+const papers = Array.from(refState.papers.values());
+---
+
+{papers.length}
+
+<ol>
+  {
+    papers.map((paper) => {
+      return (
+        <li>
+          test {paper.id} - {paper.title}
+        </li>
+      );
+    })
+  }
+</ol>

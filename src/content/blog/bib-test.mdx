@@ -1,0 +1,21 @@
+---
+title: "Bib test"
+description: "Lorem ipsum dolor sit amet"
+pubDate: "Mar 14 2025"
+heroImage: "/blog-placeholder-4.jpg"
+---
+
+import Cite from "@/components/Cite.astro";
+import Paper from "@/components/Paper.astro";
+import Bibliography from "@/components/Bibliography.astro";
+import { papers } from "@/bibs/master-thesis-bib";
+
+<Paper />
+
+# Bib test
+
+<Cite papers={papers} paperId="paperOne" />
+
+## Bibliography
+
+<Bibliography papers={papers} />
