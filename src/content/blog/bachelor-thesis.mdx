@@ -1,0 +1,57 @@
+---
+title: "Bachelor Thesis"
+description: "Model for Bacteria mixing in three-dimensions using random walker agents"
+pubDate: "Jul 27 2023"
+heroImage: "/blog-placeholder-4.jpg"
+---
+
+import { Paper, Cite, CiteList, Bibliography, Ref } from "@/components/paper";
+import { papers } from "@/bibs/bachelor-thesis-bib";
+
+# Territory patterns created by random walker agents in three dimensions
+
+## Abstract
+
+> This research paper proposes a discrete agent-based model to simulate territorial development among micro-organisms. The
+> model involves two species that interact through marker signals left behind by agents as they move through a three-dimensional
+> lattice. The study builds on previous research that established a phase transition from a well-mixed to a well-segregated state
+> for two-dimensional lattices. This research extends the finding to three dimensions and confirms that the properties observed
+> in the two-dimensional model are also present in the three-dimensional model. We conclude that the addition of more mass or
+> the ratio between gamma and lambda behaves similarly to the two-dimensional model. However, the three-dimensional model
+> needs a larger mass to reach the same critical point as the two-dimensional one.
+
+---
+
+## Introduction
+
+Territory formation has been studied in depth in two dimensions (2D) in many other papers.
+Some applications include bacteria <Cite papers={papers} paperId="bst/Motility analysis of bacteria-based" />, <Cite papers={papers} paperId="bst/Englert_Manson_Jayaraman_2009" />
+or fungi <Cite papers={papers} paperId="bst/Khokon.2021" />. Micro-organisms will often use chemo repellents to establish and maintain their territories,
+and to avoid direct competition with other species <Cite papers={papers} paperId="bst/GUILLENGONZALEZ2022193" />. By excreting these chemicals, micro-organisms can create a chemical
+boundary that serves as a warning to other organisms to avoid direct contact. This can be especially important in environments where
+resources are limited and competition for those resources is high. By avoiding direct competition with other species, organisms can
+increase their chances of survival and reproduction. Another notable example of territory formation in two dimensions is the territories
+of human gangs, which were researched by A. Alsenafi and A.B. Barbaro <Cite papers={papers} paperId="bst/ALSENAFI2018765" /> (hereafter referred to as the previous territory paper).
+In their paper, a model is proposed for gang territory using graffiti. Two gangs will leave behind their own graffiti tags at different
+locations that the other gang will attempt to avoid. The paper studies biased random agent movement on a two-dimensional (2D) lattice.
+However, the same model can be extended to micro-organisms living in a three-dimensional (3D) lattice. To make the model more applicable
+to our case, our paper replaces gangs with species, graffiti with (chemo-repellent) markers, and gang members with agents.
+
+The purpose of this paper is to show how a random walker model behaves in three dimensions with different strengths of avoidance for opposing species.
+The main question attempted to be answered is: “What similarities exist between properties of the twodimensional and three-dimensional
+lattice models?”. This question is answered with the following sub-questions: "What are the states of the three-dimensional lattice model,
+and are they well-mixed or well-segregated?", "How does mass and gamma/lambda ratio influence the phase transition of the 3D model?".
+
+The paper is structured in the following way: First, <Ref type="section" label="Background and related work" /> shows the background
+which is needed to understand this paper. <Ref type="section" label="Method" /> explains how a random walker model is used with pseudo-code. <Ref type="section" label="A Naive model" /> shows an intuitive algorithm
+derived from mathematics. <Ref type="section" label="CPU improvements" /> and <Ref type="section" label="GPU improvements" /> demonstrate how CPU (Central
+Processing Unit) and GPU (Graphics Processing Unit) parallel computing can improve the performance of the model. <Ref type="section" label="Visualisations" /> explains how the client is
+interacting and visualising the model. <Ref type="section" label="Results" /> presents the simulations for multiple configurations. <Ref type="section" label="Argumentation and discussion" /> discusses what
+similarities a 3D random walker model creates. <Ref type="section" label="Conclusion" /> is the conclusion of the paper.
+Finally, <Ref type="section" label="Responsible Research" /> discusses the responsibility and accountability of this research paper.
+
+---
+
+## Background and related work
+
+<Bibliography />

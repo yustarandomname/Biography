@@ -10,6 +10,8 @@ type Base = {
   doi?: string;
   year: string;
   month?: string;
+  note?: string;
+  keywords?: string;
 };
 
 interface ResearachPaper extends Base {
@@ -58,7 +60,7 @@ interface WebPage extends Base {
   journal?: string;
 }
 
-export type Paper = ResearachPaper | Journal | Book | WebPage;
+export type Paper = TechReport | ResearachPaper | Journal | Book | WebPage;
 
 class Refs {
   papers = new SvelteMap<string, Paper>();
