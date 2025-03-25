@@ -5,19 +5,15 @@ pubDate: "Mar 14 2025"
 heroImage: "/blog-placeholder-4.jpg"
 ---
 
-import Cite from "@/components/Cite.astro";
-import Paper from "@/components/Paper.astro";
-import Bibliography from "@/components/Bibliography.astro";
+import { Paper, Cite, Bibliography } from "@/components/paper";
 import { papers } from "@/bibs/master-thesis-bib";
 
 <Paper />
 
 # Bib test
 
-<Cite papers={papers} paperId="paperOne" />
-<Cite papers={papers} paperId="paperTwo" />
-<Cite papers={papers} paperId="paperTwo" />
-
-## Bibliography
+<Cite papers={papers} paperId="mst/9120181" />
+<Cite papers={papers} paperId="mst/Albero" />
+<Cite papers={papers} paperId="mst/Chen2022ParallelGC" />
 
 <Bibliography papers={papers} />
