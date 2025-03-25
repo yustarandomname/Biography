@@ -17,7 +17,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
   <body>
     <main class="w-full">
       <article>
-        <div>
+        <div class="print:hidden">
           {
             heroImage && (
               <img

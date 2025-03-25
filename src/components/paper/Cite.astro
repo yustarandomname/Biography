@@ -1,0 +1,23 @@
+---
+import { refState, type Paper } from '@/components/svelte/bib/BibState.svelte';
+import { toString, toId } from '@/components/Paper/paperToCiteString';
+import type { MasterPapers } from '@/bibs/master-thesis-bib';
+
+interface Props<T extends { [key: string]: Paper }> {
+  papers: T;
+  paperId: keyof T;
+}
+
+const { papers, paperId } = Astro.props as Props<MasterPapers>;
+
+const paper = papers[paperId];
+
+if (!paper) {
+  console.log('Could not find paper with id', paperId);
+} else {
+  // Add paper to bibliography
+  refState.addPaper(paper);
+}
+---
+
+{paper && <a href={'#' + toId(paperId)}>[{toString(paper)}]</a>}

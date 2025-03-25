@@ -5,9 +5,12 @@ pubDate: "Mar 14 2025"
 heroImage: "/blog-placeholder-4.jpg"
 ---
 
+import { Paper, Cite, CiteList, Bibliography } from "@/components/paper";
+import { papers } from "@/bibs/master-thesis-bib";
+
 # Interactive visual manipulation of large-scale line data
 
-## Abstract
+## Short Abstract
 
 > As datasets grow in size, the demand for efficient rendering and manipulation of this data intensifies. This research paper explores how GPU shaders can significantly enhance the processing of large-scale line data. In addition, various (semi-automatic) interaction tools are explored to optimally cluster line data and effectively select certain lines to be in or out of focus.
 
@@ -23,7 +26,12 @@ heroImage: "/blog-placeholder-4.jpg"
 
 > "Interactive visual manipulation of large-scale line data"
 
-The term “large scale” refers to thousands or millions of (PCP) lines; this can be, for example, millions of RIS data lines <Cite paperId="2022_gch_andra" /> or large-scale weather data <Cite paperId="Albero" /> <Cite paperId="ZHAO2015156" />. I would like to focus on fuzzy-clustering <Cite paperId="shimony2002automated" /> certain line groups by guiding a user by pulling certain lines in or out of context. My research questions are stated as follows:
+The term “large scale” refers to thousands or millions of (PCP) lines; this can be, for example,
+millions of RIS data lines <Cite papers={papers} paperId="mst/2022_gch_andra" /> or large-scale
+weather data <Cite papers={papers} paperId="mst/Albero" /> <Cite papers={papers} paperId="mst/ZHAO2015156" />.
+I would like to focus on fuzzy-clustering <Cite papers={papers} paperId="mst/shimony2002automated" /> certain
+line groups by guiding a user by pulling certain lines in or out of context. My research questions
+are stated as follows:
 
 - (Main question) How to effectively cluster large-scale line data?
   - How to help a user to cluster lines in a semi-automatic way?
@@ -32,20 +40,44 @@ The term “large scale” refers to thousands or millions of (PCP) lines; this 
 
 ## Background
 
-To gain a better understanding of how this research differs from previous work, it is important to understand the current state of the art. This section explains what others have done in the fields of selecting large-scale high-dimensional, rendering, and clustering line data.
+To gain a better understanding of how this research differs from previous work, it is important
+to understand the current state of the art. This section explains what others have done in the fields
+of selecting large-scale high-dimensional, rendering, and clustering line data.
 
-Many authors have attemted to solve the problem of clustering (large-scale) point data <Cite paperId="Chen2022ParallelGC" /><Cite paperId="ben2015computational" /><Cite paperId="Amagata2023EfficientDC" />. This is done by using a variety of techniques, such as the use of a Mahalanobis brush <Cite paperId="fan2021sketch" /> or a fuzzy classifier <Cite paperId="9120181"/><Cite paperId="YANG19931" /><Cite paperId="shimony2002automated" /> or K-means++ clustering with a lightweight neural network <Cite paperId="10410948" />. This paper will borow some of these techniques and apply them to 2D line data.
+Many authors have attemted to solve the problem of clustering (large-scale) point data
 
-Fewer research has been done on clustering large-scale line data. One of the few papers that has been written about this is the work by Trautner <Cite paperId="trautner2021line" />. This paper assumed the data to be pre-clustered and only focused on the rendering of the data. However, the rendering technique does prioritise well-segmented clusters and renders them in a way that makes them stand out. This paper will focus on the clustering of the data and will use the rendering technique as a way to show the user the clusters.
+<CiteList
+  papers={papers}
+  paperIds={[
+    "mst/Chen2022ParallelGC",
+    "mst/ben2015computational",
+    "mst/Amagata2023EfficientDC",
+  ]}
+/>
 
-<Cite paperId="wei2011parallel" /> introduces a GPU-optimized Expectation
-Maximization algorithm for clustering large-scale point data. Although this
-method is able to establish a great seed for reaching some local optimum,
-expert-led clustering is expected to achieve a better clustering
-<Cite paperId="rsos.211189" />. This paper will focus on creating better tools
-for experts to cluster the data in a more effective way.
+. This is done by using a variety of techniques, such as the use of a
+Mahalanobis brush <Cite papers={papers} paperId="mst/fan2021sketch" /> or a
+fuzzy classifier
 
-An expert lead tool has been developed by A. Popa <Cite paperId="2022_gch_andra" />. This tool allows the user to select points in a 2D space and cluster them. This paper will focus on extending this tool to a higher dimension by directly selecting lines.
+<CiteList
+  papers={papers}
+  paperIds={["mst/9120181", "mst/YANG19931", "mst/shimony2002automated"]}
+/>
+. or K-means++ clustering with a lightweight neural network
+<Cite papers={papers} paperId="mst/10410948" />. This paper will borow some of
+these techniques and apply them to 2D line data.
+
+Fewer research has been done on clustering large-scale line data. One of the few papers that has been written about this is the work by Trautner <Cite papers={papers} paperId="mst/trautner2021line" />. This paper assumed the data to be pre-clustered and only focused on the rendering of the data. However, the rendering technique does prioritise well-segmented clusters and renders them in a way that makes them stand out. This paper will focus on the clustering of the data and will use the rendering technique as a way to show the user the clusters.
+
+<Cite papers={papers} paperId="mst/wei2011parallel" /> introduces a
+GPU-optimized Expectation Maximization algorithm for clustering large-scale
+point data. Although this method is able to establish a great seed for reaching
+some local optimum, expert-led clustering is expected to achieve a better
+clustering
+<Cite papers={papers} paperId="mst/rsos.211189" />. This paper will focus on
+creating better tools for experts to cluster the data in a more effective way.
+
+An expert lead tool has been developed by A. Popa <Cite papers={papers} paperId="mst/2022_gch_andra" />. This tool allows the user to select points in a 2D space and cluster them. This paper will focus on extending this tool to a higher dimension by directly selecting lines.
 
 ## Evaluation metric
 
@@ -76,14 +108,14 @@ Based on the results of the first nine weeks, I will decide on the next steps. T
 - Implement multiple (3+) levels of focus/context. For giving the user a better way to focus on what lines are more or less likely to be added to the current selection. Forinstance:
   1. Selected lines (Highlight colour + Shadow)
   2. Selected Cluster groups (Faded Colour)
-  3. Unselected Cluster groups (Display as Mean+Std similar to A. Popa <Cite paperId="2022_gch_andra" />)
+  3. Unselected Cluster groups (Display as Mean+Std similar to A. Popa <Cite papers={papers} paperId="mst/2022_gch_andra" />)
   4. Noise lines (blurred in the background)
   5. All other lines (Density plot)
 
 ### During the Seminar
 
 - (Research) the work by T. Trautner (Line Weaver, Honeycomb Plots, Sunspot Plots)
-- (Implement) a WebGL version of <Cite paperId="trautner2021line"/> in 3D
+- (Implement) a WebGL version of <Cite papers={papers} paperId="mst/mst/trautner2021line"/> in 3D
 
 ### Weeks ≤0 - Feb 1 - Mar 14
 
@@ -102,30 +134,31 @@ Based on the results of the first nine weeks, I will decide on the next steps. T
 
 ### Week 2 - Mar 24 - 28 (Going in depth)
 
-- (Implement) Render the selected lines on top using depth buffer
+- (Implement) Render the selected lines on top using a depth buffer
+- (Implement) Make both ROW and COLUMN sizes based on data instead of hardcoded
 - (Research) How to best select lines (Mahalanobis brush by C. Fan et al.) or find others
 
 ### Week 3 - Mar 31 - Apr 4 (Selection week)
 
 - (Implement) Enable the ability to select multiple lines, allowing users to create, add, remove, or delete the chosen lines.
-- (Research) Read about Structured Brushing <Cite paperId="StructuredBrushing"/> papers
+- (Research) Read about Structured Brushing <Cite papers={papers} paperId="mst/StructuredBrushing"/> papers
 - (Write) Setup overleaf file
 
 ### Week 4 - Apr 7 - 11 (UI/UX week)
 
-- (Implement) Add ability to create groups in the data.
+- (Implement) Add the ability to create groups in the data.
 - (Implement) Hide already created groups
-- (Implement) Have to ability to show your False- Positive/Negative scores (or other evaluation metrics)
+- (Implement) Have the ability to show your False- Positive/Negative scores (or other evaluation metrics)
 
 ### Week 5 - Apr 14 - 18 (Focus/Context week)
 
-- (Implement) Make lines more pop-out similar to described in the paper about Line Weaver or linking&brushing
+- (Implement) Make lines more pop-out similar to those described in the paper about Line Weaver or linking&brushing
 - (Implement) Merging/Splitting of clusters
 
 ### Week 6 - Apr 21 - 25
 
 - (Research) Read on how a simple ML brush can better segment/cluster lines
-- (Research) How to automatically naivly cluster lines
+- (Research) How to automatically naively cluster lines
 - (Write) Evaluation metric / User study guidelines
 
 ### Week 7 - Apr 28 - May 2
@@ -157,4 +190,4 @@ Based on the results of the first nine weeks, I will decide on the next steps. T
 - (implement) Extend the Manivault application to embed the methods described above
 - (Write) Abstract, Method, Discussion & Conclusion
 
-<Biography client:load />
+<Bibliography />

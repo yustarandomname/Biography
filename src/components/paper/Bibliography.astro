@@ -1,0 +1,47 @@
+---
+import { refState } from '@/components/svelte/bib/BibState.svelte';
+import { toString, toId } from '@/components/Paper/paperToCiteString';
+
+const papers = Array.from(refState.papers.values()).toSorted((a, b) => {
+  return toString(a).localeCompare(toString(b));
+});
+---
+
+<h2 class="bib">Bibliography</h2>
+
+<div class="space-y-2 print:columns-2 print:gap-4">
+  {
+    papers.map((paper, i) => {
+      const paperUrlId = toId(paper.ID);
+
+      return (
+        <div
+          id={paperUrlId}
+          class="border-2 bg-black print:bg-white print:border-none print:p-0 px-4 py-3 border-orange-500 "
+        >
+          <h4 class="mt-0">
+            [{toString(paper)}] - {paper.title} -{' '}
+            {'month' in paper ? paper.month + '/' : ''}
+            {paper.year}
+          </h4>
+
+          {'authos' in paper && <p class="m-0">{paper.authors.join(', ')}</p>}
+
+          {'url' in paper ? (
+            <a href={paper.url}>Source</a>
+          ) : 'doi' in paper ? (
+            <a href={'https://doi.org/' + paper.doi}>Source</a>
+          ) : null}
+        </div>
+      );
+    })
+  }
+</div>
+
+<style>
+  @media print {
+    .bib {
+      break-before: page;
+    }
+  }
+</style>
