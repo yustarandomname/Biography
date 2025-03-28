@@ -1,0 +1,60 @@
+---
+import {
+  refState,
+  type RefType,
+} from '@/components/svelte/bib/RefState.svelte';
+
+interface Props {
+  type: RefType;
+  name: string;
+}
+
+const { type, name } = Astro.props as Props;
+
+const sanitizedLabel = name.replaceAll(/\s/g, '-').toLowerCase();
+
+refState.addItem(name, type);
+---
+
+{
+  type == 'Section' && (
+    <h2 class="label inline" id={sanitizedLabel}>
+      {refState.getItem(type)}.
+    </h2>
+  )
+}
+{
+  type == 'Subsection' && (
+    <h3 class="label inline" id={sanitizedLabel}>
+      {refState.getItem('Section')}.{refState.getItem(type)}.
+    </h3>
+  )
+}
+{
+  type == 'Subsubsection' && (
+    <h4 class="label inline" id={sanitizedLabel}>
+      {refState.getItem('Section')}.{refState.getItem('Subsection')}.{refState.getItem(type)}.
+    </h4>
+  )
+}
+{
+  type == 'Figure' && (
+    <h5 class="label inline" id={sanitizedLabel}>
+      {refState.getItem(type)}.
+    </h5>
+  )
+}
+{
+  type == 'Table' && (
+    <h5 class="label inline" id={sanitizedLabel}>
+      {refState.getItem(type)}.
+    </h5>
+  )
+}
+{
+  type == 'Equation' && (
+    <span class="label inline" id={sanitizedLabel}>
+      {refState.getItem(type)}.
+    </span>
+  )
+}

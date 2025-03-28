@@ -62,7 +62,7 @@ interface WebPage extends Base {
 
 export type Paper = TechReport | ResearachPaper | Journal | Book | WebPage;
 
-class Refs {
+class Bibs {
   papers = new SvelteMap<string, Paper>();
 
   clear() {
@@ -74,4 +74,4 @@ class Refs {
   }
 }
 
-export const refState = new Refs();
+export const bibState = new Bibs();

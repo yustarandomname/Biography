@@ -1,7 +1,8 @@
+import AutoRef from "./AutoRef.astro";
 import Bibliography from "./Bibliography.astro";
 import Cite from "./Cite.astro";
 import CiteList from "./CiteList.astro";
 import Paper from "./Paper.astro";
-import Ref from "./Ref.astro";
+import Label from "./Label.astro";
 
-export { Bibliography, Cite, CiteList, Paper, Ref };
+export { AutoRef, Bibliography, Cite, CiteList, Paper, Label };

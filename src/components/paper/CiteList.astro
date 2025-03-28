@@ -1,5 +1,5 @@
 ---
-import { refState, type Paper } from '@/components/svelte/bib/BibState.svelte';
+import { bibState, type Paper } from '@/components/svelte/bib/BibState.svelte';
 import { toString, toId } from '@/components/paper/paperToCiteString';
 import type { MasterPapers } from '@/bibs/master-thesis-bib';
 
@@ -19,7 +19,7 @@ const { papers, paperIds } = Astro.props as Props<MasterPapers>;
       if (!paper) return null;
 
       // Add paper to bibliography
-      refState.addPaper(paper);
+      bibState.addPaper(paper);
 
       return (
         <div class="inline mx-0">

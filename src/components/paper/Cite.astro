@@ -1,5 +1,5 @@
 ---
-import { refState, type Paper } from '@/components/svelte/bib/BibState.svelte';
+import { bibState, type Paper } from '@/components/svelte/bib/BibState.svelte';
 import { toString, toId } from '@/components/paper/paperToCiteString';
 import type { MasterPapers } from '@/bibs/master-thesis-bib';
 
@@ -16,7 +16,7 @@ if (!paper) {
   console.log('Could not find paper with id', paperId);
 } else {
   // Add paper to bibliography
-  refState.addPaper(paper);
+  bibState.addPaper(paper);
 }
 ---
 

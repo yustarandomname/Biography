@@ -31,6 +31,7 @@ export function toString(paper: Paper) {
 export function toId(paperId: string) {
   return paperId
     .replaceAll("mst/", "")
+    .replaceAll("bst/", "")
     .replaceAll(/[^a-zA-Z0-9]/g, "_")
     .toLocaleLowerCase();
 }

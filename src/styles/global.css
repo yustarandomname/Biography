@@ -172,6 +172,10 @@
     display: inline;
   }
 
+  div.prose .label + * {
+    display: inline;
+  }
+
   div.prose p:has(+ .citeList) {
     display: inline;
   }

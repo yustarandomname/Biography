@@ -1,8 +1,8 @@
 ---
-import { refState } from '@/components/svelte/bib/BibState.svelte';
+import { bibState } from '@/components/svelte/bib/BibState.svelte';
 import { toString, toId } from '@/components/paper/paperToCiteString';
 
-const papers = Array.from(refState.papers.values()).toSorted((a, b) => {
+const papers = Array.from(bibState.papers.values()).toSorted((a, b) => {
   return toString(a).localeCompare(toString(b));
 });
 ---

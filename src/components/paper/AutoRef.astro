@@ -1,0 +1,20 @@
+---
+import { refState } from '@/components/svelte/bib/RefState.svelte';
+import AutoRefNumber from '@/components/svelte/AutoRefNumber.svelte';
+
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props as Props;
+
+const sanitizedLabel = label.replaceAll(/\s/g, '-').toLowerCase();
+
+const { index, type } = refState.getIndex(label);
+---
+
+<a href={'#' + sanitizedLabel}>
+  {type}
+
+  <AutoRefNumber {label} />
+</a>
