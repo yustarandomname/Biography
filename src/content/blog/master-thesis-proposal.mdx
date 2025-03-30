@@ -27,28 +27,27 @@ import { papers } from "@/bibs/master-thesis-bib";
 
 ## Title and Research Question
 
-> "Interactive visual manipulation of large-scale line data"
+> Interactive visual manipulation of large-scale line data
 
-The term “large scale” refers to thousands or millions of (PCP) lines; this can be, for example,
-millions of RIS data lines <Cite papers={papers} paperId="mst/2022_gch_andra" /> or large-scale
+The term “large scale” refers to thousands or millions of Paralell Coordinate Plot (PCP) lines; this can be, for example,
+millions of Reflectance Imaging Spectroscopy (RIS) data lines <Cite papers={papers} paperId="mst/2022_gch_andra" /> or large-scale
 weather data <Cite papers={papers} paperId="mst/Albero" /> <Cite papers={papers} paperId="mst/ZHAO2015156" />.
-I would like to focus on fuzzy-clustering <Cite papers={papers} paperId="mst/shimony2002automated" /> certain
-line groups by guiding a user by pulling certain lines in or out of context. My research questions
-are stated as follows:
+I would like to focus on fuzzy-clustering <Cite papers={papers} paperId="mst/shimony2002automated" />
+line groups by guiding expert users to pull certain lines in or out of context. My research questions are as follows:
 
-- (Main question) How to, as an expert using the system, effectively cluster large-scale line data with minimal effort?
+- (Main question) How can, an expert using the system developed in this paper, effectively cluster large-scale line data with minimal effort?
   - How to optimally (with as few clicks) select certain lines to be in or out of focus?
-  - How to help a user to cluster lines in a semi-automatic way?
   - How to make the rendering of large-scale line data more efficient?
+  - How to help a user to cluster lines in a semi-automatic way? And, when a automatic selection is made, how to make sure it is what the user actually expected to select?
 
 ## Background
 
 To gain a better understanding of how this research differs from previous work, it is important
-to understand the current state of the art. This section explains what others have done in the fields
-of selecting large-scale high-dimensional, rendering, and clustering line data.
+to understand the current state of the art. This section explains in a short review what existing 
+research has been done in the following three key areas: large-scale high-dimensional data selection,
+data rendering techniques, and line data clustering methodologies.
 
-Many authors have attemted to solve the problem of clustering (large-scale) point data
-
+Many authors have attempted to solve the problem of clustering (large-scale) point data
 <CiteList
   papers={papers}
   paperIds={[
@@ -56,55 +55,56 @@ Many authors have attemted to solve the problem of clustering (large-scale) poin
     "mst/ben2015computational",
     "mst/Amagata2023EfficientDC",
   ]}
-/>
-
-. This is done by using a variety of techniques, such as the use of a
+/>. This is done by using a variety of techniques, such as the use of a
 Mahalanobis brush <Cite papers={papers} paperId="mst/fan2021sketch" /> or a
-fuzzy classifier
-
+fuzzy classifier 
 <CiteList
   papers={papers}
   paperIds={["mst/9120181", "mst/YANG19931", "mst/shimony2002automated"]}
-/>
-. or K-means++ clustering with a lightweight neural network
-<Cite papers={papers} paperId="mst/10410948" />. This paper will borow some of
+/> or K-means++ clustering with a lightweight neural network
+<Cite papers={papers} paperId="mst/10410948" />. This paper will borrow some of
 these techniques and apply them to 2D line data.
 
 Fewer research has been done on clustering large-scale line data. 
 One of the few papers that has been written about this is the work by 
-Trautner <Cite papers={papers} paperId="mst/trautner2021line" />. This paper
-assumed the data to be pre-clustered and only focused on the rendering of the data. However, the 
-rendering technique does prioritise well-segmented clusters and renders them in a way that 
-makes them stand out. This paper will focus on the clustering of the data and will use the 
+T.Trautner et al. <Cite papers={papers} paperId="mst/trautner2021line" />. Their paper
+assumed that the data was pre-clustered and only focused on the rendering of this data. However, the 
+methods in the paper do prioritise well-segmented clusters and renders lines in a way that 
+makes them stand out. This paper will focus on effective clustering of the line data and will use the 
 rendering technique as a way to show the user the clusters.
 
-When a lines are not yet clustered, the data can be hard to differentiate when many lines are drawn.
-A line plot with many groups (>6) is commonly called a “spaghetti plot” [^1]. These plots are often 
-used in meteorology to visualize weather patterns [^2]. A common 
-downside is that many lines visualized in one plot can be hard to read for an expert. A trivial way 
-to reduce this clutter, is to display lines with certain channels from T. Munzner [^11] 
-like color, size, and transparency. A. Kamal et al. [^6] assumes that the lines originate from a certain mean-line that has multiple   
-uses branches of noise, the dataset is encoded using color (gradients) to visualize line uncertainties.
+When lines are not yet clustered, it can be difficult to differentiate lines.
+A line plot with many groups (>6) is commonly called a “spaghetti plot” <Cite papers={papers} paperId="mst/diggle2002analysis" />. These plots are often 
+used in meteorology to visualize weather patterns <Cite papers={papers} paperId="mst/5613483" />. A common 
+downside is: "many lines visualized in one plot can be hard to read for an expert". A trivial way 
+to reduce this clutter, is to display lines with certain channels from T. Munzner <Cite papers={papers} paperId="mst/munzner2014visualization" />.
+like color, size, and transparency. These three caracteristics are forinstance used by A. Kamal et al. <Cite papers={papers} paperId="mst/Kamal2021"/>. 
+They assume that the lines originate from a certain mean-line that has multiple   
+branches of noise, the dataset is encoded using color (gradients) to visualize line uncertainties.
 
-Lines can be aggregated to simplify the plot. One such way is to measure each line as being typical or outlying. 
-P. Micheaux et al. [^7] proposes a new statistical method called **curve depth ** that helps analyze data represented as curves or 
-trajectories and labels each line as typical or outlying. Agregating with (Iso)contours is another common 
-visualization technique to reduce clutter in spaghetti plots [^10]. F. Ferstl [^9] extends
+Lines can be aggregated to simplify the plot. One way is to measure each line as being typical or outlying. 
+P. Micheaux et al. <Cite papers={papers} paperId="mst/deMicheaux2020" /> proposes a new statistical method called
+**curve depth** that helps analyze data represented as curves or 
+{/* Add paper from thomas with cruve depth */}
+trajectories and labels each line as typical or outlying. Aggregating with (Iso)contours is another common 
+visualization technique to reduce clutter in spaghetti plots <Cite papers={papers} paperId="mst/5360497" />. F. Ferstl <Cite papers={papers} paperId="mst/Ferstl2016" /> extends
 this idea by incorporating conditional probability visualizations to reveal joint occurrences of contours across 
 different regions, offering a more informative and less cluttered alternative to traditional spaghetti plots.
 
-
-<Cite papers={papers} paperId="mst/wei2011parallel" /> introduces a
+To automate the work of clustering, J.Wei et al. <Cite papers={papers} paperId="mst/wei2011parallel" /> introduces a
 GPU-optimized Expectation Maximization algorithm for clustering large-scale
 point data. Although this method is able to establish a great seed for reaching
-some local optimum, expert-led clustering is expected to achieve a better
-clustering
-<Cite papers={papers} paperId="mst/rsos.211189" />. This paper will focus on
-creating better tools for experts to cluster the data in a more effective way.
-
-An expert lead tool has been developed by A. Popa <Cite papers={papers} paperId="mst/2022_gch_andra" />. This tool allows the user to select points in a 2D space and cluster them. This paper will focus on extending this tool to a higher dimension by directly selecting lines.
+a local optimum, expert-led clustering is expected to achieve a better
+clustering <Cite papers={papers} paperId="mst/rsos.211189" />. 
+An expert lead tool has been developed by A. Popa <Cite papers={papers} paperId="mst/2022_gch_andra" />. 
+This tool allows the user to map the line data with the help of t-SNE to a 2D point cloud. 
+A multi-view approach is used to show the user the point and line data at the same time.
+By clustering the point data, the user can view what lines are in the same cluster.
+This paper will focus on extending their tool to a higher dimension by directly selecting lines.
 
 ## Evaluation metric
+These evaluation metrics will be based on a user study with a few experts in various fields to find 
+out if the applicaiton can be used to cluster lines in most general cases. The main evaluation metrics will be:
 
 1. A user is able to select and group out of a large co-hort of lines with low FP/FN
 1. When a semi-automatic brush is implemented, the stearing of the user should be as minimal as posible. This means the automatic part should score at least some percentage in some artificial/real datasets when selecting/grouping lines.
@@ -218,14 +218,9 @@ Based on the results of the first nine weeks, I will decide on the next steps. T
 <Bibliography />
 
 <div class="bib">
-[^1]: Peter Diggle, Peter J Diggle, Patrick Heagerty, Patrick J Heagerty, Kung-Yee Liang, Scott Zeger, et al. Analysis of longitudinal data. Oxford University Press, 2002.
-[^2]: Jibonananda Sanyal, Song Zhang, Jamie Dyer, Andrew Mercer, Philip Amburn, and Robert Moorhead. Noodles: A tool for visualization of numerical weather model ensemble uncertainty. IEEE Transactions on Visualization and Computer Graphics, 16(6):1421–1430, 2010.
-[^3]: [Bridging Theory with Practice: An Exploratory Study of Visualization Use and Design for Climate Model Comparison](https://www.researchgate.net/publication/276880240_Bridging_Theory_with_Practice_An_Exploratory_Study_of_Visualization_Use_and_Design_for_Climate_Model_Comparison)
+
 [^4]: [https://pmc.ncbi.nlm.nih.gov/articles/PMC2937254/](https://pmc.ncbi.nlm.nih.gov/articles/PMC2937254/)
-[^6]: [https://link-springer-com.tudelft.idm.oclc.org/article/10.1007/s12650-021-00755-1](https://link-springer-com.tudelft.idm.oclc.org/article/10.1007/s12650-021-00755-1)
-[^7]: [https://www.tandfonline.com/doi/full/10.1080/01621459.2020.1745815#d1e8715](https://www.tandfonline.com/doi/full/10.1080/01621459.2020.1745815#d1e8715)
-[^8]: A. popa
-[^9]: [https://onlinelibrary.wiley.com/doi/10.1111/cgf.12898](https://onlinelibrary.wiley.com/doi/10.1111/cgf.12898)
-[^10]: [https://ieeexplore.ieee.org/abstract/document/5360497](https://ieeexplore.ieee.org/abstract/document/5360497)
-[^11]: Tamara Munzner. Visualization Analysis and Design. A K Peters Visualization Series, CRC Press, 2014. https://www.cs.ubc.ca/~tmm/vadbook/
+{/* [^6]: [https://link-springer-com.tudelft.idm.oclc.org/article/10.1007/s12650-021-00755-1](https://link-springer-com.tudelft.idm.oclc.org/article/10.1007/s12650-021-00755-1) */}
+{/* [^7]: [https://www.tandfonline.com/doi/full/10.1080/01621459.2020.1745815#d1e8715](https://www.tandfonline.com/doi/full/10.1080/01621459.2020.1745815#d1e8715) */}
+{/* [^9]: [https://onlinelibrary.wiley.com/doi/10.1111/cgf.12898](https://onlinelibrary.wiley.com/doi/10.1111/cgf.12898) */}
 </div>

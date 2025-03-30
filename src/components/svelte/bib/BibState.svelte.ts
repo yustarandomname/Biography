@@ -4,8 +4,8 @@ type Base = {
   ID: string;
   author: string;
   authors: string[];
-  abstract?: string;
   title: string;
+  abstract?: string;
   url?: string;
   doi?: string;
   year: string;
