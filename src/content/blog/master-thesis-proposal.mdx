@@ -12,7 +12,10 @@ import { papers } from "@/bibs/master-thesis-bib";
 
 ## Short Abstract
 
-> As datasets grow in size, the demand for efficient rendering and manipulation of this data intensifies. This research paper explores how GPU shaders can significantly enhance the processing of large-scale line data. In addition, various (semi-automatic) interaction tools are explored to optimally cluster line data and effectively select certain lines to be in or out of focus.
+> As datasets grow in size, the demand for efficient rendering and manipulation of this data intensifies. 
+> This research paper explores how GPU shaders can significantly enhance the processing of large-scale line data. 
+> In addition, various (semi-automatic) interaction tools are explored to optimally cluster line data and effectively 
+> select certain lines to be in or out of focus.
 
 ### Visual abstract
 
@@ -33,10 +36,10 @@ I would like to focus on fuzzy-clustering <Cite papers={papers} paperId="mst/shi
 line groups by guiding a user by pulling certain lines in or out of context. My research questions
 are stated as follows:
 
-- (Main question) How to effectively cluster large-scale line data?
+- (Main question) How to, as an expert using the system, effectively cluster large-scale line data with minimal effort?
+  - How to optimally (with as few clicks) select certain lines to be in or out of focus?
   - How to help a user to cluster lines in a semi-automatic way?
   - How to make the rendering of large-scale line data more efficient?
-  - How to optimally select certain lines to be in or out of focus?
 
 ## Background
 
@@ -67,7 +70,29 @@ fuzzy classifier
 <Cite papers={papers} paperId="mst/10410948" />. This paper will borow some of
 these techniques and apply them to 2D line data.
 
-Fewer research has been done on clustering large-scale line data. One of the few papers that has been written about this is the work by Trautner <Cite papers={papers} paperId="mst/trautner2021line" />. This paper assumed the data to be pre-clustered and only focused on the rendering of the data. However, the rendering technique does prioritise well-segmented clusters and renders them in a way that makes them stand out. This paper will focus on the clustering of the data and will use the rendering technique as a way to show the user the clusters.
+Fewer research has been done on clustering large-scale line data. 
+One of the few papers that has been written about this is the work by 
+Trautner <Cite papers={papers} paperId="mst/trautner2021line" />. This paper
+assumed the data to be pre-clustered and only focused on the rendering of the data. However, the 
+rendering technique does prioritise well-segmented clusters and renders them in a way that 
+makes them stand out. This paper will focus on the clustering of the data and will use the 
+rendering technique as a way to show the user the clusters.
+
+When a lines are not yet clustered, the data can be hard to differentiate when many lines are drawn.
+A line plot with many groups (>6) is commonly called a “spaghetti plot” [^1]. These plots are often 
+used in meteorology to visualize weather patterns [^2]. A common 
+downside is that many lines visualized in one plot can be hard to read for an expert. A trivial way 
+to reduce this clutter, is to display lines with certain channels from T. Munzner [^11] 
+like color, size, and transparency. A. Kamal et al. [^6] assumes that the lines originate from a certain mean-line that has multiple   
+uses branches of noise, the dataset is encoded using color (gradients) to visualize line uncertainties.
+
+Lines can be aggregated to simplify the plot. One such way is to measure each line as being typical or outlying. 
+P. Micheaux et al. [^7] proposes a new statistical method called **curve depth ** that helps analyze data represented as curves or 
+trajectories and labels each line as typical or outlying. Agregating with (Iso)contours is another common 
+visualization technique to reduce clutter in spaghetti plots [^10]. F. Ferstl [^9] extends
+this idea by incorporating conditional probability visualizations to reveal joint occurrences of contours across 
+different regions, offering a more informative and less cluttered alternative to traditional spaghetti plots.
+
 
 <Cite papers={papers} paperId="mst/wei2011parallel" /> introduces a
 GPU-optimized Expectation Maximization algorithm for clustering large-scale
@@ -191,3 +216,16 @@ Based on the results of the first nine weeks, I will decide on the next steps. T
 - (Write) Abstract, Method, Discussion & Conclusion
 
 <Bibliography />
+
+<div class="bib">
+[^1]: Peter Diggle, Peter J Diggle, Patrick Heagerty, Patrick J Heagerty, Kung-Yee Liang, Scott Zeger, et al. Analysis of longitudinal data. Oxford University Press, 2002.
+[^2]: Jibonananda Sanyal, Song Zhang, Jamie Dyer, Andrew Mercer, Philip Amburn, and Robert Moorhead. Noodles: A tool for visualization of numerical weather model ensemble uncertainty. IEEE Transactions on Visualization and Computer Graphics, 16(6):1421–1430, 2010.
+[^3]: [Bridging Theory with Practice: An Exploratory Study of Visualization Use and Design for Climate Model Comparison](https://www.researchgate.net/publication/276880240_Bridging_Theory_with_Practice_An_Exploratory_Study_of_Visualization_Use_and_Design_for_Climate_Model_Comparison)
+[^4]: [https://pmc.ncbi.nlm.nih.gov/articles/PMC2937254/](https://pmc.ncbi.nlm.nih.gov/articles/PMC2937254/)
+[^6]: [https://link-springer-com.tudelft.idm.oclc.org/article/10.1007/s12650-021-00755-1](https://link-springer-com.tudelft.idm.oclc.org/article/10.1007/s12650-021-00755-1)
+[^7]: [https://www.tandfonline.com/doi/full/10.1080/01621459.2020.1745815#d1e8715](https://www.tandfonline.com/doi/full/10.1080/01621459.2020.1745815#d1e8715)
+[^8]: A. popa
+[^9]: [https://onlinelibrary.wiley.com/doi/10.1111/cgf.12898](https://onlinelibrary.wiley.com/doi/10.1111/cgf.12898)
+[^10]: [https://ieeexplore.ieee.org/abstract/document/5360497](https://ieeexplore.ieee.org/abstract/document/5360497)
+[^11]: Tamara Munzner. Visualization Analysis and Design. A K Peters Visualization Series, CRC Press, 2014. https://www.cs.ubc.ca/~tmm/vadbook/
+</div>
