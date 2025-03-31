@@ -5,8 +5,9 @@ pubDate: "Mar 14 2025"
 heroImage: "/blog-placeholder-4.jpg"
 ---
 
-import { Paper, Cite, CiteList, Bibliography } from "@/components/paper";
-import { papers } from "@/bibs/master-thesis-bib";
+import { Image } from 'astro:assets';
+import { Cite, CiteList, Bibliography } from "@/components/paper";
+import { papers } from "@/content/blog/master-thesis-assets/master-thesis-bib";
 
 # Interactive visual manipulation of large-scale line data
 
@@ -19,11 +20,7 @@ import { papers } from "@/bibs/master-thesis-bib";
 
 ### Visual abstract
 
-<img
-  src="/visual-abstract.png"
-  alt="Visual abstract"
-  style={{ width: "100%", height: "auto" }}
-/>
+<Image src="/blogs/master-thesis-proposal/visual-abstract.png" alt="Visual abstract" width={926} height={300} />
 
 ## Title and Research Question
 
@@ -140,7 +137,7 @@ Based on the results of the first nine weeks, I will decide on the next steps. T
 ### During the Seminar
 
 - (Research) the work by T. Trautner (Line Weaver, Honeycomb Plots, Sunspot Plots)
-- (Implement) a WebGL version of <Cite papers={papers} paperId="mst/mst/trautner2021line"/> in 3D
+- (Implement) a WebGL version of <Cite papers={papers} paperId="mst/trautner2021line"/> in 3D
 
 ### Weeks ≤0 - Feb 1 - Mar 14
 

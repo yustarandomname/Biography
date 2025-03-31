@@ -151,6 +151,20 @@
 
 @layer utilities {
   div.prose {
+    --tw-prose-body: var(--color-lime-950);
+    --tw-prose-headings: var(--color-orange-500);
+    --tw-prose-lead: var(--color-orange-700);
+    --tw-prose-bold: var(--color-orange-700);
+    --tw-prose-counters: var(--color-orange-700);
+    --tw-prose-bullets: var(--color-orange-700);
+    --tw-prose-hr: var(--color-orange-700);
+    --tw-prose-quotes: var(--color-orange-800);
+    --tw-prose-quote-borders: oklch(0.71 0.21 47.6 /  0.5);
+
+    color: var(--tw-prose-body);
+  }
+
+  .dark div.prose {
     --tw-prose-body: white;
     --tw-prose-headings: var(--color-orange-500);
     --tw-prose-lead: var(--color-orange-300);
@@ -159,13 +173,25 @@
     --tw-prose-bullets: var(--color-orange-300);
     --tw-prose-hr: var(--color-orange-300);
     --tw-prose-quotes: var(--color-orange-100);
+    --tw-prose-quote-borders: oklch(0.71 0.21 47.6 /  0.5);
+
+    color: var(--tw-prose-body);
   }
 
   div.prose a {
-    color: var(--color-orange-100);
+    color: var(--color-orange-300);
   }
   div.prose a:visited {
-    color: var(--color-orange-200);
+    color: var(--color-orange-400);
+  }
+
+  .dark {
+    & div.prose a {
+      color: var(--color-orange-100);
+    }
+    & div.prose a:visited {
+      color: var(--color-orange-200);
+    }
   }
 
   div.prose .citeList + p {
@@ -181,22 +207,23 @@
   }
 
   @media print {
-    body {
+    html,body {
       color: black;
-      background: white;
+      background: white !important;
     }
 
     div.prose {
-      --tw-prose-body: black;
-      --tw-prose-headings: black;
-      --tw-prose-lead: black;
-      --tw-prose-bold: black;
-      --tw-prose-counters: black;
-      --tw-prose-bullets: black;
-      --tw-prose-hr: black;
-      --tw-prose-quotes: black;
+      --tw-prose-body: black !important;
+      --tw-prose-headings: black !important;
+      --tw-prose-lead: black !important;
+      --tw-prose-bold: black !important;
+      --tw-prose-counters: black !important;
+      --tw-prose-bullets: black !important;
+      --tw-prose-hr: black !important;
+      --tw-prose-quotes: black !important;
 
       max-width: 100ch;
+      color: black !important;
     }
 
     .div.prose.two-column {
@@ -205,11 +232,19 @@
     }
 
     div.prose a {
-      color: black;
+      color: black !important;
     }
 
     div.prose a:visited {
-      color: gray;
+      color: gray !important;
     }
   }
+
+  @page { 
+    background:white;
+    size: auto;   /* auto is the initial value */ 
+
+    /* this affects the margin in the printer settings */ 
+    margin: 30mm auto 30mm auto;  
+  } 
 }

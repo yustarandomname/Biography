@@ -1,60 +1,57 @@
 ---
-import {
-  refState,
-  type RefType,
-} from '@/components/svelte/bib/RefState.svelte';
+import { SectionMap, type RefType } from './SectionMap';
 
 interface Props {
   type: RefType;
-  name: string;
+  title: string;
+  map: SectionMap;
+  ref?: string;
 }
 
-const { type, name } = Astro.props as Props;
+const { type, title, map, ref } = Astro.props as Props;
 
-const sanitizedLabel = name.replaceAll(/\s/g, '-').toLowerCase();
-
-refState.addItem(name, type);
+const sanitizedLabel = SectionMap.sanitizeLabel(ref ?? title)
 ---
 
 {
   type == 'Section' && (
-    <h2 class="label inline" id={sanitizedLabel}>
-      {refState.getItem(type)}.
+    <h2 class="label" id={sanitizedLabel}>
+      {map.getSectionStr(sanitizedLabel, type)}. {title}
     </h2>
   )
 }
 {
   type == 'Subsection' && (
-    <h3 class="label inline" id={sanitizedLabel}>
-      {refState.getItem('Section')}.{refState.getItem(type)}.
+    <h3 class="label" id={sanitizedLabel}>
+      {map.getSectionStr(sanitizedLabel, type)}. {title}
     </h3>
   )
 }
 {
   type == 'Subsubsection' && (
-    <h4 class="label inline" id={sanitizedLabel}>
-      {refState.getItem('Section')}.{refState.getItem('Subsection')}.{refState.getItem(type)}.
+    <h4 class="label" id={sanitizedLabel}>
+      {map.getSectionStr(sanitizedLabel, type)}. {title}
     </h4>
   )
 }
 {
   type == 'Figure' && (
-    <h5 class="label inline" id={sanitizedLabel}>
-      {refState.getItem(type)}.
+    <h5 class="label" id={sanitizedLabel}>
+      Fig ??.
     </h5>
   )
 }
 {
   type == 'Table' && (
-    <h5 class="label inline" id={sanitizedLabel}>
-      {refState.getItem(type)}.
+    <h5 class="label" id={sanitizedLabel}>
+      Tab ??.
     </h5>
   )
 }
 {
   type == 'Equation' && (
-    <span class="label inline" id={sanitizedLabel}>
-      {refState.getItem(type)}.
+    <span class="label" id={sanitizedLabel}>
+      Eqn ??.
     </span>
   )
 }

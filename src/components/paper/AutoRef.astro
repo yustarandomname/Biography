@@ -1,20 +1,16 @@
 ---
-import { refState } from '@/components/svelte/bib/RefState.svelte';
-import AutoRefNumber from '@/components/svelte/AutoRefNumber.svelte';
+import { SectionMap } from './SectionMap';
 
 interface Props {
   label: string;
+  map: SectionMap;
 }
 
-const { label } = Astro.props as Props;
+const { label, map } = Astro.props as Props;
 
-const sanitizedLabel = label.replaceAll(/\s/g, '-').toLowerCase();
-
-const { index, type } = refState.getIndex(label);
+const { index, type } = map.getSection(label);
 ---
 
-<a href={'#' + sanitizedLabel}>
-  {type}
-
-  <AutoRefNumber {label} />
-</a>
+<a 
+  href={'#' + SectionMap.sanitizeLabel(label)}
+>{type} {index.join('.')}</a>
