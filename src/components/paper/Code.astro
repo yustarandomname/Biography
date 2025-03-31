@@ -10,8 +10,6 @@ interface Props {
 const { label, title, map } = Astro.props as Props;
 
 const index = map.getLabelByType(label, 'Code');
-
-console.log(map.programs, label);
 ---
 
 <div class="bg-[#24292e] border rounded code">

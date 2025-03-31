@@ -31,7 +31,7 @@ const headers = {
       "Three-dimensional lattice phase states": {},
       "Contrast and similarities between models": {},
     },
-    "Discussion on discrete models": {},
+    "Discussion on discreet models": {},
     "Find other metrics": {},
     "Other fields of research": {},
   },
@@ -40,7 +40,16 @@ const headers = {
 };
 
 const tables = ["Algorithm speed", "Iteration speed"];
-const figures = ["new marker dist", "views"];
+const figures = [
+  "new marker dist",
+  "views",
+  "states",
+  "order-beta",
+  "final-order-beta-example",
+  "critical beta vs mass",
+  "critical beta vs ratio example",
+  "critical beta vs ratio",
+];
 const equations = [
   "marker distribution 2d",
   "agent movement 2D",
@@ -50,10 +59,7 @@ const equations = [
   "agent movement 3D",
   "order param 3d",
 ];
-const programs = [
-  "Update universe serial",
-  "Update universe parallel"
-]
+const programs = ["Update universe serial", "Update universe parallel"];
 
 class BSTSectionMap extends SectionMap {
   constructor() {

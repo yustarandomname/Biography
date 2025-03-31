@@ -141,7 +141,7 @@ The iteration process runs for each forward time step and will update the model 
 
 The iteration process starts by writing to the layer of the new marker using <AutoRef map={map} label="marker distribution general" />. The data from the old agent and marker layers are read and computed together. The result of the equation is stored in the layer of the new markers as illustrated in <AutoRef map={map} label="new marker dist" />.
 
-<Image src="/blogs/bachelor-thesis/Marker Distribution for Thesis.png" map={map} alt="new marker dist" label="new marker dist" width={839} height={751} class="rounded" >This figure shows an example of a lattice with L = 3 and D = 3. 
+<Image src="/blogs/bachelor-thesis/Marker Distribution for Thesis.png" map={map} alt="new marker dist" label="new marker dist" width={839} height={751}>This figure shows an example of a lattice with L = 3 and D = 3. 
 The example highlights how the markers are updated at position (0,0,0). A new lattice is created to store the next iteration of markers. 
 The old data from the marker and agent layers are read and combined to write to the new layer.</Image>
 
@@ -291,3 +291,134 @@ To enhance the algorithm's speed, it is advisable to minimise the number of meas
   ]} hasHead > Iterating to P iterations can be done with M measurements where M spans 0 to P in between P/M iterations. 
   Doing fewer measurements between iterations will speed up the GPU algorithm significantly. 
   For this table, the value 1000 is used for P.</Table>
+
+<Label type="Subsection" map={map} title="Comparing phase transitions between papers" />
+
+Previous research showed that various parameters had a significant impact on the phase transition of the model. We first detect a phase transition in our model in <AutoRef map={map} label="Well-mixed, well-segregated and partial-segregated states" />. Then, we analyse how total mass affects both 2D and 3D models in <AutoRef map={map} label="Comparing mass parameters" />. Finally, we compare phase transition with the ratio of <Equation latex="\gamma / \lambda" /> between models in <AutoRef map={map} label="Comparing lambda/gamma parameters" />.
+
+<Label type="Subsubsection" map={map} title="Well-mixed, well-segregated and partial-segregated states" />
+The random walker model from A. Alsenafi and A.B. Barbaro <Cite papers={papers} paperId="bst/ALSENAFI2018765" /> identified three different states for a model.
+
+1. **Well-mixed**: Species will move with an unbiased walk. This is translated to a low beta value.
+1. **Partial-segregated**: Species will move together, but not to the point of complete separation.
+1. **Well-segregated**: Species will move to a state where only two territories remain, one for each species. This corresponds to a beta parameter approaching 1.
+
+These states were also observed for the 3D model. This can be observed in <AutoRef map={map} label="states" />, where all images are using <Equation latex=" L = 50, \gamma = 0.5, \lambda = 0.5" />, the total mass is 12.5 million (50 agents per node per species) and an iteration count of 60,000. The top left image is a state observed at iteration 0. Because each agent starts off at a uniformly random location, this state is by definition a well-mixed state. The top right image displays a mix of blue and red species with many small territories. This suggests that species do not form distinct territories and remain well-mixed. The bottom left image depicts a partially segregated state with some islands of territories. We can see that agents have formed some structures from the initially mixed state, making them partially segregated. The bottom right image is well-segregated, with large territories for each species.
+
+Understanding how the model would further evolve can be done by looking at the trend of the order parameter defined in <AutoRef map={map} label="order param 3d" />. The corresponding order parameters over time for <AutoRef map={map} label="states" /> are displayed in <AutoRef map={map} label="order-beta" />. All states reach 90% of their final order parameter before 1000 iterations. At the 20000 iteration mark, all states have reached over 97% of their final order parameter. We notice from the evolution of the order parameter that the segregation occurs well before the first 50000 iterations.
+
+<Image map={map} src="/blogs/bachelor-thesis/Betas3DImage.png" label="states" width={638} height={658}>Top left: A model without iterating over it, 
+all models start off as well-mixed. Top right: A model with beta = 1e-8, this model is still classified as well-mixed. Bottom left: A model with beta = 
+5e-6, this model is classified as partial-segregated. Bottom right: A model with beta 1.5e-5, and is classified as well-segregated. All models have 
+total mass of 12.5 million, lattice area = <Equation latex="50^3, \gamma=0.5" /> and <Equation latex="\lambda = 0.5" />.</Image>
+
+<br />
+
+{/* 889 × 490 */}
+<Image map={map} src="/blogs/bachelor-thesis/OrderParamsLongImage.png" label="order-beta" width={889} height={490}>Order parameters for different beta 
+values corresponding to (from top to bottom) a well-segregated, partial-segregated and well-mixed state.  Using a lattice length of 50, the mass is 12.5 
+million, <Equation latex="\gamma=0.5" /> and <Equation latex=" \lambda = 0.5" />.</Image>
+
+<Label type="Subsubsection" map={map} title="Comparing mass parameters" />
+Using the knowledge from <AutoRef map={map} label="Well-mixed, well-segregated and partial-segregated states" />, the model is unlikely to switch from well-mixed to well-segregated after 50,000 iterations. The previous territory paper concluded that using more mass corresponds to fewer beta required to reach a segregated state.
+
+After 50,000 iterations, we calculate the final order parameter value for three different beta values. The results are presented in <AutoRef map={map} label="final-order-beta-example" />. We set the critical <Equation latex="\beta" /> to be the same as the previous paper for easier comparison. This <Equation latex="\beta" /> corresponds to an order parameter of 0.01, which we denote as <Equation latex="\beta *" />. Validation that this value is correct in 3D is provided in Appendix B.
+
+The first plot in <AutoRef map={map} label="final-order-beta-example" /> shows that for a mass of 1,600,000, the critical <Equation latex="\beta" /> value for the phase transition is approximately <Equation latex="3.55 \\times e^{-6}" />. In contrast, when the mass is increased to 3,200,000, the critical <Equation latex="\beta" /> value decreases to around <Equation latex="2.32 \\times e^{-6}" />, as shown in the right plot. These findings suggest that as the system's mass increases, the critical <Equation latex="\beta" /> value for the phase transition decreases. This observation is consistent with the previous work on 2D territory formation.
+
+{/* 691 × 416 */}
+<Image map={map} src="/blogs/bachelor-thesis/mass-v-final-order.png" label="final-order-beta-example" width={691} height={416}>Final order-parameters 
+for different values of beta. The left graph has a total mass of 1,600,000, and the right has a total mass of 3,200,000. Both graphs were produced with 
+a lattice length of 20, <Equation latex="\gamma=0.5" /> and <Equation latex=" \lambda = 0.5" />.</Image>
+
+Generalising this finding with different masses to critical betas is shown in <AutoRef map={map} label="critical beta vs mass" />. The continuous stability analysis is plotted next to our measurements. It can be observed how the discrete 3D model has a similar shape to the two-dimensional stability analysis case.
+
+{/* 988 × 408 */}
+<Image map={map} src="/blogs/bachelor-thesis/critical beta vs mass.png" label="critical beta vs mass" width={988} height={408}>Critical <Equation latex="\beta" /> 
+for different total masses. <b>Left:</b> (their) 2D stability analysis, measure where taken with lattice length of 50, <Equation latex="\gamma=0.5" /> and 
+<Equation latex=" \lambda = 0.5" />. <b>Right:</b> (our) 3D discreet model, measures were taken with a lattice length of 20, <Equation latex="\gamma=0.5" /> 
+and <Equation latex=" \lambda = 0.5" />.</Image>
+
+<Label type="Subsubsection" map={map} title="Comparing lambda/gamma parameters" />
+The same procedure can be done to compare the behaviour of the ratio of gamma and lambda. The previous paper concluded that changing and making the ratio of gamma/lambda smaller resulted in an approximate doubling of critical beta.
+
+We investigated this finding in three dimensions for two ratios: 0.25/0.5 and 0.75/0.5 (see <AutoRef map={map} label="critical beta vs ratio example" />). The ratio of 1/2 was measured with a critical beta of 7.14e-6. When the ratio was increased to 3/2, the critical beta decreased to 2.27e-6. This roughly corresponds to a threefold decrease in critical beta. This finding is consistent with previous research on two-dimensional territory formation.
+
+<AutoRef map={map} label="critical beta vs ratio"/> reveals generalised measurements for a range of ratios. We plot our 3D model findings alongside the previous 2D model results. We scale both axes to the same size to allow for better analysis. The graphs have a similar shape, although remember that the total mass and lattice sizes differ between models.
+
+<br/>
+<br/>
+
+{/* 691 × 416 */}
+<Image map={map} src="/blogs/bachelor-thesis/Gamma vs Lambda.png" label="critical beta vs ratio example" width={691} height={416}>Final order-parameters 
+for different ratios of <Equation latex="\gamma/\lambda" />. The left graph has a ratio of 0.25/0.5 = 1/2, and the right has a ratio of 0.75/0.5 = 3/2. 
+Both graphs were produced with a lattice length of 20, and a total mass of 3,200,000.</Image>
+
+<br/>
+
+{/* 920 × 422 */}
+<Image map={map} src="/blogs/bachelor-thesis/Critical Beta vs Ratio.png" label="critical beta vs ratio" width={920} height={422}>Critical 
+<Equation latex="\beta" /> for different ratios of <Equation latex="\gamma/\lambda" />. <b>Left:</b> (their) 2D analysis both stability
+analysis and discrete measurements, measures were taken with a lattice length of 50, total mass = 200,000.  <b>Right:</b> (our) 3D discreet 
+model, measures were taken with a lattice length of 20, and a total mass of 3,200,000.</Image>
+
+---
+
+<Label type="Section" map={map} title="Argumentation and discussion" />
+
+Using the results obtained in the previous section, we address the limitations of the presented model for territory formation, which includes the consideration of how well our comparisons can be made between models. However, the section will also explore the possibilities for future work, such as the extension of the model to multiple species, the exploration of different metrics for analysing behavioural patterns, and the application of the model to other fields of research, such as disease spread.
+
+<Label type="Subsection" map={map} title="Discuss results" />
+
+This section revisits the two sub-questions asked in the introduction to determine if they have been adequately answered. Each sub-question is elaborated in its own subsection.
+
+<Label type="Subsubsection" map={map} title="Three-dimensional lattice phase states" />
+
+The first sub-question to be discussed is: "What are the states of the three-dimensional lattice model, and are they well-mixed or well-segregated". Well-mixed states are, by definition, present at the start of each model. <AutoRef map={map} label="states"/> and <AutoRef map={map} label="order-beta" /> demonstrate how an ordered state is created from chaos. We observed that larger values of beta produce larger territories, which are classified as well-segregated.
+
+The previous paper noted that models showed signs of segregation after the order parameter surpassed the value of 0.01. The same threshold was chosen for our model for better comparisons. Curious readers can find multiple two-dimensional slices and three-dimensional models in the Appendix validation, which validate that the threshold is still a valid measure.
+
+<Label type="Subsubsection" map={map} title="Contrast and similarities between models" />
+
+The second sub-question was: "How does mass and gamma/lambda ratio influence the phase transition of the 3D model?". <AutoRef map={map} label="final-order-beta-example" /> and <AutoRef map={map} label="critical beta vs ratio example" /> demonstrate that similarly to the findings of the previous paper, increasing the total mass or the <Equation latex="\gamma" /> to <Equation latex="\lambda" /> ratio decreases the amount of beta required to reach a segregated state.
+
+To determine if the behaviour was consistent across a wider range of masses and ratios, we plotted them and compared them to the 2D model. We noticed that the graph shape was similar between the models, concluding that the same behaviour could be observed. We take caution when making direct comparisons between models; this will be discussed in <AutoRef map={map} label="Discussion on discreet models" />.
+
+<Label type="Subsection" map={map} title="Discussion on discreet models" />
+
+Analysis of the critical beta parameter in relation to total mass for both 2D continuous and 3D discrete models displays similar behaviour across dimensions. However, a noteworthy difference is that the 3D model needs significantly more beta to reach the same critical point for each total mass. The same holds for comparing the behaviour of <Equation latex="\gamma/\lambda" /> ratio.
+
+The main cause for this large increase must be linked to the number of dimensions an agent can walk towards. Other smaller factors may also be involved. To enable direct comparisons between models, a continuous 3D model should be developed for further analysis.
+
+Discrete models are useful for exploring new behaviours, while continuous models provide more accurate representations for comparing models. Continuous models eliminate random fluctuations that can be introduced by discrete models. In summary, further research should be devoted to transforming our discrete results into a continuous model to allow for direct comparisons between models.
+
+<Label type="Subsection" map={map} title="Find other metrics" />
+Research is a collaborative effort, and often, one study can lead to the discovery of new insights and avenues for exploration. Because this paper has an accessible web version published, it is easy to find new interesting behaviour for other researchers.
+
+In the background of this paper, in <AutoRef map={map} label="Taking a drunkard walk" /> it is noted that the amount of data that can be generated with random walker models is endless. An infinite amount of parameters and iterations can be combined to produce a meaningful output. This paper computes behavioural patterns using our order parameter, defined in <AutoRef map={map} label="3D order parameter" />. Different (order) functions can be defined to analyse different types of behavioural patterns in territory formation.
+
+For example, M. Skrodzki et al. <Cite papers={papers} paperId="bst/martinPaper" /> uncovered a metric related to the typology of certain states in three-dimensional Turing-like patterns. Further research can be conducted into finding a similar behaviour for our three-dimensional patterns <Cite papers={papers} paperId="bst/test" />.
+
+In their extension paper <Cite papers={papers} paperId="bst/Alsenafi_Barbaro_2021" />, A. Alsenafi and A.B. Barbaro proposed a multi-species model (with n>2) that has many new intriguing properties relevant to this paper. Examining how the many species would interact with one another could provide meaningful insight into the realm of micro-organisms.
+
+<Label type="Subsection" map={map} title="Other fields of research" />
+This paper was inspired by micro-organisms forming a territory. However, this paper is mathematically created so it can be extended to many other fields of research.
+
+Territory formation is also apparent for ant colony formation <Cite papers={papers} paperId="bst/10.1111/icad.12486" /> <Cite papers={papers} paperId="bst/10.1673/031.011.0126" />. Ants are known for their remarkable ability to form complex societies, which are often characterised by the formation of territories. These territories are established through a variety of mechanisms, including chemical communication. However, studying ant behaviour in the wild can be challenging due to the harsh environments in which they live and the confined spaces in which they operate. By using computer models, researchers can manipulate various parameters and observe how they affect ant colony behaviour, allowing them to gain insights into the underlying mechanisms of ant colony formation.
+
+---
+
+<Label type="Section" map={map} title="Conclusion" />
+We conclude that the main question: "What similarities exist between properties of the two-dimensional and three-dimensional lattice models?" can be answered by that both models have a well-mixed and segregated state. Furthermore, the point at which the state changes from well-mixed to well-segregated is in both models determined by the amount of mass present in the lattices and the ratio between <Equation latex="\gamma/\lambda" /> plays a large role. For both models, the more mass or <Equation latex="\gamma/\lambda" /> they have, the less beta is required to reach the critical point. Additionally, the 3D model needs significantly more beta to reach the same critical point for the same amount of mass or <Equation latex="\gamma/\lambda" /> ratio.
+
+We conclude that the model has many behaviours that remain unexplored in this paper. Making the model easily accessible to other researchers can enable the measurement and observation of more interesting behaviours, helping to better understand the complex world of higher-dimensional random walks.
+
+<Bibliography />
+
+<Label type="Section" map={map} title="Responsible research" />
+Responsibility in research was carefully considered while writing this paper. All images referenced in this paper are easy to reproduce with the public web app created alongside this paper. The code for this paper is available on GitHub (<a href="https://github.com/yustarandomname/territories-in-three-dimensions"> https://github.com/yustarandomname/territories-in-three-dimensions</a>) under the MIT license, allowing abundant opportunities for extension. The code is thus reproducible and extendable for future work. Finally, any work used by other researchers is properly cited and referenced in the text to locate the sources correctly.
+
+We were supplied with the original code from the previous territory paper. However, this code was not reproducible on the machines used by the author. Our method was created from scratch and checked with the mathematics from the paper. Small discrepancies could be the result of this method. For instance, differences in PRNGs (Pseudo Random Number Generators)
+could give small differences between results. We thus opted to look if the behaviour between models was similar and were careful with making direct comparisons between models. We noted that direct comparisons are only possible if our method was reproduced with a continuous mathematical model.
+
+Finally, the author listed on the title page wrote the entire original paper. AI models like OpenAI GPT-4 and Grammarly were used to enhance grammar and readability. The author and several others validated all the changes.
