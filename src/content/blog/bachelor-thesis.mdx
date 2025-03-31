@@ -5,7 +5,8 @@ pubDate: "Jul 27 2023"
 heroImage: "/blog-placeholder-4.jpg"
 ---
 
-import { Cite, CiteList, Bibliography, AutoRef, Label } from "@/components/paper";
+import { Image } from 'astro:assets';
+import { Cite, CiteList, Bibliography, AutoRef, Label, Equation } from "@/components/paper";
 import { papers } from "@/content/blog/bachelor-thesis-assets/bibliography";
 import { map } from "@/content/blog/bachelor-thesis-assets/sectionMapping.ts";
 
@@ -52,31 +53,161 @@ can improve the performance of the model. <AutoRef map={map} label="Visualisatio
 similarities a 3D random walker model creates. <AutoRef map={map} label="Conclusion" /> is the conclusion of the paper. Finally, <AutoRef map={map} label="Responsible Research" /> 
 discusses the responsibility and accountability of this research paper.
 
-
-
----
-
-<Label type="Section" map={map} title="Background and related work" />
-
-
 <Label type="Section" map={map} title="Method" />
+A general model, independent of dimensions is presented in <AutoRef map={map} label="A generalised random walker model" />. A naive example model (later referred to as CPU serial model) is described in <AutoRef map={map} label="A Naive model" /> with pseudo-code to give the reader an impression of how a 3D territory model is represented in code. In <AutoRef map={map} label="CPU improvements" /> a Central processing unit (CPU) algorithm using parallelism is proposed that significantly improves the run-time of the naive model. The model has again improved been in run-time in <AutoRef map={map} label="GPU improvements" />, where a dedicated GPU takes some work over. Although the model produces the same output, spotting how the mathematical model is represented in these faster models is harder. This is followed by <AutoRef map={map} label="Visualisations" />, where the method for visualising the model in a browser is presented. Lastly, the method for quantifying territory using an order parameter is presented in <AutoRef map={map} label="3D order parameter" />.
 
----
+
+<Label type="Subsection" map={map} title="A generalised random walker model" />
+The model consists of two processes. The first process is initialisation, where a lattice of dimension D and side length L is created. N number of agents are randomly and uniformly distributed across the lattice nodes. The mass per species, also known as <Equation latex="N_i" />, is the same for both species A (red) and B (blue). The second process involves each agent leaving behind markers and moving to a neighbouring node based on the number of markers of the opposing species similar to <AutoRef map={map} label="marker distribution 2d" />. Further details about each process are provided in the following paragraphs.
+
+The model is **initialised** with a cyclic lattice, where <Equation latex="D" /> number of dimensions is created. We assume each lattice side to have the same length. This results in a lattice with <Equation latex="L^D" /> nodes with <Equation latex="\lbrace x_1,x_2,...,x_D \rbrace \in \lbrace 0,1,2,...,L-2,L-1  \rbrace" />. Each node is connected to its direct neighbours. Thus, node <Equation latex="(x_1, x_2, ..., x_D)" /> is connected to <Equation latex="(\tilde{x_1},\tilde{x_2},...,\tilde{x_D})" />, which can be formulated with the following equation:
+
+<Equation label="neighbours general" block latex={String.raw`(\tilde{x_1},\tilde{x_2},...,\tilde{x_D}) \in \{(x_1 \pm 1, x_2, \ldots, x_D), (x_1, x_2 \pm 1, \ldots, x_D), \ldots ,(x_1, x_2, ..., x_D \pm 1) \}`} />
+
+Each node keeps track of its own amount of agents, and the amount of markers.
+
+At each **iteration**, all nodes adjust their amount of markers and agent count. For adjusting markers, <AutoRef map={map} label="marker distribution 2d" /> is adapted for <Equation latex="\xi_i"/> and <Equation latex="\rho_i" /> to reference to a location in D-dimensional space. Therefore, our model applies the following equation for adjusting markers between time steps:
+
+<Equation label="marker distribution general" block latex={String.raw`\begin{align}
+\xi_i(x_1,x_2,\ldots,x_D,t+1) = (1-\lambda)\cdot\xi_i(x_1,x_2,\ldots,x_D,t) + \\ \gamma\cdot\rho_i(x_1,x_2,\ldots,x_D,t)
+\end{align}`} />
+
+Similarly, in <AutoRef map={map} label="agent movement 2D" />, the movement of agents is transformed to the following formula:
+
+<Equation label="agent movement 3D" block latex={String.raw`
+\begin{align} 
+M_{A}(x_1\rightarrow \hat{x_1} , x_2 \rightarrow \hat{x_2}, \ldots, x_D \rightarrow \hat{x_D}, t) = \\ \frac{e^{-\beta\cdot\xi_{B}(\hat{x_1},\hat{x_2},\ldots,\hat{x_D},t)}}{\sum_{(\tilde{x_1},\tilde{x_2}, \ldots,\tilde{x_D})\sim(x_1,x_2,\ldots,x_D)}e^{-\beta\cdot\xi\_{B}(\tilde{x_1},\tilde{x_2},\ldots,\tilde{x_D},t))}}
+\end{align}`} />
+
+By utilising these formulae, the adaptability of the model is demonstrated to any number of dimensions, whether it be one, ten, or a thousand. The model's movement in higher dimensions should resemble that of the 2D model proposed in <AutoRef map={map} label="Human gang territories" />.
 
 <Label type="Subsection" map={map} title="A naive model" />
+We have established that the previous territory paper can be extended to any number of dimensions. To illustrate this, an example is presented with figures and pseudo-codes of how mathematics is used in the 3D model. The example is divided into two sections, similar to the mathematics in <AutoRef map={map} label="A generalised random walker model" />.
 
 <Label type="Subsubsection" map={map} title="Initialisation" />
+
+The initialization process is executed every time the model needs to be started or reset. The model is set up with an <Equation latex="L \times L \times L" /> lattice, where each node is connected to its direct neighbours. This connection is described by <AutoRef map={map} label="neighbours general" />, with <Equation latex="D = 3" />. All global hyper-parameters (<Equation latex="\beta" />, <Equation latex="\lambda" />, <Equation latex="\gamma" />) are initialised so they can be accessed by the iteration process.
+
+To maintain the separation of concerns, a separate layer is allocated for agents and markers. N agents from both species A and B are randomly (uniformly) distributed over all nodes. Initially, all markers for each species are set to zero.
+
 <Label type="Subsubsection" map={map} title="Iteration" />
 
+The iteration process runs for each forward time step and will update the model as constructed in the initialisation process. In each iteration, a new empty layer is constructed for both agents and markers to write to. The old layers are only used to read from. This is done to prohibit the behaviour that a node from time t is requested to be read. However, the node data is already partially updated with data for time (t + 1).
 
----
+The iteration process starts by writing to the layer of the new marker using <AutoRef map={map} label="marker distribution general" />. The data from the old agent and marker layers are read and computed together. The result of the equation is stored in the layer of the new markers as illustrated in <AutoRef map={map} label="new marker dist" />.
+
+<Image src="/blogs/bachelor-thesis/Marker Distribution for Thesis.png" alt="new marker dist" label="new marker dist" width={839} height={751} class="rounded" >
+  This figure shows an example of a lattice with L = 3 and D = 3. The example highlights how the markers are updated at position (0,0,0). A new lattice is created to store the next iteration of markers. The old data from the marker and agent layers are read and combined to write to the new layer.
+</Image>
+
+The iteration process continues with each agent randomly selecting one of its neighbours, weighted by the number of markers the neighbours possess. As mentioned before, agents prefer neighbours with lower markers of the opposite species. A pseudo-code implementation for moving the red agents is given in <AutoRef map={map} label="update universe serial" />.
+
+Each iteration ends by removing the old lattices and replacing them with the newer ones. If no errors occur, the iteration count increases.
+
+```python
+# Loop over every agent and marker node in the old lattices
+Foreach (agent_node, marker_node, index) in old_lattices.iter()
+
+  # Setup a pseudorandom number generator (PRNG). The seed should depend on the 
+  # index and iteration amount, as well as a global seed provided by the user.
+  prng = new PRNG(index, iteration, seed);
+
+  # Get the 6 neighbours of this marker node
+  neighbour_markers = marker_node.neighbours()
+  blue_strength = [] # Store push strengths of all neighbours
+
+  Foreach marker in neighbour_markers.iter()
+    # Append the blue strength for each marker defined in equation
+    blue_strengths.push(pow(e, -beta x marker.blue_value))
+
+  # Loop over each red_agent and move it to one of its neighbours 
+  # according to the strengths of the blue markers
+  Foreach red_agent in agent_node.red_agents.iter()
+    # Pick one of the neighbours and return the chosen direction to move 
+    # in (Top, Left, Front, etc.). More info about the method in appendix A.
+    direction = PICK_WEIGHTED(prng, blue_strengths)
+
+    # Get the neighbours index from the direction
+    new_index = agent_node.index_from_dir(direction)
+
+    # Increment the new lattice with agent nodes at the position of new_index by one
+    new_lattices.agent_nodes.add_red_agent(new_index)
+```
 
 <Label type="Subsection" map={map} title="CPU improvements" />
 
----
+The straightforward nature of the naive model makes it easy to understand and apply using the mathematics provided. However, as will be shown in <AutoRef map={map} label="Algorithm speed" />, its execution speed is slow. Iteration is the most time-consuming part of the process. The model is built only once, but the program may have to iterate thousands or even millions of times. To speed up this process while still producing the same output, this section will introduce a faster method of iteration.
+
+Introducing parallel CPU computing can be a good solution when algorithms are running slowly <Cite papers={papers} paperId="bst/Concha_Cabido_Pantrigo_Montemayor_2014" />. Ideally, using K threads can speed up your program by a factor of K. However, this comes with a cost of unpredictability when multiple threads write to the same memory address. This can lead to a behaviour known as a 'race condition' <Cite papers={papers} paperId="bst/Liu_Wang_Zhou_Wang_2022" />.
+
+Race conditions can introduce unpredictable and unstable behaviour. An example can be where an agent is moving from one node to another. When threads A and B read the agent count of node X simultaneously and both try to write one agent to it, only one agent will be added to node X. This results in a loss of total agents which is not allowed in this model. A Mutex <Cite papers={papers} paperId="bst/10.1007/978-3-642-21834-7_13" /> prevents simultaneous access to a piece of memory, though this comes with a performance cost as only one thread can access it at a time. By performing all writing calculations within each node and spawning one thread per node, we ensure that only one thread is writing to a memory address during the node's lifetime.
+
+Only the walking part needs to be updated from the naive model, as updating the markers is not writing to other nodes other than itself, as shown in <AutoRef map={map} label="new marker dist" />. <AutoRef map={map} label="update universe serial" /> is adopted, whereby each node can read all other nodes but can only write to its own. An impression of how the movement of red agents is changed is visible in <AutoRef map={map} label="update universe parallel" />.
+
+```python
+new_lattices = new Lattices(old_lattices.parameters)
+
+Foreach (agent_node, marker_node, index) in old_lattices.iter()
+  # Move agents out by storing the newly distributed agents in this agent node
+  neighbour_markers = marker_node.neighbours()
+  prng = new PRNG(index, iteration);
+  agents_out = {top:0,right:0,front:0,bottom:0,left:0,back:0}
+
+  Foreach red_agent in agent_node.red_agents.iter()
+    # Set of blue strength for each neighbouring node
+    blue_strengths = neighbour_markers.blue_strengths
+    dir = pick_weighted(prng, blue_strengths)
+    agents_out[dir] += 1
+
+  # Write the number of agents that will go to each neighbour to own (index) of the new agent node
+  new_lattices.agent_nodes[index].red_agents_out(agents_out)
+
+  Foreach (agent_node, index) in new_lattices.iter()
+    # Read agents from neighbouring nodes and move to this node. For instance, get top neighbours agents that should move down (i.e. to this node).
+    neighbour_agents = agent_node.neighbours()
+    total_red_agents = 0
+
+    Foreach dir in neighbour_agents.iter()
+      # Set of all agents in the neighbour at dir (top, right, etc)
+      red_agents_dir = neighbour_agents[dir].red_agents_out
+
+      # Add red agents from dir.opposite (top -> bottom, right -> left)
+      total_red_agents += red_agents_dir[dir.opposite]
+
+    # Set red agents that this node gets from all neighbours
+    agent_node.red_agents(total_red_agents)
+```
+
 
 <Label type="Subsection" map={map} title="GPU improvements" />
 
----
+The speed of the parallelised CPU implementation was still insufficient, as will be discussed in <AutoRef map={map} label="Compare Algorithm speed" />. Most GPUs have many more working threads compared to CPUs, this means that GPUs are able to do parallel computations. The GPU implementation was written using WebGPU <Cite papers={papers} paperId="bst/Maxfield:23:W" /> as the core technology. This web API provides direct access to most GPUs on desktop computers, making the model versatile and more easily reproducible.
 
-<Bibliography />
+WebGPU is often described as a successor of WebGL. WebGL was mostly used for drawing images on the browser screen, whereas WebGPU was designed from the ground up to handle complex GPU computations. WebGPU uses its own shader-language WGSL to reach near-native performance.
+
+GPUs have one downside: data transfers between the CPU and GPU take a relatively significant amount of time. The algorithm is designed to use a ping-pong buffer to store the old and new lattices in GPU memory, reducing the time needed to transfer data to the CPU. A ping-pong buffer consists of two buffers that are used in an alternating fashion. One buffer is used for input, while the other is used for output. Each iteration they swap their function as input or output buffer. This technique reduces latency and enhances performance in real-time applications.
+
+<Label type="Subsection" map={map} title="Visualisations" />
+To interpret the raw data model, several visualisation methods have been developed. These fall into three categories: 2D slice, 3D View and Real-time data view. These categories can be seen in <AutoRef map={map} label="views" />. To study these views in detail, visit <a href="https://3d-walker.vercel.app/vision/slice">https://3d-walker.vercel.app/vision/slice</a> for a live view. The purpose for each category is explained further in the respective paragraphs.
+
+The left figure is the **slice view** and is useful for comparing the current 3D state to the 2D one. If patterns similar to those expected from the 2D case start emerging from a given configuration, it often indicates that we are moving towards an interesting state to compare against. However, each slice is in general an invalid 2D state because agents can cluster and move to slices in the front and back. The assumption of an equal number of agents from species A and B is often not true, so direct comparisons should be made with caution.
+
+<Image src="/blogs/bachelor-thesis/Views.png" label="views" alt="views" width={950} height={307} class="rounded">
+  Left: 2D slicing view. Centre: 3D view and right: data view. All three views display the visuals for lattice area <Equation latex="50^3" />, iterations 31001, <Equation latex="\beta = 1.5e-5" />, <Equation latex="\gamma = 0.5" />, <Equation latex="\lambda = 0.5" />.
+</Image>
+
+The centre figure shows the **3D view**. Drawing each node as a coloured block is difficult to interpret in 3D, because blocks that are hidden by others are hard to spot. The marching cubes algorithm <Cite papers={papers} paperId="bst/MarchingCubes" /> is often used in the three-dimensional visualisation of territories. This technique shows the border at which species are equally dominant. Blue-shaded areas describe territories, where the blue species is most dominant. Observe how the slicing view at index z=0 is recognised at the front (left) side of the cube.
+
+Lastly, the right figure is **real-time data view**. This is for abstracting the visuals away and showing condensed metrics about the model. Here, the order parameter over time which will be defined in <AutoRef map={map} label="3d order parameter" /> is shown. Hovering over each data point reveals the exact order parameter at each time step.
+
+<Label type="Subsection" map={map} title="3D order parameter" />
+
+The previous territorial paper employed an order parameter to measure the effect of various parameters on the state of well-mixed versus segregated systems. The order parameter (as defined in <AutoRef map={map} label="order parameter 2d" /> is adapted to use agent densities in three dimensions, where the agent density of species i is formulated as <Equation latex="\\rho_i(x,y,z,t) =" /> (amount of agents at position (x,y,z) and time t) <Equation latex="* L^3" />.
+
+<Equation label="order param 3d" block latex={String.raw`\begin{align} 
+\epsilon = \frac{1}{6L^3N^2} \sum_{(x,y,z) \in S } \sum_{(\tilde{x},\tilde{y},\tilde{z}) \sim(x,y,z)} (\rho_A(x,y,z,t) - \rho_B(x,y,z,t)) (\rho_A(\tilde{x},\tilde{y},\tilde{z} t) - \rho_B(\tilde{x},\tilde{y},\tilde{z} t))
+\end{align}`} />
+
+The normalisation coefficient is adapted too. We divide the entire equation by the product of the number of neighbours, lattice area, and total mass squared. This keeps the order parameter bounded at 1, making comparisons between papers easier.
+
+---
