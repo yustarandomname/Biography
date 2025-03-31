@@ -79,13 +79,12 @@ used in meteorology to visualize weather patterns <Cite papers={papers} paperId=
 downside is: "many lines visualized in one plot can be hard to read for an expert". A trivial way 
 to reduce this clutter, is to display lines with certain channels from T. Munzner <Cite papers={papers} paperId="mst/munzner2014visualization" />.
 like color, size, and transparency. These three caracteristics are forinstance used by A. Kamal et al. <Cite papers={papers} paperId="mst/Kamal2021"/>. 
-They assume that the lines originate from a certain mean-line that has multiple   
+They assume that the lines originate from a certain mean-line that has multiple 
 branches of noise, the dataset is encoded using color (gradients) to visualize line uncertainties.
 
 Lines can be aggregated to simplify the plot. One way is to measure each line as being typical or outlying. 
 P. Micheaux et al. <Cite papers={papers} paperId="mst/deMicheaux2020" /> proposes a new statistical method called
 **curve depth** that helps analyze data represented as curves or 
-{/* Add paper from thomas with cruve depth */}
 trajectories and labels each line as typical or outlying. Aggregating with (Iso)contours is another common 
 visualization technique to reduce clutter in spaghetti plots <Cite papers={papers} paperId="mst/5360497" />. F. Ferstl <Cite papers={papers} paperId="mst/Ferstl2016" /> extends
 this idea by incorporating conditional probability visualizations to reveal joint occurrences of contours across 
@@ -96,6 +95,7 @@ GPU-optimized Expectation Maximization algorithm for clustering large-scale
 point data. Although this method is able to establish a great seed for reaching
 a local optimum, expert-led clustering is expected to achieve a better
 clustering <Cite papers={papers} paperId="mst/rsos.211189" />. 
+
 An expert lead tool has been developed by A. Popa <Cite papers={papers} paperId="mst/2022_gch_andra" />. 
 This tool allows the user to map the line data with the help of t-SNE to a 2D point cloud. 
 A multi-view approach is used to show the user the point and line data at the same time.

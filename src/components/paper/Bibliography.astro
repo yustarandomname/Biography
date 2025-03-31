@@ -19,20 +19,22 @@ const papers = Array.from(bibState.papers.values()).toSorted((a, b) => {
           id={paperUrlId}
           class="border-2 bg-black print:bg-white print:border-none print:p-0 px-4 py-3 border-orange-500 "
         >
-          <div class="mt-0">
-            <span class="font-bold">[{toString(paper)}] - {paper.title} -{' '}
-            {'month' in paper ? paper.month + '/' : ''}
-            {paper.year}</span>
+          <div class="mt-6 inline">
+            <span class="font-bold">
+              [{toString(paper)}] - {paper.title} -{' '}
+              {'month' in paper ? paper.month + '/' : ''}
+              {paper.year}
+            </span>
 
-            {'authors' in paper && <span class="m-0">{paper.authors.join(', ')}</span>}
+            {'authors' in paper && (
+              <span class="m-0">{paper.authors.join(', ')}</span>
+            )}
           </div>
-
-          
 
           {'url' in paper ? (
             <a href={paper.url}>Source</a>
           ) : 'doi' in paper ? (
-            <a href={'https://doi.org/' + paper.doi}>Source</a>
+            <a href={'https://doi.org/' + paper.doi}>{'doi.org/' + paper.doi}</a>
           ) : null}
         </div>
       );
