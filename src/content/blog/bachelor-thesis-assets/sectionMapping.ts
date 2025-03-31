@@ -1,6 +1,6 @@
 import { SectionMap } from "@/components/paper/SectionMap";
 
-const sections = {
+const headers = {
   Introduction: {},
   "Background and related work": {
     "Taking a drunkard walk": {},
@@ -39,17 +39,37 @@ const sections = {
   "Responsible research": {},
 };
 
+const tables = ["Algorithm speed", "Iteration speed"];
+const figures = ["new marker dist", "views"];
+const equations = [
+  "marker distribution 2d",
+  "agent movement 2D",
+  "order parameter 2d",
+  "neighbours general",
+  "marker distribution general",
+  "agent movement 3D",
+  "order param 3d",
+];
+const programs = [
+  "Update universe serial",
+  "Update universe parallel"
+]
+
 class BSTSectionMap extends SectionMap {
-
   constructor() {
-    super(sections)
+    const map = {
+      headers,
+      tables,
+      figures,
+      programs,
+      equations,
+    };
+    super(map);
   }
 
-  getSections() {
-    return this.sections;
+  getHeaders() {
+    return headers;
   }
-
- 
 }
 
 export const map = new BSTSectionMap();
