@@ -87,6 +87,13 @@ visualization technique to reduce clutter in spaghetti plots <Cite papers={paper
 this idea by incorporating conditional probability visualizations to reveal joint occurrences of contours across 
 different regions, offering a more informative and less cluttered alternative to traditional spaghetti plots.
 
+Another statistical method is the use of Curve Density Estimates <Cite papers={papers} paperId="mst/Lampe2011CurveDensity" />.
+This method is able to give a rough sense of the how the data
+is distributed in certain areas. When a million lines are drawn in a plot on an average screen of 1920x1080,
+the expected number of overlapping lines at each pixel is ~1000:1. With density methods users are able to base their 
+clustering on the density of lines. In addition, this extra context could give semi-automatic clustering a better starting point 
+by selecting some equally dense areas across the x-axis.
+
 To automate the work of clustering, J.Wei et al. <Cite papers={papers} paperId="mst/wei2011parallel" /> introduces a
 GPU-optimized Expectation Maximization algorithm for clustering large-scale
 point data. Although this method is able to establish a great seed for reaching
@@ -127,6 +134,7 @@ Based on the results of the first nine weeks, I will decide on the next steps. T
 
 - Going in depth on the rendering of millions of lines in a WebGPU environment
 - Implementing a more advanced brush
+- Use edge bundeling <Cite papers={papers} paperId="mst/Lhuillier2017EdgeBundling" /> to simplify the number of lines being drawn
 - Implement multiple (3+) levels of focus/context. For giving the user a better way to focus on what lines are more or less likely to be added to the current selection. Forinstance:
   1. Selected lines (Highlight colour + Shadow)
   2. Selected Cluster groups (Faded Colour)
@@ -213,11 +221,3 @@ Based on the results of the first nine weeks, I will decide on the next steps. T
 - (Write) Abstract, Method, Discussion & Conclusion
 
 <Bibliography />
-
-<div class="bib">
-
-[^4]: [https://pmc.ncbi.nlm.nih.gov/articles/PMC2937254/](https://pmc.ncbi.nlm.nih.gov/articles/PMC2937254/)
-{/* [^6]: [https://link-springer-com.tudelft.idm.oclc.org/article/10.1007/s12650-021-00755-1](https://link-springer-com.tudelft.idm.oclc.org/article/10.1007/s12650-021-00755-1) */}
-{/* [^7]: [https://www.tandfonline.com/doi/full/10.1080/01621459.2020.1745815#d1e8715](https://www.tandfonline.com/doi/full/10.1080/01621459.2020.1745815#d1e8715) */}
-{/* [^9]: [https://onlinelibrary.wiley.com/doi/10.1111/cgf.12898](https://onlinelibrary.wiley.com/doi/10.1111/cgf.12898) */}
-</div>

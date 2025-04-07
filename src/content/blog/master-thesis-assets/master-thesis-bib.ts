@@ -406,11 +406,13 @@ export const papers = {
     url: "https://books.google.nl/books?hl=en&lr=&id=NfkYCwAAQBAJ&oi=fnd&pg=PP1&dq=Visualization+Analysis+and+Design,+Tamara+Munzner.+Visualization+Analysis+and+Design",
   },
   "mst/article": {
-    author: "Dasgupta, Aritra and Poco, Jorge and Wei, Yaxing and Cook, Bob and Bertini, Enrico and Silva, Cláudio",
+    author:
+      "Dasgupta, Aritra and Poco, Jorge and Wei, Yaxing and Cook, Bob and Bertini, Enrico and Silva, Cláudio",
     year: "2015",
     month: "09",
     pages: "1-1",
-    title: "Bridging Theory with Practice: An Exploratory Study of Visualization Use and Design for Climate Model Comparison",
+    title:
+      "Bridging Theory with Practice: An Exploratory Study of Visualization Use and Design for Climate Model Comparison",
     volume: "21",
     journal: "IEEE Transactions on Visualization and Computer Graphics",
     doi: "10.1109/TVCG.2015.2413774",
@@ -455,7 +457,8 @@ export const papers = {
     doi: "10.1080/01621459.2020.1745815",
     number: "536",
     journal: "Journal of the American Statistical Association",
-    author: "de Micheaux, Pierre Lafaye and Mozharovskyi, Pavlo and Vimond, Myriam",
+    author:
+      "de Micheaux, Pierre Lafaye and Mozharovskyi, Pavlo and Vimond, Myriam",
     year: "2020",
     month: "April",
     pages: "1881–1897",
@@ -479,17 +482,14 @@ export const papers = {
     doi: "10.1111/cgf.12898",
     ENTRYTYPE: "article",
     ID: "Ferstl2016",
-    authors: [
-      "Ferstl, F.",
-      "Kanzler, M.",
-      "Rautenhaus, M.",
-      "Westermann, R.",
-    ],
+    authors: ["Ferstl, F.", "Kanzler, M.", "Rautenhaus, M.", "Westermann, R."],
   },
   "mst/5360497": {
-    author: "Potter, Kristin and Wilson, Andrew and Bremer, Peer-Timo and Williams, Dean and Doutriaux, Charles and Pascucci, Valerio and Johnson, Chris R.",
+    author:
+      "Potter, Kristin and Wilson, Andrew and Bremer, Peer-Timo and Williams, Dean and Doutriaux, Charles and Pascucci, Valerio and Johnson, Chris R.",
     journal: "2009 IEEE International Conference on Data Mining Workshops",
-    title: "Ensemble-Vis: A Framework for the Statistical Visualization of Ensemble Data",
+    title:
+      "Ensemble-Vis: A Framework for the Statistical Visualization of Ensemble Data",
     year: "2009",
     pages: "233-240",
     doi: "10.1109/ICDMW.2009.55",
@@ -504,6 +504,45 @@ export const papers = {
       "Pascucci, Valerio",
       "Johnson, Chris R.",
     ],
+  },
+  "mst/Lampe2011CurveDensity": {
+    author: "Lampe, O. Daae and Hauser, H.",
+    title: "Curve Density Estimates",
+    journal: "Computer Graphics Forum",
+    volume: "30",
+    number: "3",
+    pages: "633-642",
+    keywords:
+      "I.3.3 Computer Graphics: Picture/Image Generation, Line and curve generation",
+    doi: "https://doi.org/10.1111/j.1467-8659.2011.01912.x",
+    url: "https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-8659.2011.01912.x",
+    eprint:
+      "https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1467-8659.2011.01912.x",
+    abstract:
+      "Abstract In this work, we present a technique based on kernel density estimation for rendering smooth curves. With this approach, we produce uncluttered and expressive pictures, revealing frequency information about one, or, multiple curves, independent of the level of detail in the data, the zoom level, and the screen resolution. With this technique the visual representation scales seamlessly from an exact line drawing, (for low-frequency/low-complexity curves) to a probability density estimate for more intricate situations. This scale-independence facilitates displays based on non-linear time, enabling high-resolution accuracy of recent values, accompanied by long historical series for context. We demonstrate the functionality of this approach in the context of prediction scenarios and in the context of streaming data.",
+    year: "2011",
+    ENTRYTYPE: "article",
+    ID: "Lampe2011CurveDensity",
+    authors: ["Lampe, O. Daae", "Hauser, H."],
+  },
+  "mst/Lhuillier2017EdgeBundling": {
+    author: "Lhuillier, A. and Hurter, C. and Telea, A.",
+    title: "State of the Art in Edge and Trail Bundling Techniques",
+    journal: "Computer Graphics Forum",
+    volume: "36",
+    number: "3",
+    pages: "619-645",
+    keywords:
+      "Categories and Subject Descriptors (according to ACM CCS), I.3.3 Computer Graphics: Computing Methodologies—Picture/Image Generation, I.3.6 Computer Graphics: Computing Methodologies—Methodology and Techniques",
+    doi: "https://doi.org/10.1111/cgf.13213",
+    url: "https://onlinelibrary.wiley.com/doi/abs/10.1111/cgf.13213",
+    eprint: "https://onlinelibrary.wiley.com/doi/pdf/10.1111/cgf.13213",
+    abstract:
+      "Abstract Bundling techniques provide a visual simplification of a graph drawing or trail set, by spatially grouping similar graph edges or trails. This way, the structure of the visualization becomes simpler and thereby easier to comprehend in terms of assessing relations that are encoded by such paths, such as finding groups of strongly interrelated nodes in a graph, finding connections between spatial regions on a map linked by a number of vehicle trails, or discerning the motion structure of a set of objects by analyzing their paths. In this state of the art report, we aim to improve the understanding of graph and trail bundling via the following main contributions. First, we propose a data-based taxonomy that organizes bundling methods on the type of data they work on (graphs vs trails, which we refer to as paths). Based on a formal definition of path bundling, we propose a generic framework that describes the typical steps of all bundling algorithms in terms of high-level operations and show how existing method classes implement these steps. Next, we propose a description of tasks that bundling aims to address. Finally, we provide a wide set of example applications of bundling techniques and relate these to the above-mentioned taxonomies. Through these contributions, we aim to help both researchers and users to understand the bundling landscape as well as its technicalities.",
+    year: "2017",
+    ENTRYTYPE: "article",
+    ID: "Lhuillier2017EdgeBundling",
+    authors: ["Lhuillier, A.", "Hurter, C.", "Telea, A."],
     },
 } as const satisfies { [key: `mst/${string}`]: Paper };
 
