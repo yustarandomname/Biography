@@ -8,6 +8,7 @@ import { ModeWatcher } from 'mode-watcher';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import ChevronLeft from '@lucide/svelte/icons/chevron-left';
 
 type Props = CollectionEntry<'blog'>['data'];
 
@@ -52,7 +53,8 @@ bibState.clear();
     <BaseHead title={title} description={description} />
 
     <style>
-      html, body {
+      html,
+      body {
         scroll-padding: 8rem;
         scroll-behavior: smooth;
       }
@@ -68,7 +70,7 @@ bibState.clear();
     </aside>
 
     <main class="w-full print:*:w-screen">
-      <article>
+      <article id="#top">
         <div class="print:hidden">
           {
             heroImage && (
@@ -84,9 +86,20 @@ bibState.clear();
         </div>
 
         <div
-          class="prose sticky mx-auto -mt-10 mb-10 top-0 p-4 bg-lime-50/80 backdrop-blur dark:bg-lime-950/90 print:hidden"
+          class="prose sticky relative mx-auto -mt-10 mb-10 top-0 p-4 bg-lime-50/80 backdrop-blur dark:bg-lime-950/90 print:hidden"
         >
-          <h1 class="!m-0 p-0">{title}</h1>
+          <a
+            href="../.."
+            class="absolute -top-14 left-0 bg-black p-2 shadow-none shadow-orange-300/70 hover:shadow-md transition-all underline-none"
+          >
+            <h2 class="!m-0 p-0 text-xl flex gap-2 items-center">
+              <ChevronLeft /> Back to home
+            </h2>
+          </a>
+
+          <a href="#top">
+            <h1 class="!m-0 p-0 text-xl md:text-4xl">{title}</h1>
+          </a>
           <div class="date">
             <FormattedDate date={pubDate} />
             {
